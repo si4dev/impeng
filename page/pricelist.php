@@ -4,6 +4,8 @@ class page_pricelist extends Page {
   function init() {
     parent::init();
 
+
+
     $this->add('H1')->set('Pricelist');
     if( $shop_id=$_GET['shop'] ) {
       $this->add('Text')->set('shop '.$shop_id);
@@ -11,6 +13,16 @@ class page_pricelist extends Page {
       $shop->load($shop_id);
       echo $connection=$shop->connection();
       $this->api->db2=$this->api->add('DB')->connect($connection);
+      
+      
+      
+      $demo=$this->add('Model_Xcart_Demo');
+$demo->tryLoadAny();
+$demo->save();
+
+
+      
+      
       
 //      $g=$this->add('Grid');
       $pricelist = $shop->ref('Pricelist');
