@@ -4,5 +4,6 @@ class Model_Xcart_Demo extends Model_Xcart {
   function init() {
     parent::init();
     $this->addField('sometext');
+    //$this->addField('title');
   }
 }
