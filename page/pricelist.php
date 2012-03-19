@@ -39,13 +39,12 @@ class page_pricelist extends Page {
  */     
 
       $m=$this->add('Model_Xcart_Product');
-
-      
       
       $ftp=$this->add('FTP');
       $ftp->login($ftproot['host'],rawurldecode($ftproot['user']),$ftproot['pass']); 
       // print_r($ftp->dir());
       
+      $img=$this->add('Actions_Image');
             
                         
       $pricelist->selectQuery(); // solves issue to get all fields and now it gets only applicable fields definined in model
@@ -55,7 +54,7 @@ class page_pricelist extends Page {
 
         
         $m->tryLoadBy('productcode',$product['shop_productcode']);
-        $this->add('Text')->set('id ======['.$m->get('productid').']');
+        $this->add('P')->set('xcart productid ['.$m->get('productid').']');
         $m->set('productcode',$product['shop_productcode']); 
         $m->set('product',$product['product_title']); 
         $m->set('weight',$product['weight']); 
@@ -63,7 +62,7 @@ class page_pricelist extends Page {
         $m->set('fulldescr',$pricelist->specification()); 
         $m->set('avail',$product['stock']); 
         $m->set('add_date',strtotime($product['entry_date'])); 
-        $m->set('list_price',1235); 
+        $m->set('list_price',$product['price']); 
         $m->save();
         
         
@@ -71,7 +70,7 @@ class page_pricelist extends Page {
         $pricing=$m->ref('Xcart_Pricing');
         //$pricing->dsql()->do_delete()->debug();
         $pricing->tryLoadAny();
-        $pricing->set('price',1238);
+        $pricing->set('price',$product['price']);
         $pricing->save();
         
         $quickprices=$m->ref('Xcart_QuickPrices');
@@ -95,29 +94,41 @@ class page_pricelist extends Page {
         }
        
         // media file
-        $filename=$product['media'];
-        $shopfilename=$product['shop_productcode'].'.jpg';
-        if($filename) {
-          
-        
+        $filename='';
+        $imagep=$m->ref('Xcart_ImageP');
+        $imagep->tryLoadAny();
+        $media_modified=$product['media'];
+        // check if image available and not already uploaded
+        if($media_modified and strtotime($media_modified) != $imagep->get('date')) {
+          // get filename from media table
+          $media=$this->add('Model_Media');
+          $media->load($product['media_id']);
+          $filename=$media->get('file');
+          $shopfilename=$product['shop_productcode'].'.jpg';
+
+          // overrule filename for development as we don't have the file library          
+          if( $this->api->getConfig('mode')=='dev') {
+            $filename='test.jpg';
+          }
+
           // handle image
           $this->add('P')->set('file: '.$filepath.$filename);
           copy($filepath.$filename,$tmp.$shopfilename);
-          $ftp->cd($ftproot['path'].$imagespath)
-            ->setSource($tmp.$shopfilename)
-            ->setTarget($shopfilename)
-            ->save();
+          if( $this->api->getConfig('mode')!='dev') {
+            $ftp->cd($ftproot['path'].$imagespath)
+              ->setSource($tmp.$shopfilename)
+              ->setTarget($shopfilename)
+              ->save();
+          }
 
-          $img=$this->add('Actions_Image');
+          // img action to get image info like widht height etc
           $img->setFile($filepath.$filename);
-          $imagep=$m->ref('Xcart_ImageP');
-          $imagep->tryLoadAny();
           $imagep->set('filename',$filename);
           $imagep->set('image_path',$imagespath.$shopfilename);
           $imagep->set('image_x',$img->imgWidth());
           $imagep->set('image_y',$img->imgHeight());
           $imagep->set('image_size',$img->fileSize());
-          $imagep->set('date',strtotime($img->fileModified()));
+          $imagep->set('date',strtotime($media_modified));
           $imagep->set('md5',$img->fileMd5());
           $imagep->save();
           
@@ -126,12 +137,13 @@ class page_pricelist extends Page {
 
           
           //echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ -gravity center -extent 125x125 '.$tmp.$shopfilename);
-          echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ '.$tmp.$shopfilename);
-          $ftp->cd($ftproot['path'].$thumbspath)
-            ->setSource($tmp.$shopfilename)
-            ->setTarget($shopfilename)
-            ->save();
-
+          if( $this->api->getConfig('mode')!='dev') {
+            echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ '.$tmp.$shopfilename);
+            $ftp->cd($ftproot['path'].$thumbspath)
+              ->setSource($tmp.$shopfilename)
+              ->setTarget($shopfilename)
+              ->save();
+          }
 
           $img->setFile($filepath.$filename);
           $imaget=$m->ref('Xcart_ImageT');
@@ -141,7 +153,7 @@ class page_pricelist extends Page {
           $imaget->set('image_x',$img->imgWidth());
           $imaget->set('image_y',$img->imgHeight());
           $imaget->set('image_size',$img->fileSize());
-          $imaget->set('date',strtotime($img->fileModified()));
+          $imaget->set('date',strtotime($imedia_modified));
           $imaget->set('md5',$img->fileMd5());
           $imaget->save();
           

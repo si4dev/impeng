@@ -7,30 +7,31 @@ class FTP extends AbstractModel {
   }
 
   function login($server,$user,$password,$pasv=true) {
-    if($this->connection=ftp_connect($server,21,180)) {
-      if(ftp_login($this->connection, $user, $password) ) {
+    if($this->connection=@ftp_connect($server,21,180)) {
+      if(@ftp_login($this->connection, $user, $password) ) {
         ftp_pasv($this->connection,$pasv);
       } else {
       throw $this->exception('FTP: cannot login')
           ->addMoreInfo('path',$path);
       }
     } else {
-      $this->error='cannot connect';
+      throw $this->exception('FTP: cannot connect')
+          ->addMoreInfo('server',$server);
     }
     return $this;
   }
 
   function getDir() {
-    return ftp_nlist($this->connection,'.');
+    return @ftp_nlist($this->connection,'.');
   }
   
   function getPath() {
-    return ftp_pwd($this->connection);
+    return @ftp_pwd($this->connection);
   }
   
 
   function cd($path) {
-    if( !ftp_chdir($this->connection,$path) ) {
+    if( !@ftp_chdir($this->connection,$path) ) {
       throw $this->exception('FTP: cannot cd')
           ->addMoreInfo('path',$path);
     }
@@ -38,7 +39,7 @@ class FTP extends AbstractModel {
   }
 
   function mkdir($dir) {
-    if( !ftp_mkdir($this->connection,$dir) ) {
+    if( !@ftp_mkdir($this->connection,$dir) ) {
       throw $this->exception('FTP: cannot mkdir')
           ->addMoreInfo('path',$path);
     }
@@ -57,7 +58,7 @@ class FTP extends AbstractModel {
 
   function save() {
     // from local source to ftp remote target
-    if( !ftp_put($this->connection,$this->target,$this->source,$this->transfermode) ) {
+    if( !@ftp_put($this->connection,$this->target,$this->source,$this->transfermode) ) {
       throw $this->exception('FTP: cannot put')
           ->addMoreInfo('path',$path);
     }
@@ -67,7 +68,7 @@ class FTP extends AbstractModel {
     
   function delete() {
     // delete target remote ftp
-    if( !ftp_delete($this->connection,$this->target) ) {
+    if( !@ftp_delete($this->connection,$this->target) ) {
       throw $this->exception('FTP: cannot delete')
           ->addMoreInfo('path',$path);
     }
@@ -76,7 +77,7 @@ class FTP extends AbstractModel {
   
   function load() {
     // from ftp remote source to local target
-    if( !ftp_get($this->connection,$this->target,$this->source,$this->transfermode) ) {
+    if( !@ftp_get($this->connection,$this->target,$this->source,$this->transfermode) ) {
       throw $this->exception('FTP: cannot get')
           ->addMoreInfo('path',$path);
     }
@@ -86,7 +87,7 @@ class FTP extends AbstractModel {
   
   function logout()
 	{
-		ftp_quit($this->connection);
+		@ftp_quit($this->connection);
 		return $this;
 	}
 }

@@ -11,7 +11,8 @@ class Model_Media extends Model_Table {
     $this->addField('MediaFileName');
     $this->addField('MediaFileExt');
     $this->addField('MediaWidth');
-  //  $this->addField('MediaHeight');
+    $this->addField('MediaHeight');
+    $this->addField('MediaFileModified');
     $this->addExpression('file')->set("concat(MediaFileDir,'/',MediaFileName,'.',MediaFileExt)");
     $this->hasMany('Pricelist');
   }
