@@ -26,11 +26,7 @@ class Model_Xcart_Product extends Model_Xcart {
   
   function import( $product ) {
    
-    var_dump( $product ); 
-
-    
-    
-        echo '---------------<br/><br/><br/>';
+    //var_dump( $product ); 
   }
 }
 

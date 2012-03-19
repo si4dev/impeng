@@ -19,7 +19,22 @@ class Model_Shop extends Model_Table {
     if(!isset($this->config)) $this->config();
     return (string)$this->config->shopconfig->connection;
   }
-    
+
+  function ftproot() {
+    if(!isset($this->config)) $this->config();
+    return (string)$this->config->shopconfig->ftproot;
+  }
+
+  function imagespath() {
+    if(!isset($this->config)) $this->config();
+    return (string)$this->config->shopconfig->imagespath;
+  }
+
+  function thumbspath() {
+    if(!isset($this->config)) $this->config();
+    return (string)$this->config->shopconfig->thumbspath;
+  }
+
     
 
 }   

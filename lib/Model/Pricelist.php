@@ -15,12 +15,29 @@ class Model_Pricelist extends Model_Table {
     $this->addField('entry_date');
     $this->addField('price');
     $this->hasOne('Shop');
-    
+    /*
+      http://new2.agiletoolkit.org/doc/modeltable/reference
+      In the code above, model 'Author' will be examined for it's "table" property. 
+      That property is then used in the assumption about the referencing field. 
+      If Model_Author->table = 'author' then hasOne() function will use "author_id" field by default. 
+      If a different field is used, you can specify it as a second argument to hasOne().
+      
+      By default one more field will be created. This field is called "dereferenced field" and it is 
+      defined as a sub-select expression selecting "name" field from related entity. 
+      If "name" field is not set in the related model, then the field will show "Record #n" instead. 
+      You can specify a different field to expression by using 3th argument of hasOne();
+    */
+    $this->hasOne('Media','media_id','file');
+//    $this->hasOne('Media');
   }
 
-  function short_description() {
+// http://www.ltg.ed.ac.uk/~richard/utf-8.cgi?input=E2+80+A2&mode=bytes
+//
 
-    $xml=new SimpleXMLElement('<root>'.$this->get('short_description').'</root>');
+
+  function short_description() {
+    //echo "<pre>[short-".$this->get('id')."[[" . htmlentities($this->get('short_description')). "]]] </pre><br/><br/>";
+    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('short_description').'</root>');
     $result='';
     foreach($xml->xpath("info[@type='short']/*") as $node) {
       $result.=(string)$node->asXML();
@@ -28,8 +45,8 @@ class Model_Pricelist extends Model_Table {
     return $result;
   }
   function specification() {
-//echo "<pre>" . htmlentities($this->get('specification'));
-    $xml=new SimpleXMLElement('<root>'.$this->get('specification').'</root>');
+    //echo "<pre>[long-".$this->get('id')."[[" . htmlentities($this->get('specification')). "]]] </pre><br/><br/>";
+    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('specification').'</root>');
     $result='';
     foreach($xml->xpath("info/*") as $node) {
       $result.=(string)$node->asXML();

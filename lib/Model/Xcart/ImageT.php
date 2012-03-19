@@ -1,6 +1,6 @@
 <?php
 class Model_Xcart_ImageT extends Model_Xcart {
-  public $table='xcart_images_t';
+  public $table='xcart_images_T';
   public $id_field='imageid';
   public $title_field='filename';
   function init() {
