@@ -5,14 +5,12 @@ class page_shop extends Page {
     
     $this->add('H1')->set('Shop v1');
     
-      
-    
     $c=$this->add('CRUD');
     $c->setModel('Model_Shop');
+
     if ($c->grid){ 
-      
+        //$c->grid->addQuickSearch(array('name'));
         $c->grid->addPaginator(10);
-        
         $c->grid->addColumn('button','pricelist');
         if($_GET['pricelist']){
           //$this->api->memorize('shop',$_GET['pricelist']);

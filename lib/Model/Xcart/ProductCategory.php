@@ -1,5 +1,5 @@
 <?php
-class Model_Xcart_ProductCategory extends Model_Xcart {
+class Model_Xcart_ProductCategory extends Model_Table2 {
   public $table='xcart_products_categories';
   public $id_field='categoryid';
   function init() {

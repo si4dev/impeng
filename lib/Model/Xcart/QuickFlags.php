@@ -1,5 +1,5 @@
 <?php
-class Model_Xcart_QuickFlags extends Model_Xcart {
+class Model_Xcart_QuickFlags extends Model_Table2 {
   public $table='xcart_quick_flags';
   public $id_field='productid';
   public $title_field='productid';

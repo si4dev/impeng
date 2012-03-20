@@ -36,5 +36,11 @@ class Model_Shop extends Model_Table {
   }
 
     
+  function category_import() {
+    if(!isset($this->config)) $this->config();
+    return (string)$this->config->category_import->supplier;
+  }
+
+    
 
 }   

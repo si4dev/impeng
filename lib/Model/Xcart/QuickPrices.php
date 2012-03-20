@@ -1,5 +1,5 @@
 <?php
-class Model_Xcart_QuickPrices extends Model_Xcart {
+class Model_Xcart_QuickPrices extends Model_Table2 {
   public $table='xcart_quick_prices';
   public $id_field='productid';
   function init() {
