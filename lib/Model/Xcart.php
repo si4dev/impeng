@@ -9,16 +9,44 @@ class Model_Xcart extends Model_Shop {
       // get the mysql connection for this specific shop
       $this->api->db2=$this->api->add('DB')->connect($this->connection());
       $this->add('Text')->set('tenstead.');
-      $cats=$this->add('Model_Category')->debug();
+      $shopcat=$this->add('Model_Xcart_Category');
+      
+      $cats=$this->add('Model_CategorySupplier');
       $cats->selectQuery();
       $cats->dsql->where('CategoryShop','pcfast2')->where('CategoryShopID',-1);
       foreach($cats as $cat) {
         echo $cat['CategorySupplierID'].$cat['SupplierCategoryTitle'].'<br/>';
-      }
         
-    
+        $defaultcat=$cats->categoryByLang('nl');
+        
+        $this->add('HTML')->set('"<pre>".htmlentities($defaultcat->asXml())."</pre>"');
+        
+        $level = 1;
+        $parent = 0;
+        $need=false;
+        foreach( $defaultcat->node as $title ) {
+          $dsql=clone $shopcat->dsql;
+          $shopcat->addCondition('parentid',$parent)
+            ->addCondition('category',(string)$title)
+            ->tryLoadAny();
+          if(!$need) $need=!$shopcat->loaded();
+          $shopcat->set('parentid',$parent)
+            ->set('category',(string)$title)
+            ->save();
+          $shopcatid = $shopcat->get('categoryid');
+          $shopcat->dsql=$dsql; // restore dsql as we added two conditions
+          $level++;
+        }
+        // due to bug we cannot save the join, ok the bug is solved by $this->data=$this->dsql->data in Model_Table,
+        // however you cannot use ->save() as it will not be possible to load again with condition CategoryShopID=-1
+        $cats->set('CategoryShopID',$shopcatid)->saveAndUnload();
+      }
+
+
+    $shopcat->treeRebuild();
   }
   
+      
   function import() {
       $filepath=$this->api->getConfig('supplier_image_path');
       $tmp=$this->api->getConfig('tmp');
