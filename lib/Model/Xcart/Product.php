@@ -1,5 +1,5 @@
 <?php
-class Model_Xcart_Product extends Model_Xcart {
+class Model_Xcart_Product extends Model_Table2 {
   public $table='xcart_products';
   public $id_field='productid';
   public $title_field='product';
