@@ -21,7 +21,13 @@ class Model_Xcart_Product extends Model_Table2 {
     $this->hasMany('Xcart_QuickFlags','productid'); 
     $this->hasMany('Xcart_ImageP','id'); 
     $this->hasMany('Xcart_ImageT','id'); 
+    $this->hasMany('Xcart_ExtraFieldValue','productid'); 
     
+    /*
+    $extra=$this->join('xcart_extra_field_values.productid','productid');
+    $extra->addField('fieldid');
+    $extra->addField('value');
+    */
   }
   
   function import( $product ) {

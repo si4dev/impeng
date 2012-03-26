@@ -44,7 +44,7 @@ class Frontend extends ApiFrontend {
 
 
 		$m=$this->add('Menu',null,'Menu');
-		$m->addMenuItem('Back','index');
+		$m->addMenuItem('shop','Shop');
         $this->dbConnect();
 	}
     function page_index($page){

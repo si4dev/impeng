@@ -27,7 +27,7 @@ class Model_Pricelist extends Model_Table {
       If "name" field is not set in the related model, then the field will show "Record #n" instead. 
       You can specify a different field to expression by using 3th argument of hasOne();
     */
-    $this->hasOne('Media','media_id','MediaFileModified');
+    $this->hasOne('Media','media_id','file');
 //    $this->hasOne('Media');
   }
 
