@@ -1,9 +1,5 @@
 <?php
-<<<<<<< HEAD
-class Model_Xcart extends AbstractController {
-=======
 class Model_Xcart extends Model_Shop {
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
   function init() {
     parent::init();
   }
@@ -46,64 +42,6 @@ class Model_Xcart extends Model_Shop {
         $cats->set('CategoryShopID',$shopcatid)->saveAndUnload();
       }
 
-<<<<<<< HEAD
-  function setConfig($config) {
-    
-    
-  }
-
-  function import() {
-  
-      
-      $shop = $this->add('Model_Shop');
-      $shop->load($shop_id);
-      $connection=$shop->connection();
-      
-      $filepath=$this->api->getConfig('supplier_image_path');
-      $tmp=$this->api->getConfig('tmp');
-      $ftproot=parse_url($shop->ftproot().'/');
-      $imagespath=$shop->imagespath().'/';
-      $thumbspath=$shop->thumbspath().'/';
-      
-      //$connection = array('mysql:host=vm08.shopimport.nl;dbname=nijtronics_xcart;charset=utf8','nijtronics_xcart','mybr3Da27');
-      
-      $this->api->db2=$this->api->add('DB')->connect($connection);
-      
-   
-
-      
-      
-      
-//      $g=$this->add('Grid');
-      $pricelist = $shop->ref('Pricelist');
-
-//     $g->setModel($pricelist);
-//      $g->addFormatter('price','money');
-//      $g->addPaginator(10);
-      /*
-      $text='';
-      //print_r( $pricelist->getActualFields() );
-
- */     
-
-      $m=$this->add('Model_Xcart_Product');
-      
-      $ftp=$this->add('FTP');
-      $ftp->login($ftproot['host'],rawurldecode($ftproot['user']),$ftproot['pass']); 
-      // print_r($ftp->dir());
-      
-      $img=$this->add('Actions_Image');
-            
-                        
-      $pricelist->selectQuery(); // solves issue to get all fields and now it gets only applicable fields definined in model
-      $i=0;
-      
-      foreach( $pricelist as $product ) {
-
-        
-        $m->tryLoadBy('productcode',$product['shop_productcode']);
-        $this->add('P')->set('xcart productid ['.$m->get('productid').']');
-=======
 
     $shopcat->treeRebuild();
   }
@@ -151,7 +89,6 @@ class Model_Xcart extends Model_Shop {
 
         // set the product fields        
         $m->tryLoadBy('productcode',$product['shop_productcode']);
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
         $m->set('productcode',$product['shop_productcode']); 
         $m->set('product',$product['product_title']); 
         $m->set('weight',$product['weight']); 
@@ -162,10 +99,6 @@ class Model_Xcart extends Model_Shop {
         $m->set('list_price',$product['price']); 
         $m->save();
         
-<<<<<<< HEAD
-        
-=======
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
         // handle pricing
         $pricing=$m->ref('Xcart_Pricing');
         //$pricing->dsql()->do_delete()->debug();
@@ -178,10 +111,6 @@ class Model_Xcart extends Model_Shop {
         $quickprices->set('priceid',$pricing->get('priceid'));
         $quickprices->save();
         
-<<<<<<< HEAD
-        
-=======
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
         // handle category
         $category=$m->ref('Xcart_ProductCategory');
         $found=false;
@@ -204,10 +133,6 @@ class Model_Xcart extends Model_Shop {
         // check if image available and not already uploaded
         if($media_modified and strtotime($media_modified) != $imagep->get('date')) {
           // get filename from media table
-<<<<<<< HEAD
-          $media=$this->add('Model_Media');
-=======
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
           $media->load($product['media_id']);
           $filename=$media->get('file');
           $shopfilename=$product['shop_productcode'].'.jpg';
@@ -218,13 +143,8 @@ class Model_Xcart extends Model_Shop {
           }
 
           // handle image
-<<<<<<< HEAD
-          $this->add('P')->set('file: '.$filepath.$filename);
-          copy($filepath.$filename,$tmp.$shopfilename);
-=======
           //copy($filepath.$filename,$tmp.$shopfilename);
           shell_exec('convert -define jpeg:size=2048x2048 '.$filepath.$filename.' -resize 1024x1024 '.$tmp.$shopfilename);
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
           if( $this->api->getConfig('mode')!='dev') {
             $ftp->cd($ftproot['path'].$imagespath)
               ->setSource($tmp.$shopfilename)
@@ -244,18 +164,9 @@ class Model_Xcart extends Model_Shop {
           $imagep->save();
           
           // handle thumbs
-<<<<<<< HEAD
-          $this->add('P')->set('file: '.$filepath.$filename);
-
-          
-          //echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ -gravity center -extent 125x125 '.$tmp.$shopfilename);
-          if( $this->api->getConfig('mode')!='dev') {
-            echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ '.$tmp.$shopfilename);
-=======
           if( $this->api->getConfig('mode')!='dev') {
             //echo shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ -gravity center -extent 125x125 '.$tmp.$shopfilename);
             shell_exec('convert -define jpeg:size=250x250 '.$filepath.$filename.' -thumbnail 125x125^ '.$tmp.$shopfilename);
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
             $ftp->cd($ftproot['path'].$thumbspath)
               ->setSource($tmp.$shopfilename)
               ->setTarget($shopfilename)
@@ -270,11 +181,7 @@ class Model_Xcart extends Model_Shop {
           $imaget->set('image_x',$img->imgWidth());
           $imaget->set('image_y',$img->imgHeight());
           $imaget->set('image_size',$img->fileSize());
-<<<<<<< HEAD
-          $imaget->set('date',strtotime($imedia_modified));
-=======
           $imaget->set('date',strtotime($media_modified));
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
           $imaget->set('md5',$img->fileMd5());
           $imaget->save();
           
@@ -289,16 +196,6 @@ class Model_Xcart extends Model_Shop {
         }
         $quickflags->save();
         
-<<<<<<< HEAD
-        // move to this in the future $m->import( $product );
-        if( $i++ > 20 ) break; 
-
-      }
-     
-    
-  }
-}
-=======
         // handle extra field value to know it's a shopimport product
         $extravalue=$m->ref('Xcart_ExtraFieldValue');
         $extravalue->tryLoadBy('fieldid',$fieldid);
@@ -311,4 +208,3 @@ class Model_Xcart extends Model_Shop {
     $this->nb_products=$i;
   }
 }
->>>>>>> 8b4bd199e8d18e7240ccba6ba1497a1e165bdeb6
