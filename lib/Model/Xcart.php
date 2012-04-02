@@ -8,41 +8,43 @@ class Model_Xcart extends Model_Shop {
   function import_categories() { 
       // get the mysql connection for this specific shop
       $this->api->db2=$this->api->add('DB')->connect($this->connection());
-      $this->add('Text')->set('tenstead.');
+      // prepare model for shop category to add categories
       $shopcat=$this->add('Model_Xcart_Category');
-      
+      // prepare model to loop through the available categories to be imported (where shopid=-1)
       $cats=$this->add('Model_CategorySupplier');
-      $cats->selectQuery();
-      $cats->dsql->where('CategoryShop','pcfast2')->where('CategoryShopID',-1);
+      $cats->selectQuery(); // bug fix to get the model fields
+      $cats->dsql->where('CategoryShop',$this->get('name'))->where('CategoryShopID',-1);
+      // loop through the categories to be imported to the shop (not all, only needed ones)
       foreach($cats as $cat) {
-        echo $cat['CategorySupplierID'].$cat['SupplierCategoryTitle'].'<br/>';
-        
         $defaultcat=$cats->categoryByLang('nl');
         
-        $this->add('HTML')->set('"<pre>".htmlentities($defaultcat->asXml())."</pre>"');
-        
-        $level = 1;
-        $parent = 0;
-        $need=false;
+        $level = 1; // not used for this xcart shop 
+        $lastshopcatid = 0;
+        // loop through the levels of one category path (like breadcrumb)
         foreach( $defaultcat->node as $title ) {
+          
+          if( !(string)$title ) {
+            throw $this->exception('Shopassist: supplier title node empty')->addMoreInfo('Category ID',$cats->id);
+          }
+          
           $dsql=clone $shopcat->dsql;
-          $shopcat->addCondition('parentid',$parent)
+          // this will save or update or do nothing
+          // select `categoryid`,`category`,`parentid`,`lpos`,`rpos`,`order_by` from `xcart_categories` where `parentid` = 0 and `category` = "LED verlichting" limit 0, 1 [:a_2, :a]
+          // insert into `xcart_categories` (`category`,`parentid`) values ("LED verlichting",0) [:a_2, :a]
+          $shopcat->addCondition('parentid',$lastshopcatid)
             ->addCondition('category',(string)$title)
-            ->tryLoadAny();
-          if(!$need) $need=!$shopcat->loaded();
-          $shopcat->set('parentid',$parent)
-            ->set('category',(string)$title)
+            ->tryLoadAny()
             ->save();
-          $shopcatid = $shopcat->get('categoryid');
+          $lastshopcatid = $shopcat->get('categoryid');
           $shopcat->dsql=$dsql; // restore dsql as we added two conditions
           $level++;
         }
         // due to bug we cannot save the join, ok the bug is solved by $this->data=$this->dsql->data in Model_Table,
         // however you cannot use ->save() as it will not be possible to load again with condition CategoryShopID=-1
-        $cats->set('CategoryShopID',$shopcatid)->saveAndUnload();
+        $cats->set('CategoryShopID',$lastshopcatid)->saveAndUnload();
       }
 
-
+    // rebuild category tree of the shop to nicely set the lpos and rpos again
     $shopcat->treeRebuild();
   }
   

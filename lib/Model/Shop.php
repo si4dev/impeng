@@ -20,6 +20,12 @@ class Model_Shop extends Model_Table {
     return (string)$this->config->shopconfig->connection;
   }
 
+  function shopsystem() {
+    if(!isset($this->config)) $this->config();
+    return (string)$this->config->shopconfig->shopsystem;
+  }
+
+
   function ftproot() {
     if(!isset($this->config)) $this->config();
     return (string)$this->config->shopconfig->ftproot;

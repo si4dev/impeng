@@ -13,14 +13,24 @@ class Model_Category extends Model_Table {
     $this->addField('CategoryShopID');
   }
   
+  
+  /*
+  
+     $this->title=new SimpleXMLElement('<title>'.
+     '<cat lang="nl">
+        <node>VOGELS2</node>
+        <node>Knaagdieren konijnen</node>
+      </cat>'.
+      '</title>');
+  */
   private function titleXml() {
-     
-     $this->title=new SimpleXMLElement('<title>'.'<cat lang="nl">
-  <node>VOGELS2</node>
-  <node>Knaagdieren konijnen</node>
-</cat>'.'</title>');
-//     $this->title=new SimpleXMLElement('<title>'.$this->get('SupplierCategoryTitle').'</title>');
-     
+    if( strpos($this->get('SupplierCategoryTitle'),'<node') ) {
+      $titleXml=$this->get('SupplierCategoryTitle');
+    } else {
+      // in case the category is not yet in xml structure for old supplier import
+      $titleXml='<cat lang="nl"><node>'.$this->get('SupplierCategoryTitle').'</node></cat>';
+    }
+    $this->title=new SimpleXMLElement('<title>'.$titleXml.'</title>');
   }
 
   function categoryByLang($iso) {
