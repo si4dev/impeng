@@ -8,15 +8,29 @@ class Model_Xcart_Category extends Model_Table2 {
     parent::init();
     $this->addField('category');
     $this->addField('parentid');
-    $this->addField('lpos');
-    $this->addField('rpos');
+
+
+    $res=$this->api->db2->query("show columns from xcart_categories like 'lpos'")->fetch();
+    $this->tree=$res[0]=='lpos'?true:false;
+    if($this->tree) {
+      $this->addField('lpos');
+      $this->addField('rpos');
+    } else {
+      $this->addField('categoryid_path');
+    }
     $this->addField('order_by')->type('int');
   //  $this->hasOne('Xcart_Category','parentid');
    $this->hasMany('Xcart_Category','parentid');
+   
+   
   }
+  
   
 
   function treeRebuild($left = 0) {
+    if(!$this->tree) {
+      return $this;
+    }
     $right = $left + 1;
     if($left==0) {
       // main call has no initial load() so we need to setup all parent=0 records

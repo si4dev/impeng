@@ -11,6 +11,10 @@ class Model_Category extends Model_Table {
     $this->addField('CategoryShop');
     $this->addField('CategorySupplierID');
     $this->addField('CategoryShopID');
+    
+    
+    
+//    $this->addHook('beforeLoad',function($o){       unset($o->title);        echo 'closure'; });
   }
   
   
@@ -24,17 +28,21 @@ class Model_Category extends Model_Table {
       '</title>');
   */
   private function titleXml() {
-    if( strpos($this->get('SupplierCategoryTitle'),'<node') ) {
-      $titleXml=$this->get('SupplierCategoryTitle');
-    } else {
+    $title=$this->get('SupplierCategoryTitle');
+    if( strpos($title,'<node') === false ) {
       // in case the category is not yet in xml structure for old supplier import
-      $titleXml='<cat lang="nl"><node>'.$this->get('SupplierCategoryTitle').'</node></cat>';
+      $title=trim($title)?:'-';
+      $this->title=new SimpleXMLElement('<title></title>');
+      $cat=$this->title->addChild('cat');
+      $cat->addAttribute('lang','nl');
+      $cat->{"node"}[]=$title; // this way XML is properly escaped, http://www.php.net/manual/en/simplexmlelement.addchild.php
+    } else {
+      $this->title=new SimpleXMLElement('<title>'.$title.'</title>');
     }
-    $this->title=new SimpleXMLElement('<title>'.$titleXml.'</title>');
   }
 
   function categoryByLang($iso) {
-    if(!isset($this->title)) $this->titleXml();
+    $this->titleXml();
     
     foreach( $this->title->cat as $cat ) {
       if( (string)$cat['lang'] == $iso ) {
