@@ -60,7 +60,8 @@ class FTP extends AbstractModel {
     // from local source to ftp remote target
     if( !@ftp_put($this->connection,$this->target,$this->source,$this->transfermode) ) {
       throw $this->exception('FTP: cannot put')
-          ->addMoreInfo('path',$path);
+          ->addMoreInfo('source',$this->source)
+          ->addMoreInfo('target',$this->target);
     }
     return $this;
   }

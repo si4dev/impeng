@@ -9,7 +9,7 @@ class Model_Xcart_ExtraField extends Model_Table2 {
     $this->addField('field')->defaultValue('Shopimport');
     $this->addField('service_name');
     $this->setMasterField('service_name','SHOPIMPORT');
-//     $this->hasMany('Xcart_Product','filedid');
+    $this->addField('active')->defaultValue('N');
   }
 }
 

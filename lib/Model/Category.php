@@ -1,57 +1,33 @@
 <?php
 class Model_Category extends Model_Table {
-  public $table='tbltype_category';
-  public $id_field='CategoryID';
-  public $title_field='CategoryID';
-  public $title;
-  
+  public $table='category';
+  public $title_field='reference';
   function init() {
     parent::init();
-    
-    $this->addField('CategoryShop');
-    $this->addField('CategorySupplierID');
-    $this->addField('CategoryShopID');
-  }
-  
-  
-  /*
-  
-     $this->title=new SimpleXMLElement('<title>'.
-     '<cat lang="nl">
-        <node>VOGELS2</node>
-        <node>Knaagdieren konijnen</node>
-      </cat>'.
-      '</title>');
-  */
-  private function titleXml() {
-    if( strpos($this->get('SupplierCategoryTitle'),'<node') ) {
-      $titleXml=$this->get('SupplierCategoryTitle');
-    } else {
-      // in case the category is not yet in xml structure for old supplier import
-      $titleXml='<cat lang="nl"><node>'.$this->get('SupplierCategoryTitle').'</node></cat>';
-    }
-    $this->title=new SimpleXMLElement('<title>'.$titleXml.'</title>');
+    $this->hasOne('Supplier');
+    $this->addField('reference');
+    $this->addField('title');
   }
 
-  function categoryByLang($iso) {
-    if(!isset($this->title)) $this->titleXml();
-    
-    foreach( $this->title->cat as $cat ) {
-      if( (string)$cat['lang'] == $iso ) {
-        return $cat;
+  // structure to create form Audio, Video, Image|Mounting solutions|Carts|Trolleys into  
+  // <cat lang="nl"><node>Audio, Video, Image</node><node>Mounting solutions</node><node>Carts</node><node>Trolleys</node></cat>
+  function category_title($cat) {
+    $dom=new DOMDocument('1.0', 'UTF-8');
+    $n=$dom->appendChild($dom->createElement('cat'));
+    $n->setAttribute('lang','nl');
+    foreach(explode('|',$cat) as $node) {
+      // use createtextnode as it will escape xml better then value of createElement
+      if($node!='-') {
+        $n->appendChild($dom->createElement('node'))->appendChild($dom->createTextNode($node));
       }
     }
+    $this->set('title',$dom->saveXml($n));
+    return $this;
   }
-    
-
-  function title() {
-    if(!isset($this->title)) $this->titleXml();
-      foreach($this->title->cat as $cat) {
-        foreach($cat->node as $node) {
-        echo '[['.(string)$node.'==';
-        }
-      }
-    return 'tet';
-  }
-
 }
+
+/*
+update category c inner join supplier s on (s.name = c.supplier) 
+set c.supplier_id = s.id
+where c.supplier_id =0
+*/

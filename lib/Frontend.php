@@ -1,4 +1,9 @@
 <?php
+function exceptions_error_handler($severity, $message, $filename, $lineno, $vars) {
+	throw new ErrorException($message, 0, $severity, $filename, $lineno);
+	//print_r($vars);
+}
+
 /*
    Commonly you would want to re-define ApiFrontend for your own application.
  */
@@ -26,6 +31,8 @@ class Model_Examples extends Model {
     }
 
 }
+
+
 class Frontend extends ApiFrontend {
 	function init(){
 		parent::init();
@@ -42,10 +49,12 @@ class Frontend extends ApiFrontend {
 			// ->_load('ui.atk4_expander')
 			;
 
-
+    
 		$m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('shop','Shop');
         $this->dbConnect();
+        
+        
 	}
     function page_index($page){
         /*
