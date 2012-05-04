@@ -117,16 +117,11 @@ class Model_Prestashop extends Model_Shop {
       // load the prestashop product
       
      
+      echo 'product ['.$product['shop_productcode'].']';
       
       $m->tryLoadBy('reference',$product['shop_productcode'])->debug();
       
       // hande manufacturer
-      echo 'product ['.$product['shop_productcode'].']';
-      
-  var_dump(     $m['id_manufacturer_2']);
-  
-  var_dump($product['manufacturer']);
-      
       if($m['id_manufacturer_2']!==$product['manufacturer']) { // use !== as one shop mfr can be null and other one empty
         $mfr=$m->ref('id_manufacturer');
         $mfr
