@@ -16,6 +16,7 @@ class Model_Product extends Model_Table {
 //    $this->hasMany('Media');
     $this->addField('entry_date');
     $this->addField('last_checked');
+    
 
     $this->addHook('beforeInsert',function($m,$dsql){
       $dsql->set('entry_date',$dsql->expr('now()'));

@@ -6,7 +6,7 @@ class page_shop extends Page {
     $this->add('H1')->set('Shop v1');
     
     $c=$this->add('CRUD');
-    $c->setModel('Model_Shop');
+    $c->setModel('Model_Shop',array('name','user'));
 
     if ($c->grid){ 
         //$c->grid->addQuickSearch(array('name'));

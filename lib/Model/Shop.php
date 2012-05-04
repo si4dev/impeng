@@ -9,6 +9,7 @@ class Model_Shop extends Model_Table {
     $this->addField('config');
     $this->hasOne('User',null,'login'); 
     $this->hasMany('Pricelist');
+    $this->hasMany('CatLink');
   }
 
   private function config() {
@@ -22,6 +23,7 @@ class Model_Shop extends Model_Table {
 
   function shopsystem() {
     if(!isset($this->config)) $this->config();
+    echo (string)$this->config->shopconfig->shopsystem;
     return (string)$this->config->shopconfig->shopsystem;
   }
 
@@ -31,9 +33,9 @@ class Model_Shop extends Model_Table {
     return (string)$this->config->shopconfig->ftproot;
   }
 
-  function imagespath() {
+  function imagepath() {
     if(!isset($this->config)) $this->config();
-    return (string)$this->config->shopconfig->imagespath;
+    return (string)$this->config->shopconfig->imagepath;
   }
 
   function thumbspath() {

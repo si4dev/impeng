@@ -144,7 +144,7 @@ class Model_Xcart extends Model_Shop {
         }
       }
       if( !$found ) {
-        $category->set('categoryid',$product['shop_category_id'])->save();
+        $category->set('categoryid',$product['shop_category_id'])->saveAndUnload();
       }
      
       // media file
@@ -167,7 +167,6 @@ class Model_Xcart extends Model_Shop {
         }
 
         // handle image
-        //copy($filepath.$filename,$tmp.$shopfilename);
         $s=microtime(true);
         $img->resizeImage($filepath.$filename, $tmp.$shopfilename, 1024, 1024, 90, 'Thumb');
         //shell_exec('convert -define jpeg:size=2048x2048 "'.$filepath.$filename.'" -resize 1024x1024 "'.$tmp.$shopfilename.'"');

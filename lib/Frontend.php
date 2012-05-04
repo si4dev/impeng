@@ -48,13 +48,16 @@ class Frontend extends ApiFrontend {
 			->_load('atk4_univ')
 			// ->_load('ui.atk4_expander')
 			;
-
-    
-		$m=$this->add('Menu',null,'Menu');
+    $this->dbConnect();
+//    $this->add('Auth')->setModel('User'); // email and password are default to login
+//    $this->auth->usePasswordEncryption('md5')->check();
+		
+    $m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('shop','Shop');
-        $this->dbConnect();
-        
-        
+    $m->addMenuItem('logout','Logout');
+
+    //$this->add('performance/Controller_Profiler');
+    
 	}
     function page_index($page){
         /*

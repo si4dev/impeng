@@ -8,6 +8,5 @@ class Model_CatLink extends Model_Table {
     $this->addField('import');
     $this->addField('margin_ratio');
     $this->addField('margin_amount');
-    $this->addCondition('shop_id',36);
   }
 }

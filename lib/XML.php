@@ -11,6 +11,36 @@ class XML extends AbstractModel {
     }
   
   
+  
+  function xmlToArray($xml,$row,$key) {
+    $result=array();
+    if($xml) {
+      $dom = new DOMDocument("1.0", "UTF-8");
+      $dom->loadXML('<root>'.$xml.'</root>');
+      $xpath = new DOMXPath($dom);
+      foreach( $xpath->query( '/root/'.$row ) as $node ) {
+        $result[$node->getAttribute($key)]=$this->innerXml($node);
+      }
+    }
+    return $result;
+  }
+  
+  function innerXml($node,$outputXml=false) {
+    $innerXml='';
+    foreach( $node->childNodes as $child ) {
+			if( !$outputXml ) {
+  	   	// in case the field is not an xml field then replace back the xml characters
+	   	  // most of the times the field is NOT an xml field
+				$innerXml .= str_replace ( array ( '&amp;' , '&quot;', '&apos;' , '&lt;' , '&gt;' ), array ( '&', '"', "'", '<', '>' ),$node->ownerDocument->saveXML($child));
+			} else {
+        if( $child->nodeType == XML_ELEMENT_NODE and $innerXml)
+          $innerXml .= "\r\n";
+        $innerXml .= (string)$node->ownerDocument->saveXML($child);
+      }
+    }
+    return $innerXml;
+  }
+  
   function tryToXml($dom,$content) {
     
     if(!$content) return false;

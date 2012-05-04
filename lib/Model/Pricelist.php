@@ -1,19 +1,28 @@
 <?php
 class Model_Pricelist extends Model_Table {
   public $table='pricelist';
+  public $lang;
+  public $nb_categories;
+  public $title; 
   function init() {
     parent::init();
     
     $this->addField('shop_productcode');
+    $this->addField('supplier_productcode');
+    $this->addField('name');
     $this->addField('product_title');
     $this->addField('supplier_category_id');
     $this->addField('shop_category_id');
     $this->addField('weight');
-    $this->addField('short_description');
-    $this->addField('specification');
+    $this->addField('info_short');
+    $this->addField('info_long');
+    $this->addField('manufacturer');
+    $this->addField('manufacturer_code');
+    $this->addField('ean');
     $this->addField('stock');
     $this->addField('entry_date');
     $this->addField('price');
+    $this->addField('tax');
     $this->hasOne('Shop');
     /*
       http://new2.agiletoolkit.org/doc/modeltable/reference
@@ -27,7 +36,10 @@ class Model_Pricelist extends Model_Table {
       If "name" field is not set in the related model, then the field will show "Record #n" instead. 
       You can specify a different field to expression by using 3th argument of hasOne();
     */
-    $this->hasOne('Media','media_id','MediaFileModified');
+    $this->hasOne('Media',null,'file_modified');
+    
+    $this->addHook('beforeLoad',function($o){ unset($o->title); });
+
   }
 
 // http://www.ltg.ed.ac.uk/~richard/utf-8.cgi?input=E2+80+A2&mode=bytes
@@ -36,25 +48,55 @@ class Model_Pricelist extends Model_Table {
   function image() {
     return str_replace('/','_',$this->get('shop_productcode')).'.jpg';
   }
+  
+  // returns one inner xml title for the specified language
+  function title() {
     
-
-  function short_description() {
+    if(!isset($this->title)) {
+      $this->title=$this->add('XML')->xmlToArray($this->get('product_title'),'info','lang');
+    }
+        
+    $result=$this->title[$this->lang];
+    if(!$result) $result = $this->title[null];
+    if(!$result) $result = $this->title['nl'];
+    if(!$result) $result = $this->get('name');
+    return $result;
+  }
+    
+  function info_short() {
     //echo "<pre>[short-".$this->get('id')."[[" . htmlentities($this->get('short_description')). "]]] </pre><br/><br/>";
-    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('short_description').'</root>');
+    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('info_short').'</root>');
     $result='';
     foreach($xml->xpath("info[@type='short']/*") as $node) {
       $result.=(string)$node->asXML();
     }
     return $result;
   }
-  function specification() {
+  function info_long() {
     //echo "<pre>[long-".$this->get('id')."[[" . htmlentities($this->get('specification')). "]]] </pre><br/><br/>";
-    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('specification').'</root>');
+    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('info_long').'</root>');
     $result='';
     foreach($xml->xpath("info/*") as $node) {
       $result.=(string)$node->asXML();
     }
     return $result;
+  }
+  function meta_title() {
+    $content= $this->title().' '.$this->get('manufacturer').' '.$this->get('manufacturer_code');
+    return str_replace(array(';','=','#','{','}','<','>'),'-',$content);
+  }
+  function meta_description() {
+    $content= $this->title().' '.$this->get('manufacturer').' '.$this->get('manufacturer_code');
+    return str_replace(array(';','=','#','{','}','<','>'),'-',$content);
+  }
+  function meta_keywords() {
+    $content= $this->title().','.$this->get('manufacturer').','.$this->get('manufacturer_code');
+    $content=str_replace(array(';','=','#','{','}','<','>'),'-',$content);
+    $content=str_replace(' ',',',$content);
+    return $content;
+  }
+  function rewrite() {
+    return strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $this->title()), '-'));
   }
 }
 
