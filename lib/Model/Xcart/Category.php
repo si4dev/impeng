@@ -28,7 +28,7 @@ class Model_Xcart_Category extends Model_Table2 {
   
 
   function treeRebuild($left = 0) {
-    if(!$this->tree) {
+    if(!$this->tree) { // no treebuild needed for old xcart versions
       return $this;
     }
     $right = $left + 1;

@@ -69,11 +69,11 @@ where s.id=:shop";
       $shop->load($shop_id);
       
       // *** import categories ***
-//      $shop->import_categories();
+      $shop->import_categories();
       $this->add('P')->set('Imported categories: '.$shop->nb_categories);
       $starttime2=microtime(true);
       // *** import products ***
-      $shop->load($shop_id)->import();
+ //     $shop->load($shop_id)->import();
        $starttime3=microtime(true);
       $this->add('P')->set('Imported products: '.$shop->nb_products);
     } else {

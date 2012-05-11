@@ -1,10 +1,27 @@
 <?php
+class Controller_Prestashop extends AbstractController {
+  function init(){
+    parent::init();
+    $this->owner->addHook('afterLoad',$this);
+  } 
+  function afterLoad($m){
+    if($m->loaded()) {
+      // get the mysql connection for this specific shop
+      $this->api->db2=$this->api->add('DB')->connect($this->owner->connection());
+    }
+  }
+}
+
+
 class Model_Prestashop extends Model_Shop {
   public $language=array();
   public $tax=array();
   function init() {
     parent::init();
+  
+    $this->add('Controller_Prestashop');
   }
+ 
   
   
   function tax() {
@@ -15,19 +32,17 @@ class Model_Prestashop extends Model_Shop {
     }
   }
   
-  function import_categories() { 
-      // get the mysql connection for this specific shop
-      $this->api->db2=$this->api->add('DB')->connect($this->connection());
+  function import_categories($lang='nl') { 
       // prepare model for shop category to add categories
-      $shopcat=$this->add('Model_Xcart_Category');
+      $shopcat=$this->add('Model_Prestashop_Category');
       // prepare model to loop through the available categories to be imported (where shopid=-1)
-      $cats=$this->add('Model_CategorySupplier');
+      $cats=$this->add('Model_CatLink');
       $cats->selectQuery(); // bug fix to get the model fields
-      $cats->dsql->where('CategoryShop',$this->get('name'))->where('CategoryShopID',-1);
+      $cats->dsql->where('shop_id',$this->id)->where('catshop_id',-1)->debug();
       // loop through the categories to be imported to the shop (not all, only needed ones)
       $i=0;
       foreach($cats as $cat) {
-        $defaultcat=$cats->categoryByLang('nl');
+        $defaultcat=$cats->categoryByLang($lang);
         
         $level = 1; // not used for this xcart shop 
         $lastshopcatid = 0;
@@ -42,18 +57,13 @@ class Model_Prestashop extends Model_Shop {
           // this will save or update or do nothing
           // select `categoryid`,`category`,`parentid`,`lpos`,`rpos`,`order_by` from `xcart_categories` where `parentid` = 0 and `category` = "LED verlichting" limit 0, 1 [:a_2, :a]
           // insert into `xcart_categories` (`category`,`parentid`) values ("LED verlichting",0) [:a_2, :a]
-          $shopcat->addCondition('parentid',$lastshopcatid)
-            ->addCondition('category',(string)$title)
+          $shopcat->addCondition('id_parent',$lastshopcatid)
+            ->addCondition('name',(string)$title)
+            ->addCondition('id_lang',6) // TODO loop through languages
             ->tryLoadAny()
             ->save()
             ;
           $lastshopcatid = $shopcat->get('categoryid');
-          // check if old xcart categoryid_path field is used
-          if( !$shopcat->tree ) {
-            if($shopcatpath) $shopcatpath.='/';
-            $shopcatpath.=$lastshopcatid;
-            $shopcat->set('categoryid_path',$shopcatpath)->save();
-          }
           $shopcat->dsql=$dsql; // restore dsql as we added two conditions
           $level++;
         }
@@ -65,7 +75,7 @@ class Model_Prestashop extends Model_Shop {
 
     $this->nb_categories=$i;
     // rebuild category tree of the shop to nicely set the lpos and rpos again
-    $shopcat->treeRebuild();
+//    $shopcat->treeRebuild();
   }
   
   /*
@@ -110,7 +120,6 @@ class Model_Prestashop extends Model_Shop {
     $imgtypes[]=array('name'=>'','width'=>1024,'height'=>1024);
     // traverse through the pricelist and import each product one by one 
     $pricelist = $this->ref('Pricelist');
-    $pricelist->debug();
     $pricelist->selectQuery(); // solves issue to get all fields and now it gets only applicable fields definined in model
     $i=0;
     foreach( $pricelist as $product ) {
@@ -119,7 +128,7 @@ class Model_Prestashop extends Model_Shop {
      
       echo 'product ['.$product['shop_productcode'].']';
       
-      $m->tryLoadBy('reference',$product['shop_productcode'])->debug();
+      $m->tryLoadBy('reference',$product['shop_productcode']);
       
       // hande manufacturer
       if($m['id_manufacturer_2']!==$product['manufacturer']) { // use !== as one shop mfr can be null and other one empty
@@ -195,7 +204,6 @@ class Model_Prestashop extends Model_Shop {
       
       if($media_modified) { // for sure a source image is available
         if( !$image['filebase']) { // no image in shop then first generate database entry and use id for filename
-          $image->debug();
           $image->save();
         }
         if($media_modified > $ftplist[$image['filebase'].'.jpg']['date']) {
@@ -207,19 +215,17 @@ class Model_Prestashop extends Model_Shop {
             $shopfilename=$image['filebase'].($imgtype['name']?'-'.$imgtype['name']:'').'.jpg';
             
             $img->resizeImage($filepath.$filename, $tmp.$shopfilename, $imgtype['width'], $imgtype['height'], 90, 'Thumb');
-            echo '++++'. $imgtype['name'];
             $ftp->setSource($tmp.$shopfilename)
               ->setTarget($shopfilename)
               ->save();
             unlink($tmp.$shopfilename);
           }
-        exit();
         }
       }
           
 
       $i++;
-      if( $i >= 100 ) break;
+      if( $i >= 10 ) break;
     }
 
     $this->nb_products=$i;

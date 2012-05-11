@@ -7,9 +7,10 @@ class Model_Shop extends Model_Table {
     unset($this->config);
     $this->addField('name');
     $this->addField('config');
-    $this->hasOne('User',null,'login'); 
+    $this->hasOne('User',null,'email'); 
     $this->hasMany('Pricelist');
     $this->hasMany('CatLink');
+    $this->hasMany('CatShop');
   }
 
   private function config() {
@@ -23,7 +24,6 @@ class Model_Shop extends Model_Table {
 
   function shopsystem() {
     if(!isset($this->config)) $this->config();
-    echo (string)$this->config->shopconfig->shopsystem;
     return (string)$this->config->shopconfig->shopsystem;
   }
 
