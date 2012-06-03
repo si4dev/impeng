@@ -2,7 +2,7 @@
 class Model_Prestashop_Category extends Model_Table2 {
   public $table='ps_category';
   public $id_field='id_category';
-  public $title_field='id_category';
+  public $title_field='name';
   function init() {
     parent::init();
     $this->debug();

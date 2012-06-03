@@ -9,6 +9,7 @@ class Model_Shop extends Model_Table {
     $this->addField('config');
     $this->hasOne('User',null,'email'); 
     $this->hasMany('Pricelist');
+    $this->hasMany('ProductForPricelist');
     $this->hasMany('CatLink');
     $this->hasMany('CatShop');
   }

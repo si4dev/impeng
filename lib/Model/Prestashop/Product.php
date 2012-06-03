@@ -14,6 +14,8 @@ class Model_Prestashop_Product extends Model_Table2 {
     $this->addField('location');
     $this->addField('id_category_default');
     $this->addField('id_color_default');
+    $this->addField('date_add');
+    $this->addField('date_upd');
     $this->addField('active');
     $this->hasMany('Prestashop_CategoryProduct','id_product');
     $this->hasMany('Prestashop_ProductLang','id_product');

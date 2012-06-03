@@ -32,7 +32,7 @@ class Model_Prestashop extends Model_Shop {
     }
   }
   
-  function import_categories($lang='nl') { 
+  function ZZZimport_categories($lang='nl') { 
       // prepare model for shop category to add categories
       $shopcat=$this->add('Model_Prestashop_Category');
       // prepare model to loop through the available categories to be imported (where shopid=-1)
@@ -83,7 +83,7 @@ class Model_Prestashop extends Model_Shop {
   images: 100 images in 15 seconds
   */
           
-  function import() {
+  function ZZZimport() {
     $filepath=$this->api->getConfig('supplier_image_path'); // root path location for supplier images
     $tmp=$this->api->getConfig('tmp'); // used to compress images
             // get the mysql connection for this specific shop

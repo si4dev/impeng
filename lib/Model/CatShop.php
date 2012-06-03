@@ -1,4 +1,7 @@
 <?php
+
+HOLD
+
 class Model_CatShop extends Model_Table {
   public $table='catshop';
   public $title_field='title';

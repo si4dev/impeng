@@ -1,28 +1,35 @@
 <?php
 class Model_Pricelist extends Model_Table {
   public $table='pricelist';
+  public $title_field='title';
   public $lang;
   public $nb_categories;
   public $title; 
   function init() {
     parent::init();
     
+    $this->addField('productcode');
     $this->addField('shop_productcode');
-    $this->addField('supplier_productcode');
-    $this->addField('name');
+    $this->addField('title');
     $this->addField('product_title');
-    $this->addField('supplier_category_id');
-    $this->addField('shop_category_id');
+    $this->hasOne('Product');
+    $this->addField('supplier_id');
+    $this->addField('category_id');
+    $this->addField('catshop_id');
     $this->addField('weight');
     $this->addField('info_short');
     $this->addField('info_long');
     $this->addField('manufacturer');
     $this->addField('manufacturer_code');
     $this->addField('ean');
+    $this->addField('price');
+    $this->addField('price_si');
+    $this->addField('price_pe');
+    $this->addField('tax');
     $this->addField('stock');
     $this->addField('entry_date');
-    $this->addField('price');
-    $this->addField('tax');
+    $this->addField('last_checked');
+    $this->addField('info_actualised');
     $this->hasOne('Shop');
     /*
       http://new2.agiletoolkit.org/doc/modeltable/reference
@@ -42,6 +49,30 @@ class Model_Pricelist extends Model_Table {
 
   }
 
+  function setInfo($info) {
+    
+    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$info.'</root>');
+    $result='';
+    foreach($xml->xpath("info[@type='title']/*") as $node) {
+      $result.=(string)$node->asXML()."\r\n";
+    }
+    $this->set('product_title',$result);
+    
+    $result='';
+    foreach($xml->xpath("info[@type='short']/*") as $node) {
+      $result.=(string)$node->asXML()."\r\n";
+    }
+    $this->set('info_short',$result);
+
+    $result='';
+    foreach($xml->xpath("info[@type='long']/*") as $node) {
+      $result.=(string)$node->asXML()."\r\n";
+    }
+    $this->set('info_long',$result);
+    
+    return $this;
+  }
+
 // http://www.ltg.ed.ac.uk/~richard/utf-8.cgi?input=E2+80+A2&mode=bytes
 //
 
@@ -59,7 +90,7 @@ class Model_Pricelist extends Model_Table {
     $result=$this->title[$this->lang];
     if(!$result) $result = $this->title[null];
     if(!$result) $result = $this->title['nl'];
-    if(!$result) $result = $this->get('name');
+    if(!$result) $result = $this->get('title');
     return $result;
   }
     

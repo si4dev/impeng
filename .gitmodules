@@ -3,4 +3,4 @@
 	url = https://github.com/atk4/atk4
 [submodule "atk4-addons"]
 	path = atk4-addons
-	url = https://github.com/atk4/atk4-addons
+	url = https://github.com/si4dev/atk4-addons
