@@ -3,14 +3,14 @@ class page_import extends Page {
   function init() {
     parent::init();
 
-    
+
         
     if( $supplier_id=$_GET['supplier'] ) {
     
       $m=$this->add('Model_Supplier');
       $m->load($supplier_id);
-      $this->add('h1')->set('Supplier Import '.$m->get('friendly_name'));
      
+      $this->add('h1')->set('Supplier Import '.$m->get('friendly_name'));
       $m->import_files();  
     
     }

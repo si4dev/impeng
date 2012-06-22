@@ -8,5 +8,6 @@ class Model_User extends Model_Table {
     $this->addField('login');
     $this->addField('email');
     $this->addField('password')->system(true);
+    $this->hasMany('Shop');
   }
 }

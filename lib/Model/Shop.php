@@ -18,6 +18,8 @@ class Model_Shop extends Model_Table {
      $this->config=new SimpleXMLElement('<config>'.$this->get('config').'</config>');
   }
 
+  
+
   function connection() {
     if(!isset($this->config)) $this->config();
     return (string)$this->config->shopconfig->connection;
@@ -50,6 +52,21 @@ class Model_Shop extends Model_Table {
     return (string)$this->config->category_import->supplier;
   }
 
+  function roundings() {
+    if(!isset($this->config)) $this->config();
+    $r=$this->add('Model_Rounding');
+    $r->setSource('Array');
+    foreach($this->config->roundings as $rounding) {
+      $r->set('from',(string)$rounding->from)
+        ->set('value',(string)$rounding->value)
+        ->set('offset',(string)$rounding->offset)
+        ->save();
+    }
+    
+    
+    foreach($r as $rr) print_r($rr);
+    return $r;
+  }
     
 
 }   
