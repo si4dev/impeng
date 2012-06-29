@@ -6,10 +6,26 @@ class Controller_Prestashop extends AbstractController {
     
     // use with setController on the Model_Shop
     // then the $this->owner is the Model_Shop
-    $this->api->db2=$this->api->add('DB')->connect($this->owner->connection());
-
+    
+    if($connection=$this->owner->connection()) {
+      $this->api->db2=$this->api->add('DB')->connect($connection);
+    }
+    $thos->owner->addMethod('setConfig',array($this,'setConfig'));
   }
+
+
+  function setConfig($cfg) {
+    print_r($cfg);
+    return 'bob';
+  }
+   
   
+  function ftproot() {
+    $this->config();
+    return (string)$this->config->shopconfig->ftproot;
+  }
+
+      
   // imports shop categories into local table --- We do not use anymore.. 
   // decided to get it instantly from source shop.
   function import_shopcat() {

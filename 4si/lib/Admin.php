@@ -4,7 +4,7 @@ class Admin extends ApiFrontend {
   function init() {
     parent::init();
     
-    
+    ini_set('display_errors',1);
     
     $this->dbConnect();
 
@@ -26,10 +26,15 @@ class Admin extends ApiFrontend {
 
 //    $this->add('Auth')->setModel('User');
 //    $this->auth->check();
+    $this->add('Auth')->setModel('User'); // email and password are default to login
+    $this->auth->usePasswordEncryption(function($v) { return md5($v); } );
+//    $this->auth->check();
+
     
     $m = $this->add('Menu', null, 'Menu');
-    $m->addMenuItem('Users','users');      
-    $m->addMenuItem('Log out','logout');      
+    $m->addMenuItem('user','Users');      
+    $m->addMenuItem('shop','Shops');      
+    $m->addMenuItem('logout','Log out');      
   }
   
   function page_index($p){
