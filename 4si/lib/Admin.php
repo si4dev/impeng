@@ -6,7 +6,6 @@ class Admin extends ApiFrontend {
     
     ini_set('display_errors',1);
     
-    $this->dbConnect();
 
     $this->addLocation('..',array(
                     'php'=>array(
@@ -24,20 +23,19 @@ class Admin extends ApiFrontend {
             ->_load('atk4_univ')
             ->_load('ui.atk4_notify');
 
-//    $this->add('Auth')->setModel('User');
-//    $this->auth->check();
-    $this->add('Auth')->setModel('User'); // email and password are default to login
+    $this->dbConnect();
+    $this->add('Dbug');
+
+    $this->add('Auth')->setModel('Admin'); // email and password are default to login
     $this->auth->usePasswordEncryption(function($v) { return md5($v); } );
-//    $this->auth->check();
+    $this->auth->check();
 
     
     $m = $this->add('Menu', null, 'Menu');
     $m->addMenuItem('user','Users');      
     $m->addMenuItem('shop','Shops');      
+    $m->addMenuItem('supplier','Suppliers');      
     $m->addMenuItem('logout','Log out');      
   }
   
-  function page_index($p){
-      $p->add('HelloWorld');
-  }
 }

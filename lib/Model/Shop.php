@@ -6,18 +6,47 @@ class Model_Shop extends Model_Table {
 
     unset($this->config);
     $this->addField('name');
-    $this->addField('config');
-    $this->hasOne('User',null,'email'); 
+    $this->addField('schedule')->enum(array('disable','daily','manual','test'));
+    $this->addField('config')->visible(false)->editable(false);
+    $this->hasOne('User',null,'name'); 
     $this->hasMany('Pricelist');
     $this->hasMany('ProductForPricelist');
     $this->hasMany('CatLink');
     $this->hasMany('CatShop');
+    $this->hasMany('SupplierLink');
+    
+    $this->addHook('beforeSave',function($m){
+
+      // xml to config
+      if(isset($m->config)) {
+        $r='';
+        foreach($m->config->children() as $n) $r.=(string)$n->asXml(); // output without root node
+        $m->set('config',$r);
+      }
+    });
+    
   }
 
+  function shopconfig($field,$value=null) {
+    $this->config();
+    if($value===null) return (string)$this->config->shopconfig->{$field};
+    $this->config->shopconfig->{$field}->{0}=$value;
+    return $this;
+  }
+  function shopsystem($v=null) {
+    return $this->shopconfig('shopsystem',$v);
+  }
+  
   function config($cfg=null) {
     if(!isset($this->config)) {
       $this->config=new SimpleXMLElement('<config>'.$this->get('config').'</config>'); // add root node
     }
+    
+    
+    return;
+    
+    // not ready:
+    
     if($cfg) {
       foreach($cfg as $key => $value) {
         $n=$this->config;
@@ -40,17 +69,6 @@ class Model_Shop extends Model_Table {
 
     
 
-  function connection() {
-    $this->config();
-    return (string)$this->config->shopconfig->connection;
-  }
-
-  function shopsystem($v) {
-    $this->config();
-    if(!$v) return (string)$this->config->shopconfig->shopsystem;
-    $this->config->shopconfig->shopsystem=$v;
-    return $this;
-  }
   
 
   function imagepath() {

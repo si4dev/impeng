@@ -4,9 +4,17 @@ class page_catlink extends Page {
     parent::init();
     $p=$this;
     
-    $s=$p->add('Model_Shop')->load(10);
+    $si=$this->add('Controller_Shopimport');
+    $s=$si->shop;
+    $u=$si->user;
+
     $shopsystem = ucwords($s->shopsystem());
+    if($shopsystem=='') {
+      $p->add('P')->set('No shop platform found');
+      return;
+    }
     $s->setController($shopsystem);
+    
     $shopcats=$this->add('Model_Prestashop_Category')->load(1)->tree();
 
     $c=$p->add('CRUD');

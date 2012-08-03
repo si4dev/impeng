@@ -11,11 +11,12 @@ class page_user extends Page {
       $crud->grid->getColumn('login')->makeSortable();
             
       if($_GET['set_password']){
-          $auth = $this->api->auth;
-          $model = $auth->getModel()->loadData($_GET['set_password']);
-          $enc_p = $auth->encryptPassword($_GET['value'],$model->get('email'));
-          $model->set('password',$enc_p)->update();
-          $this->js()->univ()->successMessage('Changed password for '.$model->get('email'))->execute();
+          $u=$this->add('Model_User')
+              ->load($_GET['set_password']);
+          $enc_p = $this->api->auth->encryptPassword($_GET['value'],$u->get('email'));
+          $u->set('password',$enc_p)
+              ->save();
+          $this->js()->univ()->successMessage('Changed password for '.$u->get('login'))->execute();
       }
     }
   }

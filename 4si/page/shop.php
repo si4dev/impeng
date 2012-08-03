@@ -3,22 +3,31 @@ class page_shop extends Page {
   function init() {
     parent::init();
     
-    $crud=$this->add('CRUD');
-    $crud->setModel('Shop',null,array('name','user'));
-    if($crud->grid) {
-      $crud->grid->getColumn('name')->makeSortable();
-    }
-    if($f=$crud->form) {
-      //$f->addField('dropdown','config')->setValueList(array('prestashop','opencart','xcart','magento','oscommerce'));
-      $f->addField('text','nice');
-      if($f->isSubmitted()) {
-        $crud->model->set('config','') // )
-            ->save();
-        
-        $f->js()->univ()->alert(print_r($f->get(),true))->execute();
-        
-//        $f->js()->univ()->successMessage('Got it')->execute();
+    $c=$this->add('CRUD');
+    $c->setModel('Shop');
+    if($c->grid) {
+      $c->grid->addColumn('button','config');
+      $c->grid->getColumn('name')->makeSortable();
+      if($_GET['config']){
+        // learn how to redirect to other page. http://agiletoolkit.org/doc/grid/interaction 
+        // replace dialogURL() with location() and drop first argument. 
+        // also for non ajax add api redirect http://agiletoolkit.org/doc/form/submit
+        $p=$this->api->getDestinationURL(
+              'shopconfig',array(
+              'shop'=> $_GET['config']
+              ));
+        $c->js()->univ()->location($p)->execute();
+        $this->api->redirect($p);
       }
+    }
+    if($f=$c->form) {
+      //$f->addField('dropdown','config')->setValueList(array('prestashop','opencart','xcart','magento','oscommerce'));
+      //$f->addField('text','nice');
+      //if($f->isSubmitted()) {
+        //$c->model->save();
+        //$f->js()->univ()->alert(print_r($f->get(),true))->execute();
+//        $f->js()->univ()->successMessage('Got it')->execute();
+      //}
     }
   }
 }

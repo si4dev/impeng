@@ -5,7 +5,12 @@ class Model_Supplier extends Model_Table {
     parent::init();
     $this->addField('name');
     $this->addField('friendly_name');
-    $this->addField('config');
+    $this->addField('branch');
+    $this->addField('import_full');
+    $this->addField('import_start');
+    $this->addField('import_end');
+    $this->addField('schedule')->enum(array('disable','daily','manual','test'));
+    $this->addField('config')->type('text');
     $this->hasMany('Category');
     $this->hasMany('Product');
   }
@@ -16,7 +21,10 @@ class Model_Supplier extends Model_Table {
      
   }
   
-  function import_files() {
+  function import_files($full=false) {
+    
+    $this->set('import_start',$this->dsql->expr('now()') )->save();
+
     $config=$this->config();
     foreach($config->import as $import) {
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
@@ -69,14 +77,18 @@ class Model_Supplier extends Model_Table {
       $db=$this->api->add('DB')->connect($this->api->getConfig('dsn_supplierdata'));
       $table=$this->get('name').'_'.$import->name;
       $db->query("drop table if exists {$table}_previous");
-      if($db->getOne("show tables like '{$table}'")) {
-        $db->query("alter table {$table} RENAME {$table}_previous");
+      // when full it means full import and not only incremential
+      if($full) {
+        $db->query("drop table if exists {$table}");
       }
- 
-      $create='create table '.$table.' ('.implode(', ',$fieldAndType) .', PRIMARY KEY ('.implode(', ',$primary).') ) ENGINE=MyISAM DEFAULT CHARSET=utf8';
-      $db->query($create);
       
-          
+      $create='create table '.$table.' ('.implode(', ',$fieldAndType) .', PRIMARY KEY ('.implode(', ',$primary).') ) ENGINE=MyISAM DEFAULT CHARSET=utf8';
+      
+      if(!$db->getOne("show tables like '{$table}'")) {
+        $db->query($create);
+      }
+      $db->query("alter table {$table} RENAME {$table}_previous");
+      $db->query($create);
             
       // now table is created and we can use fast load data infile
       $load="load data infile '".realpath($file)."' ".($import->duplicate?:'').' into table '.$table.
@@ -91,9 +103,13 @@ class Model_Supplier extends Model_Table {
       $db->query($load);   
       
       
-   //   $this->import_category();
+      $this->import_category();
       $this->import_product();
       $this->import_watch();
+
+      $this->set('import_end',$this->dsql->expr('now()') )
+          ->set('import_full',$this->dsql->expr('now()') )
+          ->save();
     }
     return $this;
   }
