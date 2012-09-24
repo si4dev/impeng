@@ -20,7 +20,7 @@ class Page_Shopimport_Margin extends Page {
 
     $r=$this->add('Model_Rounding');
     //$r->setSource('Array',array('1'=>'100'));
-    $r->setSource('Array',array(array('from'=>'100','value'=>'123','offset'=>'-0.95')));
+   $r->setSource('Array',array(array('from'=>'100','value'=>'123','offset'=>'-0.95')));
     //$r->setStaticSource(array(array('from'=>'100','value'=>'123','offset'=>'-0.95')));
     $c=$this->add('CRUD');
     $c->setModel($r,array('from','value','offset'),array('from','value','offset') );

@@ -9,7 +9,6 @@ class Controller_Shopimport extends AbstractController {
 
 
     $u=$this->api->auth->model;
-    echo count($u->ref('Shop'))."==<<==";
     if($shop_id=$this->api->recall('shop_id')) {
       $s=$u->ref('Shop')->load($shop_id);
     } else {

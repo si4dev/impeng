@@ -1,54 +1,57 @@
 <?php
-class Model_Prestashop_Product extends Model_Table2 {
-  public $table='ps_product';
-  public $id_field='id_product';
-  public $title_field='reference';
+class Page_External extends Page {
   function init() {
     parent::init();
-    $this->addField('reference');
-    $this->addField('supplier_reference');
-    $this->addField('quantity');
-    $this->addField('price');
-    $this->addField('ean13');
-    $this->addField('weight');
-    $this->addField('location');
-    $this->addField('id_category_default');
-    $this->addField('id_color_default');
-    $this->addField('date_add');
-    $this->addField('date_upd');
-    $this->addField('active');
-    $this->hasMany('Prestashop_CategoryProduct','id_product');
-    $this->hasMany('Prestashop_ProductLang','id_product');
-    $this->hasMany('Prestashop_Image','id_product');
-    $this->hasOne('Prestashop_Manufacturer','id_manufacturer');
-    $this->hasOne('Prestashop_Tax','id_tax_rules_group');
+
+    $si=$this->add('Controller_Shopimport');
+    $s=$si->shop;
+    
+    
+    $product=$s->getShopPricelist()->debug();
+    //print_r($products);
+/*        
+    $c=$this->add('Grid');
+    $c->setModel($products,array('test'=>'reference','name','description_short','image','manufacturer','taxrate','price_incl'));
+    $c->addFormatter('description_short','shorttext');
+    return;
+*/
+    // Prijzen, EAN code, SKU code, levertijden, productnamen en natuurlijk de deeplinks. 
+    $file=$this->api->getConfig('path_externaldata').'tweakers/'.$s['name'].'.csv';
+    if(!($fp = fopen($file, 'w+'))) {
+      throw $this->exception('cannot write to csv file')->addMoreInfo('file',$file);
+    }
+    
+  //  $product->addCondition('reference','A6E60EA');
+    
+    $domain=$s->shopconfig('domain');
+    $product->setActualFields(array('taxrate','price','reference','name','ean13','quantity','id_product','link_rewrite','specific_price'));
+    foreach($product as $p) {
+      $price=round((1+$p['taxrate']/100)*($p['specific_price']?:$p['price']),2);
+      $line=array( 
+          'SKU' => $p['reference'],
+          'title' => $p['name'],
+          'EAN' => $p['ean13'],
+          'price' => number_format($price,2,'.',''),
+          'stock' => ($p['quantity']>0?'ja':'nee'),
+          'URL' => 'http://'.$domain.'/'.$p['id_product'].'-'.$p['link_rewrite'].'.html',
+          );
+        print_r($line);
+      if(!isset($header)) {
+        fputcsv($fp, array_keys($line), ',', '"' );
+        $header=true;
+      }
+      fputcsv($fp, $line, ',', '"' );
+    }
+    fclose($fp);
+    
   }
   
-  function pricelist() {
-    // might need this for some shops
-    //$productfields=$this->_dsql()->owner->query("show columns from ps_product where field like 'reduction_price'")->fetch();
-    $pl=$this->join('ps_product_lang.id_product','id_product');
-    $pl->addField('name');
-    $pl->addField('description_short');
-    $pl->addField('link_rewrite');
-    $pl->join('ps_lang.id_lang','id_lang')->addField('iso_code');
-    $this->addCondition('iso_code','nl');
-    $this->addExpression('manufacturer')->set(function($m,$q) {
-      return $m->refSQL('id_manufacturer')->dsql()->field('name');
-    });
-    $this->addExpression('taxrate')->set(function($m,$q) {
-      return $m->refSQL('id_tax_rules_group')->dsql()->field('rate');
-    });
-    $this->addExpression('image')->set(function($m,$q) {
-      return $m->refSQL('Prestashop_Image')->dsql()->field('id_image')->limit(1);
-    });
-    $this->addExpression('specific_price')->set(function($m,$q) {
-      return $q->dsql()->table('ps_specific_price')->field('price')->where('id_product',$q->getField('id_product'));
-    });
-    //$this->addExpression('price_incl',$this->dsql()->expr('100 * taxrate'));
-    return $this;
-  }
+  
+    
+
+
 }
+
 
 
 /*

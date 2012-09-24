@@ -10,18 +10,21 @@ class Controller_Prestashop extends AbstractController {
     $this->owner->addMethod('ftproot',array($this,'ftproot'));
     $this->owner->addMethod('connection',array($this,'connection'));
     
+    unset($this->api->db2);
     if($connection=$this->owner->connection()) {
       $this->api->db2=$this->api->add('DB')->connect($connection);
-    } 
+    }
   }
 
   function shopconfig($f) {
     $f->addField('line','ftproot')->set($this->owner->ftproot());
     $f->addField('line','connection')->set($this->owner->connection());
+    $f->addField('line','domain')->set($this->owner->shopconfig('domain'));
     
     if($f->isSubmitted()){
       $this->owner->ftproot($f->get('ftproot'));
       $this->owner->connection($f->get('connection'));
+      $this->owner->shopconfig('domain',$f->get('domain'));
     }
   }
   function ftproot($m,$v=null) { return $m->shopconfig('ftproot',$v); }
@@ -40,6 +43,12 @@ class Controller_Prestashop extends AbstractController {
     }
   }
   
+  // get shop categories is called in the Model_Shop and left over to the controller like here:
+  function getShopCategories() {
+    return $this->add('Model_Prestashop_Category')->load(1)->tree();
+  }
+    
+    
   // build pricelist!
   function build_pricelist() {
     $s=$this->owner;
@@ -343,4 +352,10 @@ class Controller_Prestashop extends AbstractController {
     $this->nb_products=$i;
   }
 
+
+  // function to return the shop pricelist for external purposes
+  function getShopPricelist() {
+    return $this->add('Model_Prestashop_Product')->pricelist();
+        
+  }
 }

@@ -4,35 +4,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno, $vars
 	//print_r($vars);
 }
 
-/*
-   Commonly you would want to re-define ApiFrontend for your own application.
- */
-class Link extends HtmlElement {
-    function init(){
-        parent::init();
-        $this->setElement('a');
-    }
-    function set($name,$descr){
-        $this->setAttr('href',$this->api->getDestinationURL($name));
-        return parent::set($descr);
-    }
-}
-
-class Model_Examples extends Model {
-    public $dir;
-    function init(){
-        parent::init();
-
-        $this->addField('name');
-
-        $p=$this->api->pathfinder->searchDir('page');
-        $this->setSource('ArrayAssoc',$p);
-        return $this;
-    }
-
-}
-
-
 class Frontend extends ApiFrontend {
   function md5($value) {return md5($value);}
 	function init(){
@@ -51,7 +22,7 @@ class Frontend extends ApiFrontend {
 			;
 
     $this->dbConnect();
-    $this->add('Dbug');
+    // $this->add('Dbug');
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
@@ -66,6 +37,7 @@ class Frontend extends ApiFrontend {
         $m2=$this->add('Menu',null,'SubMenu');
         $m2->addMenuItem('shopimport/test','Test');
         $m2->addMenuItem('shopimport/margin','Marge');
+        $m2->addMenuItem('shopimport/category','Category');
     }
 
     //$this->add('performance/Controller_Profiler');

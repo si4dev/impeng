@@ -5,8 +5,9 @@ class Model_Category extends Model_Table {
   function init() {
     parent::init();
     $this->hasOne('Supplier');
-    $this->addField('reference');
     $this->addField('title');
+    $this->addField('reference');
+    
   }
 
   // structure to create form Audio, Video, Image|Mounting solutions|Carts|Trolleys into  

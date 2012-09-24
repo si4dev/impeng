@@ -8,6 +8,8 @@ class page_catlink extends Page {
     $s=$si->shop;
     $u=$si->user;
 
+
+// old way
     $shopsystem = ucwords($s->shopsystem());
     if($shopsystem=='') {
       $p->add('P')->set('No shop platform found');
