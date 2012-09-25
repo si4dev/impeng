@@ -26,7 +26,11 @@ class Frontend extends ApiFrontend {
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
-    $this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
+    if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
+      // admin or cron
+    } else {
+      $this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
+    }
     $m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('shopimport/test','Shopimport');
     $m->addMenuItem('logout','Logout');

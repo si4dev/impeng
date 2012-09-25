@@ -2,12 +2,15 @@
 class Page_External extends Page {
   function init() {
     parent::init();
-
-    $si=$this->add('Controller_Shopimport');
-    $s=$si->shop;
     
+    if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
+      $s=$this->add('Model_Shop')->loadBy('name',$_GET['shop']);
+    } else {
+      $si=$this->add('Controller_Shopimport');
+      $s=$si->shop;
+    }
     
-    $product=$s->getShopPricelist()->debug();
+    $product=$s->getShopPricelist();
     //print_r($products);
 /*        
     $c=$this->add('Grid');
@@ -32,10 +35,9 @@ class Page_External extends Page {
           'title' => $p['name'],
           'EAN' => $p['ean13'],
           'price' => number_format($price,2,'.',''),
-          'stock' => ($p['quantity']>0?'ja':'nee'),
+          'stock' => ($p['quantity']>0?'2 dagen':'8 dagen'),
           'URL' => 'http://'.$domain.'/'.$p['id_product'].'-'.$p['link_rewrite'].'.html',
           );
-        print_r($line);
       if(!isset($header)) {
         fputcsv($fp, array_keys($line), ',', '"' );
         $header=true;
