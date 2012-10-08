@@ -46,6 +46,7 @@ class Model_Prestashop_Product extends Model_Table2 {
       return $q->dsql()->table('ps_specific_price')->field('price')->where('id_product',$q->getField('id_product'));
     });
     //$this->addExpression('price_incl',$this->dsql()->expr('100 * taxrate'));
+    $this->addCondition('active',1);
     return $this;
   }
 }
