@@ -11,6 +11,7 @@ class Model_Product extends Model_Table {
     $this->addField('manufacturer');
     $this->addField('manufacturer_code');
     $this->addField('ean');
+    $this->addField('weight');
     $this->addField('info');
     $this->addField('info_modified');
 //    $this->hasMany('Media');

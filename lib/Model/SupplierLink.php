@@ -5,7 +5,7 @@ class Model_SupplierLink extends Model_Table {
     parent::init();
     $this->hasOne('Supplier');
     $this->hasOne('Shop');
-    $this->hasOne('Pricebook');
+    $this->hasOne('Pricebook')->defaultValue(1);
     $this->addField('prefix');
     $this->addField('login');
   }

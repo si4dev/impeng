@@ -20,7 +20,8 @@ class Model_Prestashop_Product extends Model_Table2 {
     $this->hasMany('Prestashop_CategoryProduct','id_product');
     $this->hasMany('Prestashop_ProductLang','id_product');
     $this->hasMany('Prestashop_Image','id_product');
-    $this->hasOne('Prestashop_Manufacturer','id_manufacturer');
+    $this->hasOne('Prestashop_Supplier','id_supplier',null,'supplier');
+    $this->hasOne('Prestashop_Manufacturer','id_manufacturer',null,'manufacturer');
     $this->hasOne('Prestashop_Tax','id_tax_rules_group');
   }
   

@@ -6,42 +6,39 @@ class page_pricelist extends Page {
 
     $this->add('H1')->set('Pricelist');
 
-    //      $g=$this->add('Grid');
-    //  $pricelist = $this->ref('Pricelist');
 
-//     $g->setModel($pricelist);
-//      $g->addFormatter('price','money');
-//      $g->addPaginator(10);
-      /*
-      $text='';
-      //print_r( $pricelist->getActualFields() );
- */     
+    if(isset($_GET['key']) and $_GET['key']===$this->api->getConfig('key',null)) {
+      $s=$this->add('Model_Shop')->loadBy('name',$_GET['shop']);
+    } else {
+      $si=$this->add('Controller_Shopimport');
+      $s=$si->shop;
+    }
 
+
+    // -------------------------------------------------------------------------------------------------
+    // set the script memory limit
+    if(isset($memory_limit)) {
+      ini_set("memory_limit", $memory_limit);
+    }
+    // -------------------------------------------------------------------------------------------------
+    // set the script timeout and database timeeout
+    $timeout='6000';
+    if( isset($timeout) ) {
+      set_time_limit($timeout);
+      ini_set('default_socket_timeout', ini_get('max_execution_time'));
+    }
+      
+    $this->add('Text')->set('shop '.$s->id);
+      $s->pricelist();
+    try{
+      $s->import();
+    } catch  (Exception_FTP $e){
+       foreach($e->more_info as $key=>$value){
+            $args[]=$key.'='.$value;
+        }
         
-    if( $shop_id=$_GET['shop'] ) {
-      
-      // 
-      // -------------------------------------------------------------------------------------------------
-      // set the script memory limit
-      if(isset($memory_limit)) {
-        ini_set("memory_limit", $memory_limit);
-      }
-      // -------------------------------------------------------------------------------------------------
-      // set the script timeout and database timeeout
-      $timeout='6000';
-      if( isset($timeout) ) {
-        set_time_limit($timeout);
-        ini_set('default_socket_timeout', ini_get('max_execution_time'));
-      }
-      
-      
-      $this->add('Text')->set('shop '.$shop_id);
-      
-      $s=$this->add('Model_Shop')->load($shop_id);
-      $shopsystem = ucwords($s->shopsystem());
-      $sc=$s->setController($shopsystem)->build_pricelist();
-
-      
+      $this->add('View_Error')->set('Error '.$e->getMessage() . '['.implode(', ',$args).']' );
+    }
       
       // temp solution for old database structure
       if($supplier=$s->category_import()) {
@@ -57,6 +54,7 @@ class page_pricelist extends Page {
         $cat = $this->api->db->query($sql);
         */
       }
+      /*
       $s->ref('CatLink')->deleteAll();
         
         $sql="insert into catlink (id, shop_id, category_id, catshop_id, import, margin_ratio, margin_amount, timestamp)
@@ -64,7 +62,9 @@ select c.CategoryId, s.id, c.CategorySupplierID, c.CategoryShopID, c.CategoryImp
 from shop s inner join tbltype_category c on (s.name = c.CategoryShop) 
 where s.id=:shop";
         $cat = $this->api->db->query($sql,array('shop'=>$s->id));
-              
+      */
+
+return; // phase out code after this line:
       // *** import categories ***
       $sc->import_categories();
       $this->add('P')->set('Imported categories: '.$sc->nb_categories);
@@ -72,8 +72,5 @@ where s.id=:shop";
       $sc->import();
       $this->add('P')->set('Imported products: '.$sc->nb_products);
       
-    } else {
-      $this->add('Text')->set('no shop selected');
-    }
   }
 }

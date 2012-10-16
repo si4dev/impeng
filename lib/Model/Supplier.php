@@ -28,65 +28,50 @@ class Model_Supplier extends Model_Table {
     $config=$this->config();
     foreach($config->import as $import) {
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
-//      copy((string)$import->url,$file);
+      copy((string)$import->url,$file);
+
+      // *** analyse first line to determine field names ***
 		  $fp=fopen($file,"r");
-      $line=fgetcsv( $fp, 10000, (string)$import->seperator, ((string)$import->enclosure?:'"') );
-      foreach($line as &$value) {
-        $value = trim($value, (string)$import->trim);
-      }
-      if(!isset($fields)) {
-        foreach($line as $value) {
-          $field[strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $value), '_'))]='varchar(255)';
-        }
+      $header=fgetcsv( $fp, 10000, (string)$import->seperator, ((string)$import->enclosure?:'"') );
+      fclose($fp);
+      
+      // trim each field value
+      foreach($header as $h) {
+        $fieldName=strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $h), '_'));
+        $field[$fieldName]='varchar(255)'; // default field type
+        $var[$fieldName]=$fieldName; // default variable for mysql load data into
       }
       
       // overrule default type and key when defined
       $primary=array();
       $set=array();
-      $var=$field;
+      
       foreach($import->fields->field as $fieldDef) {
         if($field[(string)$fieldDef->name]) {
-          if((string)$fieldDef->type) { 
-            $field[(string)$fieldDef->name]=(string)$fieldDef->type;
-          }
-          if((string)$fieldDef->key) {
-            $primary[]=(string)$fieldDef->name;
-          }
+          if((string)$fieldDef->type) $field[(string)$fieldDef->name]=(string)$fieldDef->type; // overrule field type
+          if((string)$fieldDef->key) $primary[]=(string)$fieldDef->name; // set primary field(s)
           if((string)$fieldDef->var) {
-            $var[(string)$fieldDef->var]=$var[(string)$fieldDef->name];
-            unset($var[(string)$fieldDef->name]);
-            $set[(string)$fieldDef->name]=(string)$fieldDef->set;
+            $var[(string)$fieldDef->name]=(string)$fieldDef->var; // var for calculated fields with load data infile
+            $set[]=(string)$fieldDef->name.'='.(string)$fieldDef->set; // set calculated fields with load data infile
           }
         }
       }
-      
       // by default the first column is the primary key
-      if(!$primary) {
-        $primary[]=key($field);
-      }
+      if(!$primary) $primary[]=key($field);
 
-      foreach($field as $key=>$value) {
-        $fieldAndType[]=$key.' '.$value.' DEFAULT NULL';
-      }
-      $setAndName=array();
-      foreach($set as $key=>$value) {
-        $setAndName[]=$key.'='.$value;
-      }
-      $var=array_keys($var);
+      // prepare field and type formatted together
+      foreach($field as $key=>$value) $fieldAndType[]=$key.' '.$value.' DEFAULT NULL';
 
+      // connect to specific supplierdata import database
       $db=$this->api->add('DB')->connect($this->api->getConfig('dsn_supplierdata'));
       $table=$this->get('name').'_'.$import->name;
       $db->query("drop table if exists {$table}_previous");
       // when full it means full import and not only incremential
-      if($full) {
-        $db->query("drop table if exists {$table}");
-      }
-      
+      if($full) $db->query("drop table if exists {$table}");
+
+      // create supplier data table      
       $create='create table '.$table.' ('.implode(', ',$fieldAndType) .', PRIMARY KEY ('.implode(', ',$primary).') ) ENGINE=MyISAM DEFAULT CHARSET=utf8';
-      
-      if(!$db->getOne("show tables like '{$table}'")) {
-        $db->query($create);
-      }
+      if(!$db->getOne("show tables like '{$table}'")) $db->query($create);
       $db->query("alter table {$table} RENAME {$table}_previous");
       $db->query($create);
             
@@ -99,16 +84,14 @@ class Model_Supplier extends Model_Table {
       ($import->terminate?" lines terminated by '".$import->terminate."'":''). // the mysql default is '\n'
       ' ignore 1 lines '.
       '('.implode(', ',$var).') '.
-      ($setAndName?'set ':'').implode(', ',$setAndName);
-      $db->query($load);   
-      
-      
+      ($set?'set ':'').implode(', ',$set);
+      $db->query($load);
       $this->import_category();
       $this->import_product();
       $this->import_watch();
 
       $this->set('import_end',$this->dsql->expr('now()') )
-          ->set('import_full',$this->dsql->expr('now()') )
+          ->set('import_full',$this->get('import_start') ) // full start date when all articles are imported and 
           ->save();
     }
     return $this;
@@ -195,8 +178,9 @@ class Model_Supplier extends Model_Table {
     $prod=$this->ref('Product');
     $cat=$this->add('Model_Category');
     $i=0;
+    
     foreach($this->api->db->query($select) as $row) {
-//      echo '['.$row['productcode'].':::';
+//     echo '['.$row['productcode'].':::';
 //      echo ''.$row['info_long_nl'].']';
       // TODO we can keep $cat when category_ref is same for next product, maybe it saves time
       $cat->loadBy('reference',$row['category_ref']);
@@ -209,7 +193,8 @@ class Model_Supplier extends Model_Table {
           ->set('ean',$row['ean'])
           ->set('weight',$row['weight'])
           ->set('tax',$row['tax'])
-          ->set('last_checked',$prod->dsql->expr('now()'));
+          ->set('last_checked',$prod->dsql->expr('now()'))
+          ->set('info_modified',$prod->dsql->expr('now()'));
 
       // get all rows with info_type_lang format, use array_keys as we don't need the big data values.
       foreach(array_keys($row) as $key) {
@@ -220,7 +205,7 @@ class Model_Supplier extends Model_Table {
       }
       $prod->setInfo()->saveAndUnload();
     
-      if($i++ > 20000) {
+      if($i++ > 200000) {
         break;
       }
     }

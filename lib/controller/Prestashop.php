@@ -49,95 +49,6 @@ class Controller_Prestashop extends AbstractController {
   }
     
     
-  // build pricelist!
-  function build_pricelist() {
-    $s=$this->owner;
-    
-    // fill pricelist table from supplier product tables
-    $pricelist = $s->ref('Pricelist');
-    $products=$s->ref('ProductForPricelist');
-    
-    $margins=array('0'=>'1','200'=>'0.1');
-    $roundings[0]=array('rounding'=>'1','offset'=>'-0.05');
-    $roundings[100]=array('rounding'=>'1','offset'=>'0');
-    
-    foreach($products as $product) {
-      print_r($product);
-      echo '<br/>';
-      echo '<br/>';
-      $margin=1;
-      foreach($margins as $key => $value) {
-        if( $key > $product['price'] ) break;
-        $margin=$value;
-      }
-  
-      $price_si=$product['price']*$margin*(1+$product['tax']/100);
-
-      $rounding=0;
-      $offset=0;
-      foreach($roundings as $key => $value) {
-        if( $key > $price_si ) break;
-        $found=$key;
-      }
-      $rounding=$roundings[$found]['rounding'];
-      $offset=$roundings[$found]['offset'];
-      if($rounding < 1/100) $rounding=1/100;
-      echo "(($rounding))".ceil(12.5);
-      $price_si=ceil($price_si / $rounding) * $rounding + $offset;
-      $price_se=$price_si / (1+$product['tax']/100);
-      $pricelist->tryLoadBy('product_id',$product['id'])
-          ->set('productcode',$product['productcode'])
-          ->set('title',$product['title'])
-          ->set('supplier_id',$product['supplier_id'])
-          ->set('category_id',$product['category_id'])
-          ->set('catshop_id',$product['catshop_id'])
-          ->set('tax',$product['tax'])
-          ->set('manufacturer',$product['manufacturer'])
-          ->set('manufacturer_code',$product['manufacturer_code'])
-          ->set('price',$price_se)
-          ->set('price_si',$price_si)
-          ->set('price_pe',$product['price'])
-          ->set('stock',$product['stock'])
-          ->set('ean',$product['ean'])
-          ->set('weight',$product['weight'])
-          ->set('entry_date',$product['entry_date'])
-          ->set('last_checked',$product['watch_last_checked'])
-          ;
-      
-      $pricelist->saveAndUnload();
-      
-    }
-    // phase 2 for all pricelist items with out of date info
-    
-    $products=$s->ref('Pricelist');
-    $products->join('product')->addField('info');
-    $products->addCondition('info_actualised','>',$products->dsql()->expr('info_modified'))->debug();  
-    $products->setActualFields(array('id','info'));
-    /*
-          	WebArticleID, WebArticleCode, p.ProductTitle, p.ProductSupplier,
-        p.ProductManufacturer, p.ProductManufacturerCode, p.ProductEan,
-        p.ProductSpecification,  
-        icecat.ProductSpecification as ProductInfo
-*/
-    
-
-    $pricelist=$this->add('Model_Pricelist')->setActualFields(array('info_long','info_actualised'));
-    $pricelist->selectQuery();
-    $now=$pricelist->dsql()->expr('now()');
-    foreach($products as $product) {
-      echo 'INFO:';
-      $pricelist->load($product['id'])
-          ->setInfo($product['info'])
-          ->set('info_actualised',$now)
-          ->debug()->saveAndUnload();
-      print_r($product);
-      echo '<br/><br/>';
-    }
-    
-    return $this;
-    
-  }
-
   function import_categories($lang='nl') { 
     echo '###CAT###';
     // prepare model for shop category to add categories
@@ -187,7 +98,7 @@ class Controller_Prestashop extends AbstractController {
   }
 
   // collect all taxes used in the shop
-  function tax() {
+  protected function tax() {
     foreach($this->add('Model_Prestashop_Tax') as $t) {
       if( !isset($this->tax[$t['rate']]) ) {
         $this->tax[floatval($t['rate'])]=$t['id_tax_rules_group'];
@@ -240,6 +151,7 @@ class Controller_Prestashop extends AbstractController {
     $imgtypes[]=array('name'=>'','width'=>1024,'height'=>1024);
     // traverse through the pricelist and import each product one by one 
     $pricelist = $s->ref('Pricelist');
+    $pricelist->addCondition('shop_action','!=','DELETE');
     $pricelist->selectQuery(); // solves issue to get all fields and now it gets only applicable fields definined in model
     $i=0;
     foreach( $pricelist as $product ) {
@@ -251,7 +163,7 @@ class Controller_Prestashop extends AbstractController {
       $m->tryLoadBy('reference',$product['shop_productcode']);
       
       // hande manufacturer
-      if($m['id_manufacturer_2']!==$product['manufacturer']) { // use !== as one shop mfr can be null and other one empty
+      if($m['manufacturer']!==$product['manufacturer']) { // use !== as one shop mfr can be null and other one empty
         $mfr=$m->ref('id_manufacturer');
         $mfr
           ->tryLoadBy('name',$product['manufacturer'])
@@ -260,10 +172,21 @@ class Controller_Prestashop extends AbstractController {
           ->save();
         $m->set('id_manufacturer',$mfr->id);
       }
+      // hande supplier
+      if($m['supplier']!==$product['supplier_id']) { // use !== as one shop mfr can be null and other one empty
+        $supplier=$m->ref('id_supplier');
+        $supplier
+          ->tryLoadBy('name',$product['supplier_id'])
+          ->set('name',$product['supplier_id'])
+          ->set('active',1)
+          ->save();
+        $m->set('id_supplier',$supplier->id);
+      }
+
 
       // set more product fields   
       $m->set('reference',$product['shop_productcode']); 
-      $m->set('supplier_reference',$product['supplier_productcode']); 
+      $m->set('supplier_reference',$product['productcode']); 
       $m->set('quantity',$product['stock']); 
       $m->set('price',$product['price']);
       $m->set('weight',$product['weight']); 
@@ -271,10 +194,11 @@ class Controller_Prestashop extends AbstractController {
       $m->set('location',$product['manufacturer_code']);
       $m->set('date_add',$product['entry_date']); 
       $m->set('date_upd',$m->dsql()->expr('now()')); 
-      $m->set('id_category_default',$product['shop_category_id']); 
+      $m->set('id_category_default',$product['catshop_id']); 
       $m->set('id_color_default',0); 
       $m->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
       $m->set('active',1);
+      $m->debug();
       $m->save();
     
       // handle title based on product id
@@ -298,17 +222,18 @@ class Controller_Prestashop extends AbstractController {
       // handle category
       $category=$m->ref('Prestashop_CategoryProduct');
       $found=false;
+      
+      
       foreach( $category as $cat ) {
-        if( $cat['id_category'] == $product['shop_category_id'] ) {
+        if( $cat['id_category'] == $product['catshop_id'] ) {
           $found = true;
         } elseif ($cat['id_category'] != 1) {
           $category->delete();
         }
       }
       if( !$found ) {
-        $category->set('id_category',$product['shop_category_id'])->saveAndUnload();
+        $category->set('id_category',$product['catshop_id'])->saveAndUnload();
       }
-
       // media file
       $media_modified=$product['media'];
       $image=$m->ref('Prestashop_Image');

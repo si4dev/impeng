@@ -21,7 +21,7 @@ class FTP extends AbstractModel {
     return $this;
   }
   function user($user) {
-    $this->user=$user;
+    $this->user=rawurldecode($user);
     return $this;
   }
   function pass($pass) {
@@ -57,12 +57,15 @@ class FTP extends AbstractModel {
     switch($this->scheme) {
       case 'ftp':
         if($this->connection=@ftp_connect($this->host,21,180)) {
-          if(@ftp_login($this->connection, $this->user, $this->pass) ) {
-            ftp_pasv($this->connection,$this->pasv);
-          } else {
-          throw $this->exception('FTP: cannot login')
+          try{
+            ftp_login($this->connection, $this->user, $this->pass);
+          } catch (Exception $e) {
+            throw $this->exception('FTP: cannot login','FTP')
               ->addMoreInfo('user',$this->user);
-          }
+          }  
+          
+          ftp_pasv($this->connection,$this->pasv);
+          
         } else {
           throw $this->exception('FTP: cannot connect')
               ->addMoreInfo('host',$this->host);

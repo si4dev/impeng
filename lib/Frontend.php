@@ -41,7 +41,8 @@ class Frontend extends ApiFrontend {
         $m2=$this->add('Menu',null,'SubMenu');
         $m2->addMenuItem('shopimport/test','Test');
         $m2->addMenuItem('shopimport/margin','Marge');
-        $m2->addMenuItem('shopimport/category','Category');
+        $m2->addMenuItem('shopimport/filter','Filter');
+        $m2->addMenuItem('shopimport/import','Import');
     }
 
     //$this->add('performance/Controller_Profiler');

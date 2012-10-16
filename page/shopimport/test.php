@@ -4,5 +4,6 @@ class Page_Shopimport_Test extends Page {
     parent::init();
     
     $this->add('P')->set('test');
+    
   }
 }

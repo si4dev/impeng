@@ -5,6 +5,7 @@ class Model_Pricelist extends Model_Table {
   public $lang;
   public $nb_categories;
   public $title; 
+  public $strict_fields=true;
   function init() {
     parent::init();
     
@@ -29,7 +30,9 @@ class Model_Pricelist extends Model_Table {
     $this->addField('stock');
     $this->addField('entry_date');
     $this->addField('last_checked');
+    $this->addField('actualised');
     $this->addField('info_actualised');
+    $this->addField('shop_action');
     $this->hasOne('Shop');
     /*
       http://new2.agiletoolkit.org/doc/modeltable/reference

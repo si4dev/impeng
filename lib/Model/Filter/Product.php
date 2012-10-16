@@ -1,4 +1,8 @@
 <?php
+
+
+// OLD
+
 class Model_Filter_Product extends Model_Filter {
   public $table_alias='f';
   function init() {
@@ -33,17 +37,3 @@ class Model_Filter_Product extends Model_Filter {
 
 }
 
-/*
-select cl.id,cl.keyword, p.*
-from catlink cl inner join product p
-on
-cl.id=
-(
-select cl.id 
-from product p2 
-inner join catlink cl on p2.category_id=cl.category_id and if(cl.keyword,p2.title like concat('%',cl.keyword,'%'),true) 
-where cl.shop_id=2 and p2.id=p.id
-order by rank desc limit 1
-)
-
-*/
