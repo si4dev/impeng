@@ -10,7 +10,7 @@ class Page_External extends Page {
       $s=$si->shop;
     }
     
-    $product=$s->getShopPricelist();
+    $product=$s->getShopPricelist()->addCondition('quantity','>','0');
     //print_r($products);
 /*        
     $c=$this->add('Grid');
@@ -27,11 +27,11 @@ class Page_External extends Page {
   //  $product->addCondition('reference','A6E60EA');
     
     $domain=$s->shopconfig('domain');
-    $product->setActualFields(array('taxrate','price','reference','name','ean13','quantity','id_product','link_rewrite','specific_price'));
+    $product->setActualFields(array('taxrate','price','location','name','ean13','quantity','id_product','link_rewrite','specific_price'));
     foreach($product as $p) {
       $price=round((1+$p['taxrate']/100)*($p['specific_price']?:$p['price']),2);
       $line=array( 
-          'SKU' => $p['reference'],
+          'SKU' => $p['location'],
           'title' => $p['name'],
           'EAN' => $p['ean13'],
           'price' => number_format($price,2,'.',''),
