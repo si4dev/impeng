@@ -15,14 +15,55 @@ class Page_Shopimport_Margin extends Page {
     $u=$si->user;
 
 
+
+    $r=$this->add('Model_Rounding');
+    $r->setSource('Array',$s->shopconfig_r('rounding'));
+/*
+    $r->set('from',123);
+    $r->set('value',1);
+    $r->set('offset',-0.05);
+    $r->save();
+    
+    $r->unload();
+    $r->set('from',11);
+    $r->set('value',1);
+    $r->set('offset',-0.05);
+    $r->save();
+    $r->unload();
+  
+    $s->shopconfig2('rounding',$r)->save();
+*/
+    
+    
+    
+$c=$this->add('CRUD');
+$c->setModel($r);
+if($c->form && $c->form->isSubmitted() ) {
+  $s->shopconfig_r('rounding',$r)->save();
+  }
+
+
+
+$t=$r->table;
+
+
+
+return;
+  
+
+
     // margins: margin: from,marginfactor
     // roundings: from,rounding,offset
+
 
     $r=$this->add('Model_Rounding');
     //$r->setSource('Array',array('1'=>'100'));
    $r->setSource('Array',array(array('from'=>'100','value'=>'123','offset'=>'-0.95')));
     //$r->setStaticSource(array(array('from'=>'100','value'=>'123','offset'=>'-0.95')));
     $c=$this->add('CRUD');
+    $r=$s->refRounding(); // returns model array associated for rounding
+    
+   // $c->setModel($r,array('from','value','offset'),array('from','value','offset') );
     $c->setModel($r,array('from','value','offset'),array('from','value','offset') );
     
 /*

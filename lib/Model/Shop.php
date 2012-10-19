@@ -30,6 +30,27 @@ class Model_Shop extends Model_Table {
 
 
 
+  function shopconfig_r($field,$value=null) {
+    $this->config();
+    if($value===null) {
+      $r=array();$i=1;
+      foreach($this->config->shopconfig->{$field}->children() as $row) {
+        $r[$i++]=(array)$row;
+      }
+      return $r;
+    }
+    unset($this->config->shopconfig->{$field});
+    $i=0;
+    foreach($value as $row) {
+      foreach($row as $key=>$value) {
+        if($key!='id') $this->config->shopconfig->{$field}->row[$i]->{$key}=$value;
+      }
+      $i++;
+    }
+    return $this;
+  }
+
+
   function shopconfig($field,$value=null) {
     $this->config();
     if($value===null) return (string)$this->config->shopconfig->{$field};
@@ -90,6 +111,28 @@ class Model_Shop extends Model_Table {
     return (string)$this->config->category_import->supplier;
   }
 
+
+  function refRounding() {
+    $this->config();
+    $r=$this->add('Model_Rounding');
+    $r->setSource('ArrayAssoc');
+    foreach($this->config->roundings as $rounding) {
+      $r->set('from',(string)$rounding->from)
+        ->set('value',(string)$rounding->value)
+        ->set('offset',(string)$rounding->offset)
+        ->save();
+        print($rounding);
+    }
+     $r->set('from','1')
+        ->set('value','12')
+        ->set('offset','-0.05')
+        ->save();
+    
+    // foreach($r as $rr) print_r($rr);
+    return $r;
+  }
+
+// KAN WEG
   function roundings() {
     $this->config();
     $r=$this->add('Model_Rounding');
