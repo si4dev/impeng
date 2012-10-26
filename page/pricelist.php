@@ -31,7 +31,7 @@ class page_pricelist extends Page {
     $this->add('Text')->set('shop '.$s->id);
       $s->pricelist();
     try{
-      $s->import();
+  //    $s->import();
     } catch  (Exception_FTP $e){
        foreach($e->more_info as $key=>$value){
             $args[]=$key.'='.$value;

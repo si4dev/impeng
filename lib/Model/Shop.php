@@ -28,12 +28,44 @@ class Model_Shop extends Model_Table {
   }
 
 
+  // when no value is set it will return Model_Margin, otherwise it will set margin in XML tree and return $this
+  function margin($value=null) {
+
+    if($value===null) {    
+      $m=$this->add('Model_margin');
+      $shop=$this;
+      $m->addHook('afterDelete',function($o) use($shop) { $shop->shopconfig_r('margin',$o)->save(); });
+      $m->addHook('afterSave',function($o) use($shop) { $shop->shopconfig_r('margin',$o)->save(); });
+      return $m->setSource('Array',$this->shopconfig_r('margin'))->setOrder('from');
+    } else {
+      $this->shopconfig_r('margin',$value);
+    }
+    return $this;
+  }
+
+  // when no value is set it will return Model_Rounding, otherwise it will set rounding in XML tree and return $this
+  function rounding($value=null) {
+    
+    if($value===null) {    
+      $m=$this->add('Model_Rounding');
+      $shop=$this;
+      $m->addHook('afterDelete',function($o) use($shop) { $shop->shopconfig_r('rounding',$o)->save(); });
+      $m->addHook('afterSave',function($o) use($shop) { $shop->shopconfig_r('rounding',$o)->save(); });
+      return $m->setSource('Array',$this->shopconfig_r('rounding'))->setOrder('from');
+    } else {
+      $this->shopconfig_r('rounding',$value);
+    }
+    return $this;
+  }
+
+
 
 
   function shopconfig_r($field,$value=null) {
     $this->config();
     if($value===null) {
       $r=array();$i=1;
+      if(!isset($this->config->shopconfig->{$field})) return array();
       foreach($this->config->shopconfig->{$field}->children() as $row) {
         $r[$i++]=(array)$row;
       }
@@ -224,28 +256,43 @@ class Model_Shop extends Model_Table {
     $dsql=$this->api->db->dsql();
     $pricelist_start=$dsql->field($dsql->expr('now()'))->getOne();
 
-    $margins=array('0'=>'1','200'=>'0.1');
-    $roundings[0]=array('rounding'=>'1','offset'=>'-0.05');
-    $roundings[100]=array('rounding'=>'1','offset'=>'0');
+    $roundings=array();
+    foreach($s->rounding()->setOrder('from') as $row) {
+      $roundings[$row['from']]=array('rounding'=>$row['value'],'offset'=>$row['offset']);
+    }
+    
+    $margins=array();
+    foreach($s->margin()->setOrder('from') as $row) {
+      $margins[$row['from']]=array('ratio'=>$row['ratio'],'amount'=>$row['amount']);
+    }
+    print_r($margins);
+    
+//    $margins=array('0'=>'1','200'=>'0.1');
+  //  $roundings[0]=array('rounding'=>'1','offset'=>'-0.05');
+    //$roundings[100]=array('rounding'=>'1','offset'=>'0');
     
     foreach($products as $product) {
       //print_r($product); echo '<br/><br/>';
-      $margin=1;
+      $found=false;$ratio=1;$amount=0;
       foreach($margins as $key => $value) {
         if( $key > $product['price'] ) break;
-        $margin=$value;
+        $found=$key;
       }
-  
-      $price_si=$product['price']*$margin*(1+$product['tax']/100);
-
-      $rounding=0;
-      $offset=0;
+      if($found!==false) {
+        $ratio=$value['ratio'];
+        $amount=$value['amount'];
+      }
+      $price_si=($product['price']*$ratio+$amount)*(1+$product['tax']/100);
+      $found=false;$rounding=0;$offset=0;
       foreach($roundings as $key => $value) {
         if( $key > $price_si ) break;
         $found=$key;
       }
-      $rounding=$roundings[$found]['rounding'];
-      $offset=$roundings[$found]['offset'];
+      if($found!==false) {
+        $rounding=$roundings[$found]['rounding'];
+        $offset=$roundings[$found]['offset'];
+      }
+
       if($rounding < 1/100) $rounding=1/100;
       $price_si=ceil($price_si / $rounding) * $rounding + $offset;
       $price_se=$price_si / (1+$product['tax']/100);

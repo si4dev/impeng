@@ -1,27 +1,28 @@
 <?php
-class Model_Rounding extends Model {
+class Model_Margin extends Model {
   
   function init() {
     parent::init();
     
     $this->addField('from')->type('money');
-    $this->addField('value')->type('money')->defaultValue('0.01');
-    $this->addField('offset')->type('money')->defaultValue('0');
+    $this->addField('ratio')->type('numeric')->defaultValue('1');
+    $this->addField('amount')->type('money')->defaultValue('0')->type('money');
   }
-/*
+/* not needed 
   function defaultRow() {
     foreach($this->table as $row) {
       if($row['from'] == 0) return $this;
     }
-    $this->unload()->set('from','0')->set('value','0.01')->set('offset','0')->save();
+    $this->unload()->set('from','0')->set('ratio','1')->set('amount','0')->save();
     return $this;
   }
-*/
-
+*/    
   function setOrder($field) {
     return $this->add('Controller_Model_Order')->setOrder($field);
   }
+
 }
+
 
 /* 
   Model based on array
