@@ -265,11 +265,7 @@ class Model_Shop extends Model_Table {
     foreach($s->margin()->setOrder('from') as $row) {
       $margins[$row['from']]=array('ratio'=>$row['ratio'],'amount'=>$row['amount']);
     }
-    print_r($margins);
     
-//    $margins=array('0'=>'1','200'=>'0.1');
-  //  $roundings[0]=array('rounding'=>'1','offset'=>'-0.05');
-    //$roundings[100]=array('rounding'=>'1','offset'=>'0');
     
     foreach($products as $product) {
       //print_r($product); echo '<br/><br/>';

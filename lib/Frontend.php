@@ -32,9 +32,24 @@ class Frontend extends ApiFrontend {
       $this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
     }
     $m=$this->add('Menu',null,'Menu');
-		$m->addMenuItem('shopimport/test','Shopimport');
+    $m->addMenuItem('shopimport/margin','Marge');
+    $m->addMenuItem('shopimport/filter','Filter');
+    $m->addMenuItem('shopimport/import','Import');
     $m->addMenuItem('logout','Logout');
+ 
+    
+    $si=$this->add('Controller_Shopimport');
+    $s=$si->shop;
+    $u=$si->user;
 
+    
+    $pp=$this->api->add('P',null,'UserInfo');
+    $pp->add('Text')->set('user: '.$u['email']);
+    $pp->add('HTML')->set('<br/>');
+    $pp->add('Text')->set('shop: '.$s['name']);
+    // button change shop when count($u->ref('Shop')) > 1
+    
+    /*
 		$nav=explode('_',$this->api->page);
 		switch($nav[0]){
 			case'shopimport':
@@ -44,6 +59,7 @@ class Frontend extends ApiFrontend {
         $m2->addMenuItem('shopimport/filter','Filter');
         $m2->addMenuItem('shopimport/import','Import');
     }
+    */
 
     //$this->add('performance/Controller_Profiler');
 	}
