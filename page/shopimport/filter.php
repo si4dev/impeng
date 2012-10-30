@@ -8,20 +8,36 @@ class Page_Shopimport_Filter extends Page {
   }
   
   function initMainPage() {
+  
+	$cform= $this->add('form');
+	$cbox = $cform->addfield('checkbox', 'non-active')->set(1);	
+	$cbox->js('change', $cform->js()->submit());	
+	
+	if($cform->isSubmitted()){
+		$this->api->redirect($this->api->url, array('non-active' => $cform->get('non-active')));
+	}
+	
+
         
     $s=$this->shop;
 
     // load the categories from the shop itself into table catshop
     $s->getShopCategories();
-
-    $c=$this->add('CRUD');
+	
+	$c=$this->add('CRUD');
     
     // prepare filters with new categories from suppliers, it's done in the shop model
     $filter=$s->prepareFilter();
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-    $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);
-
+    $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);	
+	
+	//check for active only (active > 1)
+	if(isset($_GET['non-active'])){
+		$active = $_GET['non-active'];
+		if($active!=1) $filter->addCondition('active', '>', '0');
+	}
+	
     // show filters
     if($c->grid) {
       $c->grid->addColumn('expander','products');
