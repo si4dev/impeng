@@ -10,7 +10,7 @@ class Page_Shopimport_Filter extends Page {
   function initMainPage() {
   
 	$cform= $this->add('form');
-	$cbox = $cform->addfield('checkbox', 'non-active')->set(1);	
+	$cbox = $cform->addfield('checkbox', 'non-active')->set(0);	
 	$cbox->js('change', $cform->js()->submit());	
 	
 	if($cform->isSubmitted()){
@@ -33,9 +33,11 @@ class Page_Shopimport_Filter extends Page {
     $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);	
 	
 	//check for active only (active > 1)
-	if(isset($_GET['non-active'])){
-		$active = $_GET['non-active'];
-		if($active!=1) $filter->addCondition('active', '>', '0');
+	if(!isset($_GET['non-active']) || $_GET['non-active'] == 0){		
+		 $filter->addCondition('active', '>', '0');
+	}
+	else{
+		$cbox->set(1);
 	}
 	
     // show filters
