@@ -42,6 +42,17 @@ class page_pricelist extends Page {
       
       // temp solution for old database structure
       if($supplier=$s->category_import()) {
+        
+        $this->add('P')->set('Take over categories from supplier '.$supplier);
+        $supplier_id=$s->ref('SupplierLink')->tryLoadBy('supplier',$supplier)->get('supplier_id');
+        
+        $filter=$s->prepareFilter();
+        foreach($filter as $f) {
+         echo '<br/>'; 
+          print_r((array)$f);
+        }
+        
+                        //$s->importCategories( );
         /* hold for the moment as it's old structure
         $this->add('P')->set('look for supplier categories to import ['.$supplier.']');
         $sql="insert ignore into  tbltype_category (categoryshop,categorysupplierid,categoryshopid)

@@ -4,6 +4,7 @@ class Model_ProductForPricelist extends Model_Product {
 
   function init() {
     parent::init();
+    $this->debug();
     $this->getField('info')->destroy('');
     $watch=$this->join('Watch.product_id');
     $watch->addField('price');

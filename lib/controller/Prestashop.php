@@ -277,6 +277,12 @@ class Controller_Prestashop extends AbstractController {
     $this->nb_products=$i;
   }
 
+  // function to return the shop pricelist for external purposes
+  function importCategories($c) {
+    echo 'TEST';
+    return $this->add('Model_Prestashop_Category')->import($c);
+  }
+
 
   // function to return the shop pricelist for external purposes
   function getShopPricelist() {

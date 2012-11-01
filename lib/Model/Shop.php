@@ -137,7 +137,7 @@ class Model_Shop extends Model_Table {
     return (string)$this->config->shopconfig->thumbspath;
   }
 
-    
+  // returns the supplier name in case automatically category creation is required
   function category_import() {
     $this->config();
     return (string)$this->config->category_import->supplier;
@@ -244,6 +244,11 @@ class Model_Shop extends Model_Table {
     $shopsystem = ucwords($this->shopsystem());
     return $this->setController($shopsystem)->getShopPricelist();
   }
+
+  function importCategories($c) {
+    $shopsystem = ucwords($this->shopsystem());
+    return $this->setController($shopsystem)->importCategories($c);
+  }
     
       
   // build pricelist!
@@ -292,6 +297,8 @@ class Model_Shop extends Model_Table {
       if($rounding < 1/100) $rounding=1/100;
       $price_si=ceil($price_si / $rounding) * $rounding + $offset;
       $price_se=$price_si / (1+$product['tax']/100);
+      
+      $price_se=round($price_se,5); // reason is that otherwise it might look dirty but it's not and it will update price every product while it's not changed
       $pricelist->tryLoadBy('product_id',$product['id'])
           ->set('productcode',$product['productcode'])
           ->set('shop_productcode',$product['prefix'].$product['productcode'])
