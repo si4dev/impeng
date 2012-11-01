@@ -23,6 +23,9 @@ class Frontend extends ApiFrontend {
 
     $this->dbConnect();
     // $this->add('Dbug');
+	
+	$this->js(true)->_selector("#Content")
+		->atk4_loader();
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();

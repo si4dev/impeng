@@ -9,16 +9,24 @@ class Page_Shopimport_Filter extends Page {
   
   function initMainPage() {
   
+	$show= $this->add('Button')->setLabel('Show non active');
+	$hide = $this->add('Button')->setLabel('hide non active');
 	
+	$show->js('click')->univ()->redirect($this->api->url(), array('non-active' => 1));
+	$hide->js('click')->univ()->redirect($this->api->url(), array('non-active' => 0));
+  
+	/*
 	$cform= $this->add('form');
 	$cbox = $cform->addfield('checkbox', 'non-active')->set(0);	
-	
-	$cbox->js('change', $cform->js()->submit());	
+	$slist= $cform->addField('dropdown' , 'supplier');
+	$slist->setModel('supplier');
+	$slist->js('change', $cform->js()->submit());	
+	$cbox->js('change',$cform->js()->submit());
 
 	if($cform->isSubmitted()){
-		$this->api->redirect($this->api->url, array('non-active' => $cform->get('non-active')));
+		$cform->js()->univ()->redirect($this->api->url(), array('non-active' => $cform->get('non-active')));
 	}
-        
+    */ 
     $s=$this->shop;
 
     // load the categories from the shop itself into table catshop
@@ -37,16 +45,16 @@ class Page_Shopimport_Filter extends Page {
 		 $filter->addCondition('active', '>', '0');
 	}
 	else{
-		$cbox->set(1);
+		//$cbox->set(1);
 	}		    
 		// show filters
 	 if($c->grid) {
       $g = $c->grid;
 	  $g->addColumn('expander','products');
       $g->addPaginator(50);
-      $g->addQuickSearch(array('category'));	  
+      $g->addQuickSearch(array('category'));
 	}
-	
+	//get Supplier name
 	$filter->getSupplier();
 	
     $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'Supplier','category','catshop','keyword','margin_ratio','margin_amount','active', ));
@@ -70,6 +78,10 @@ class Page_Shopimport_Filter extends Page {
         ->addPaginator(500)
         ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));
      
+  }
+  
+  function defaultTemplate(){
+		return array('page_filter');	
   }
 }
 
