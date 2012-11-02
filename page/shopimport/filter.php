@@ -11,8 +11,8 @@ class Page_Shopimport_Filter extends Page {
 
 	  
 	$this->add('hr');
+	$form= $this->add('form',null,null,array('form_horizontal'));
 	
-	$form= $this->add('form');
 	$cbox = $form->addfield('checkbox', 'non-active')->set(0);
 	$slist= $form->addField('dropdown' , 'supplier');
 	$supplier = $this->add('Model_Supplier');
