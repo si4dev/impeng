@@ -47,9 +47,31 @@ class Controller_Prestashop extends AbstractController {
   function getShopCategories() {
     return $this->add('Model_Prestashop_Category')->load(1)->tree();
   }
+
+    
+  // function to return the shop pricelist for external purposes
+  function importCategories($filter) {
+    $s=$this->owner; // the shop model
+    $shopcat=$this->add('Model_Prestashop_Category'); // the shop category model is the destination
     
     
-  function import_categories($lang='nl') { 
+    $cat=$this->add('Model_Category'); // this is only used to get title in proper language from the category model
+    
+    $filter->debug();
+    foreach( $filter as $f) {
+      
+      print_r((array)$f);
+    }
+    
+    
+    return $this;
+    
+    
+    
+  }
+    
+    
+  function OLD_import_categories($lang='nl') { 
     echo '###CAT###';
     // prepare model for shop category to add categories
     $s=$this->owner; // the shop model 
@@ -275,12 +297,6 @@ class Controller_Prestashop extends AbstractController {
     }
 
     $this->nb_products=$i;
-  }
-
-  // function to return the shop pricelist for external purposes
-  function importCategories($c) {
-    echo 'TEST';
-    return $this->add('Model_Prestashop_Category')->import($c);
   }
 
 

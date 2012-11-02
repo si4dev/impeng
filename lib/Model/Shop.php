@@ -245,9 +245,9 @@ class Model_Shop extends Model_Table {
     return $this->setController($shopsystem)->getShopPricelist();
   }
 
-  function importCategories($c) {
+  function importCategories($filter) {
     $shopsystem = ucwords($this->shopsystem());
-    return $this->setController($shopsystem)->importCategories($c);
+    return $this->setController($shopsystem)->importCategories($filter);
   }
     
       
