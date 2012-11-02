@@ -8,6 +8,5 @@ class Model_SupplierLink extends Model_Table {
     $this->hasOne('Pricebook')->defaultValue(1);
     $this->addField('prefix');
     $this->addField('login');
-  }
-  
+  }  
 }
