@@ -31,8 +31,6 @@ class Page_Shopimport_Filter extends Page {
 	
 	$slist->js('change', $form->js()->submit());
 	$cbox->js('change', $form->js()->submit());
-	
-	$form->addSubmit()->set('Filter');
 
 	if($form->isSubmitted()){
 		$this->api->redirect($this->api->url(), array( 'non-active' => $form->get('non-active'),  'supplier' => $form->get('supplier')) );
@@ -49,7 +47,9 @@ class Page_Shopimport_Filter extends Page {
     $filter=$s->prepareFilter();
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-	$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);
+	if($filter->isInstanceLoaded()){
+		$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);
+	}
 	
 		// show filters
 	 if($c->grid) {
