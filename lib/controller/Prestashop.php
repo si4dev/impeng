@@ -20,11 +20,13 @@ class Controller_Prestashop extends AbstractController {
     $f->addField('line','ftproot')->set($this->owner->ftproot());
     $f->addField('line','connection')->set($this->owner->connection());
     $f->addField('line','domain')->set($this->owner->shopconfig('domain'));
+	$f->addField('line', 'email')->set($this->owner->shopconfig('email'));
     
     if($f->isSubmitted()){
       $this->owner->ftproot($f->get('ftproot'));
       $this->owner->connection($f->get('connection'));
       $this->owner->shopconfig('domain',$f->get('domain'));
+	  $this->owner->shopconfig('email',$f->get('email'));
     }
   }
   function ftproot($m,$v=null) { return $m->shopconfig('ftproot',$v); }

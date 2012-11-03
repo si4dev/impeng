@@ -38,6 +38,7 @@ class Frontend extends ApiFrontend {
     $m->addMenuItem('shopimport/margin','Marge');
     $m->addMenuItem('shopimport/filter','Filter');
     $m->addMenuItem('shopimport/import','Import');
+	$m->addMenuItem('shopimport/profile', 'profile');
     $m->addMenuItem('logout','Logout');
  
     

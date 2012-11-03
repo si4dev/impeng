@@ -47,7 +47,7 @@ class Page_Shopimport_Filter extends Page {
     $filter=$s->prepareFilter();
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-	if($filter->isInstanceLoaded()){
+	if($filter->Loaded()){
 		$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id);
 	}
 	
