@@ -11,14 +11,13 @@ class Model_Filter extends Model_Table {
     $this->hasOne('CatShop');
     $this->addField('import');
     $this->addField('active');
-
   }
+  
   function getSupplier(){
-	$this->addExpression('Supplier')->set(
-	function($m, $q){		
-		$supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
-		return $m->ref('category_id')->ref('supplier_id')->dsql()->field('name')->where('id', $supl_id);
-	});
-
+    $this->addExpression('Supplier')->set(
+        function($m, $q){		
+          $supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
+          return $m->ref('category_id')->ref('supplier_id')->dsql()->field('name')->where('id', $supl_id);
+        });
   }
 }

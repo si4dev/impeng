@@ -2,7 +2,7 @@
 class Model_Category extends Model_Table {
   public $table='category';
   public $title_field='reference';
-  public $titleXml='';
+  public $titleXml;
   function init() {
     parent::init();
     $this->hasOne('Supplier');
@@ -42,11 +42,10 @@ class Model_Category extends Model_Table {
       </cat>'.
       '</title>');
   */
-  protected function getTitleXml() {
+  public function getTitleXml() {
     
     if(!isset($this->titleXml)) {
       $title=$this->get('title');
-      
       /* should not be needed anymore 
       if( strpos($title,'<node') === false ) {
         // in case the category is not yet in xml structure for old supplier import
@@ -60,19 +59,32 @@ class Model_Category extends Model_Table {
       */
       $this->titleXml=new SimpleXMLElement('<title>'.$title.'</title>');
     }
-    return $this;
+    return $this->titleXml;
   }
 
-  function getCategoryByLang($iso) {
-    foreach( $this->getTitleXml()->titleXml->cat as $cat ) {
+
+  // returns array of xml node 
+  function ZZZgetTitleXmlByLang() {
+    $t=array();
+    foreach( $this->getTitleXml()->cat as $cat ) {
+      $t[(string)$cat['lang']]=$cat;
+    }
+    return $t;
+  }
+
+
+
+  function ZZZgetTitleByLang($iso) {
+    foreach( $this->getTitleXml()->cat as $cat ) {
       if( (string)$cat['lang'] == $iso ) {
         return $cat;
       }
     }
+    return false;
   }
     
 
-  function title() {
+  function ZZZtitle() {
     if(!isset($this->title)) $this->titleXml();
       foreach($this->title->cat as $cat) {
         foreach($cat->node as $node) {

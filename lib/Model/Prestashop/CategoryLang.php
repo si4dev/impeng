@@ -1,6 +1,6 @@
 <?php
-class Model_Prestashop_Category extends Model_Table2 {
-  public $table='ps_category';
+class Model_Prestashop_CategoryLang extends Model_Table2 {
+  public $table='ps_category_lang';
   public $id_field='id_category';
   function init() {
     parent::init();
