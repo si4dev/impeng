@@ -31,6 +31,7 @@ class Frontend extends ApiFrontend {
     //$this->auth->usePasswordEncryption('md5')->check();
 	
 	if(isset($_GET['login_as'])){ $this->auth->loginByID($_GET['login_as']); }
+	
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
     } else {

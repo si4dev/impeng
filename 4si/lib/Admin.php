@@ -9,7 +9,7 @@ class Admin extends ApiFrontend {
 
     $this->addLocation('..',array(
                     'php'=>array(
-                        'lib',
+						'lib',
                         'atk4-addons/mvc',
                         'atk4-addons/billing/lib',
                         'atk4-addons/misc/lib',

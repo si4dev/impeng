@@ -39,7 +39,7 @@ class Page_Shopimport_Filter extends Page {
     $s=$this->shop;
 
     // load the categories from the shop itself into table catshop
-    //$s->getShopCategories();
+    $s->getShopCategories();
 	
 	$c=$this->add('CRUD');
 	
@@ -47,9 +47,11 @@ class Page_Shopimport_Filter extends Page {
     $filter=$s->prepareFilter();
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
+	$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
+
 	// if($filter->Loaded()){
-		/* $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); */
-		$filter->getCatShop();
+		 // $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
+		// $filter->getCatShop();
 	// }
 	
 		// show filters
