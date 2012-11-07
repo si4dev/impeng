@@ -48,11 +48,7 @@ class Page_Shopimport_Filter extends Page {
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
 	$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
-
-	// if($filter->Loaded()){
-		 // $filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
-		// $filter->getCatShop();
-	// }
+	$filter->getCatShop();
 	
 		// show filters
 	 if($c->grid) {
@@ -81,7 +77,7 @@ class Page_Shopimport_Filter extends Page {
 	}
 
 		
-    $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active', ));
+    $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','catshop_ref','keyword','margin_ratio','margin_amount','active', ));
     $c->dq->order('category_id');
 
 

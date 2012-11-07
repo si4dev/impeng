@@ -23,11 +23,14 @@ class Model_Filter extends Model_Table {
 
   }
   
-/*   function getCatShop(){
+  function getCatShop(){
 	return $this->addExpression('catshop_ref')->set(
 	 function ($m, $q){
-		return $q->dsql()->table('catshop')->field('ref')->where('shop_id', $m['shop_id'])->get();
+		return $m->refSQL('catshop_id')->dsql()->field('ref')->where('shop_id' , $m->getElement('shop_id'));
+		/* return $q->dsql()->table('catshop')->field('ref')
+			->where('shop_id', $m->getElement('shop_id') )
+			; */
 	 }
 	 );
-  } */
+  } 
 }
