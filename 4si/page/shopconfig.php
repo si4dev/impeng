@@ -15,7 +15,8 @@ class page_shopconfig extends Page {
       $f=$this->add('Form');
       $platforms=array('prestashop','opencart','xcart','magento','oscommerce');
       $f->addField('dropdown','shopsystem')->setValueList(array_combine($platforms,$platforms));
-      if(isset($sc)) $sc->shopconfig($f); // show specific shopsystem fields and also arange to store it
+	  if(isset($sc)) $sc->shopconfig($f); // show specific shopsystem fields and also arange to store it
+
       $f->addSubmit();
       if($f->isSubmitted()){
         $this->api->stickyForget($shop_id);

@@ -2,14 +2,18 @@
 class page_user extends Page {
   function init() {
     parent::init();
-    
-    $tabs=$this->add('Tabs');
+	
+		
+	$tabs=$this->add('Tabs');
     $crud=$tabs->addTab('Users')->add('CRUD');
-    $crud->setModel('User');
+	$m = $this->add('Model_User');
+    $crud->setModel($m);
     if($crud->grid){
       $crud->grid->addColumn('prompt','set_password');
       $crud->grid->getColumn('login')->makeSortable();
-            
+	  $b = $crud->grid->addColumn('button', 'login_as' ,'login_as');
+	   
+          
       if($_GET['set_password']){
           $u=$this->add('Model_User')
               ->load($_GET['set_password']);
@@ -18,6 +22,12 @@ class page_user extends Page {
               ->save();
           $this->js()->univ()->successMessage('Changed password for '.$u->get('login'))->execute();
       }
-    }
+	  
+	   if(isset($_GET['login_as'])){
+			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=>$_GET['login_as'])))->execute();
+		}
+		
+	 }
+    	
   }
 }

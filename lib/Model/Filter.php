@@ -14,10 +14,22 @@ class Model_Filter extends Model_Table {
   }
   
   function getSupplier(){
-    $this->addExpression('Supplier')->set(
-        function($m, $q){		
-          $supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
-          return $m->ref('category_id')->ref('supplier_id')->dsql()->field('name')->where('id', $supl_id);
-        });
+	return $this->addExpression('supplier')->set(
+	function($m, $q){		
+		$supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
+		return $m->ref('category_id')->ref('supplier_id')->dsql()->field('name')->where('id', $supl_id);
+	});
+
   }
+  
+  function getCatShop(){
+	return $this->addExpression('catshop_ref')->set(
+	 function ($m, $q){
+		return $m->refSQL('catshop_id')->dsql()->field('ref')->where('shop_id' , $m->getElement('shop_id'));
+		/* return $q->dsql()->table('catshop')->field('ref')
+			->where('shop_id', $m->getElement('shop_id') )
+			; */
+	 }
+	 );
+  } 
 }

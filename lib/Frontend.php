@@ -29,6 +29,9 @@ class Frontend extends ApiFrontend {
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
+	
+	if(isset($_GET['login_as'])){ $this->auth->loginByID($_GET['login_as']); }
+	
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
     } else {
@@ -38,14 +41,13 @@ class Frontend extends ApiFrontend {
     $m->addMenuItem('shopimport/margin','Marge');
     $m->addMenuItem('shopimport/filter','Filter');
     $m->addMenuItem('shopimport/import','Import');
+	$m->addMenuItem('shopimport/profile', 'profile');
     $m->addMenuItem('logout','Logout');
  
-    
     $si=$this->add('Controller_Shopimport');
     $s=$si->shop;
     $u=$si->user;
 
-    
     $pp=$this->api->add('P',null,'UserInfo');
     $pp->add('Text')->set('user: '.$u['email']);
     $pp->add('HTML')->set('<br/>');
