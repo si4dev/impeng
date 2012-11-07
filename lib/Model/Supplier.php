@@ -21,28 +21,30 @@ class Model_Supplier extends Model_Table {
      
   }
   
-  function import_files($full=false) {
+  function import($full=false) {
     
     $this->set('import_start',$this->dsql->expr('now()') )->save();
 
     $config=$this->config();
     foreach($config->import as $import) {
+      
+      // create filename to save the csv import file to
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
-      copy((string)$import->url,$file);
+      copy((string)$import->url,$file); // get url csv into local file
 
       // *** analyse first line to determine field names ***
 		  $fp=fopen($file,"r");
       $header=fgetcsv( $fp, 10000, (string)$import->seperator, ((string)$import->enclosure?:'"') );
       fclose($fp);
       
-      // trim each field value
+      // trim each field value to make nice database field names
       foreach($header as $h) {
         $fieldName=strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $h), '_'));
         $field[$fieldName]='varchar(255)'; // default field type
         $var[$fieldName]=$fieldName; // default variable for mysql load data into
       }
       
-      // overrule default type and key when defined
+      // import all fields but allow to overrule default type and key when defined
       $primary=array();
       $set=array();
       
@@ -85,10 +87,12 @@ class Model_Supplier extends Model_Table {
       ' ignore 1 lines '.
       '('.implode(', ',$var).') '.
       ($set?'set ':'').implode(', ',$set);
-      $db->query($load);
-      $this->import_category();
-      $this->import_product();
-      $this->import_watch();
+      $db->query($load); // most quick (not always nice) solution
+      
+    
+//      $this->import_category();
+//      $this->import_product();
+//      $this->import_watch();
 
       $this->set('import_end',$this->dsql->expr('now()') )
           ->set('import_full',$this->get('import_start') ) // full start date when all articles are imported and 

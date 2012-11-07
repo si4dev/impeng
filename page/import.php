@@ -7,11 +7,11 @@ class page_import extends Page {
         
     if( $supplier_id=$_GET['supplier'] ) {
     
-      $m=$this->add('Model_Supplier');
-      $m->load($supplier_id);
+      $supplier=$this->add('Model_Supplier');
+      $supplier->load($supplier_id);
      
-      $this->add('h1')->set('Supplier Import '.$m->get('friendly_name'));
-      $m->import_files();  
+      $this->add('h1')->set('Supplier Import '.$supplier->get('friendly_name'));
+      $supplier->import();  
     
     }
   }
