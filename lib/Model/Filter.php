@@ -14,7 +14,7 @@ class Model_Filter extends Model_Table {
 
   }
   
-  function getSupplier(){
+  function getSupplier() {
 	return $this->addExpression('supplier')->set(
 	function($m, $q){		
 		$supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
@@ -23,14 +23,14 @@ class Model_Filter extends Model_Table {
 
   }
   
-  function getCatShop(){
-	return $this->addExpression('catshop_ref')->set(
+  /* function getCatShop(){
+	return $this->addExpression('catshop')->set(
 	 function ($m, $q){
-		return $m->refSQL('catshop_id')->dsql()->field('ref')->where('shop_id' , $m->getElement('shop_id'));
-		/* return $q->dsql()->table('catshop')->field('ref')
-			->where('shop_id', $m->getElement('shop_id') )
-			; */
+		
+		 return $q->dsql()->table('catshop')->field('ref')->where('id', $m->getElement('catshop_id');
+			
+			; //result not unique without a key id or like.
 	 }
 	 );
-  } 
+   }  */
 }
