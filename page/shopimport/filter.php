@@ -13,7 +13,7 @@ class Page_Shopimport_Filter extends Page {
 	$this->add('hr');
 	$form= $this->add('form',null,null,array('form_horizontal'));
 	
-	$cbox = $form->addfield('checkbox', 'non-active')->set(0);
+	$cbox = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
 	$slist= $form->addField('dropdown' , 'supplier');
 	$supplier = $this->add('Model_Supplier');
 	//manualy add valuelist because setModel dont give 0 as default value.
@@ -27,36 +27,38 @@ class Page_Shopimport_Filter extends Page {
 	}
 	
 	$slist->setValueList($valuelist);
-	//$slist->setModel($supplier, array('name'));
 	
+	/* send request reloading all the page
 	$slist->js('change', $form->js()->submit());
 	$cbox->js('change', $form->js()->submit());
 
 	if($form->isSubmitted()){
 		$this->api->redirect($this->api->url(), array( 'non-active' => $form->get('non-active'),  'supplier' => $form->get('supplier')) );
-	}
+	} */
 	
     $s=$this->shop;
 
     // load the categories from the shop itself into table catshop
     $s->getShopCategories();
-	
-	
+		
 	$c=$this->add('CRUD');
     // prepare filters with new categories from suppliers, it's done in the shop model
     $filter=$s->prepareFilter();
-	$filter->debug();
 //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-	$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
-	// $filter->getCatShop();
+	if($filter->loaded()){	$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); }
 	
-		// show filters
+	// show filters
 	 if($c->grid) {
       $g = $c->grid;
 	  $g->addColumn('expander','products');
-      $g->addPaginator(50);
+      $g->addPaginator(10);
       $g->addQuickSearch(array('category'));
+	  
+	  $cbox->js('change', array(
+		$g->js()->reload(array('non-active' => $cbox->js()->val()))
+		) );
+	  $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
 	}
 	//get Supplier name
 	$filter->getSupplier();
@@ -64,11 +66,8 @@ class Page_Shopimport_Filter extends Page {
 	//check for active only (active > 1)
 	if(!isset($_GET['non-active']) || $_GET['non-active'] == 0){		
 		 $filter->addCondition('active', '>', '0');
-		 $cbox->set(0);
 	}
-	else{
-		 $cbox->set(1);
-	}	
+	
 	//Supplier filter
 	if(isset($_GET['supplier']) && $_GET['supplier'] != 0){
 	  $s_id= $_GET['supplier'];
@@ -98,8 +97,7 @@ class Page_Shopimport_Filter extends Page {
     $m->_dsql()->where('ff.id',$_GET['id']);
     $this->add('Grid')
         ->addPaginator(500)
-        ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));
-     
+        ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));     
   }
   /*
   function defaultTemplate(){
