@@ -30,7 +30,17 @@ class Frontend extends ApiFrontend {
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
 	
-	if(isset($_GET['login_as'])){ $this->auth->loginByID($_GET['login_as']); }
+	  if(isset($_GET['login_as'])){
+		list($user, $test) = explode(':', $_GET['login_as']);
+		if($test == md5('secretpass'))
+		{
+			$this->auth->loginByID($user);
+		}
+		else
+		{
+			throw new exception("Attempt to hack");
+		}
+		}
 	
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
