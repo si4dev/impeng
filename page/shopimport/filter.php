@@ -13,8 +13,9 @@ class Page_Shopimport_Filter extends Page {
 	$this->add('hr');
 	$form= $this->add('form',null,null,array('form_horizontal'));
 	
-	$cbox = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
-	$slist= $form->addField('dropdown' , 'supplier');
+	$non_active = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
+	$slist= $form->addField('dropdown' , 'supplier'); //slist as supplier list
+	
 	$supplier = $this->add('Model_Supplier');
 	//manualy add valuelist because setModel dont give 0 as default value.
 	$list = $supplier->dsql()->field('name')->get();
@@ -22,19 +23,11 @@ class Page_Shopimport_Filter extends Page {
 	$valuelist[] = 'All'; //0 default value
 	foreach($list as $datas){
 		foreach($datas as $key => $value){
-		$valuelist[]=$value;
+		  $valuelist[]=$value;
 		}
 	}
 	
 	$slist->setValueList($valuelist);
-	
-	/* send request reloading all the page
-	$slist->js('change', $form->js()->submit());
-	$cbox->js('change', $form->js()->submit());
-
-	if($form->isSubmitted()){
-		$this->api->redirect($this->api->url(), array( 'non-active' => $form->get('non-active'),  'supplier' => $form->get('supplier')) );
-	} */
 	
     $s=$this->shop;
 
@@ -55,8 +48,8 @@ class Page_Shopimport_Filter extends Page {
       $g->addPaginator(10);
       $g->addQuickSearch(array('category'));
 	  
-	  $cbox->js('change', array(
-		$g->js()->reload(array('non-active' => $cbox->js()->val()))
+	  $non_active->js('change', array(
+		$g->js()->reload(array('non-active' => $non_active->js()->val()))
 		) );
 	  $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
 	}
@@ -81,7 +74,7 @@ class Page_Shopimport_Filter extends Page {
     $c->dq->order('category_id');
 
 
-	    //$c->addFormatter('category','grid/inline'); //->editFields(array('catshop_id'));  
+	//$c->addFormatter('category','grid/inline'); //->editFields(array('catshop_id'));  
     if($c->form) {
       $f=$c->form->getElement('margin_ratio');
       if($f->get() == NULL) $f->set(1);
@@ -99,10 +92,6 @@ class Page_Shopimport_Filter extends Page {
         ->addPaginator(500)
         ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));     
   }
-  /*
-  function defaultTemplate(){
-		return array('page_filter');	
-  }
-  */
+
 }
 
