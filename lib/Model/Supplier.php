@@ -20,22 +20,31 @@ class Model_Supplier extends Model_Table {
      return new SimpleXMLElement('<config>'.$this->get('config').'</config>');
      
   }
-  
+
+      
   function import($full=false) {
-    
+   
+     
     $this->set('import_start',$this->dsql->expr('now()') )->save();
 
     $config=$this->config();
     foreach($config->import as $import) {
-      
+   
+         
       // create filename to save the csv import file to
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
-      copy((string)$import->url,$file); // get url csv into local file
+//ZZZZ      copy((string)$import->url,$file); // get url csv into local file
+
+print_r($this->add('Analyse')->file($file)->getConclusion());
+exit();
 
       // *** analyse first line to determine field names ***
 		  $fp=fopen($file,"r");
-      $header=fgetcsv( $fp, 10000, (string)$import->seperator, ((string)$import->enclosure?:'"') );
+      $header=fgetcsv( $fp, 10000, (string)$import->delimiter, ((string)$import->enclosure?:'"') );
       fclose($fp);
+      
+      
+      
       
       // trim each field value to make nice database field names
       foreach($header as $h) {
@@ -80,7 +89,7 @@ class Model_Supplier extends Model_Table {
       // now table is created and we can use fast load data infile
       $load="load data infile '".realpath($file)."' ".($import->duplicate?:'').' into table '.$table.
       ($import->characterset?" character set '".$import->characterset."'":'').
-      " fields terminated by '".($import->seperator?:',')."'". // the mysql default is '\t' now it is ','
+      " fields terminated by '".($import->delimiter?:',')."'". // the mysql default is '\t' now it is ','
       " enclosed by '".($import->enclosure?:'"')."'". // the mysql default is '', now it's '"'
       ($import->escape?" escaped by '".$import->escape."'":''). // the mysql default is '\\'
       ($import->terminate?" lines terminated by '".$import->terminate."'":''). // the mysql default is '\n'
@@ -238,7 +247,7 @@ class Model_Supplier extends Model_Table {
   <url>http://www.complies.nl/clientexport.aspx?name=complies01&amp;type=csv&amp;key=3692pcfast</url>
   <type>csv</type>
   <encoding>utf8</encoding>
-  <seperator xml:space="preserve">,</seperator>
+  <delimiter xml:space="preserve">,</delmiter>
   <enclosure>"</enclosure>
   <trim xml:space="preserve"> </trim>
   <escape></escape>
