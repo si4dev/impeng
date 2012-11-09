@@ -34,6 +34,9 @@ class Analyse extends AbstractModel {
           
             $cnt=false;
             while ($line=fgetcsv($fp,10000,$bestDelimiter,$enclosure)) {
+              
+          //    if(strpos($line
+              
               if(!$cnt) { // first so nothing to compare
                 $cnt=count($line);
               } elseif(!count($line)) { // last could have empty line and do nothing
@@ -53,7 +56,7 @@ class Analyse extends AbstractModel {
             $this->conclusion=array(
                 'type'=>'csv',
                 'delimiter'=>$bestDelimiter,
-                'encluser'=>$bestEnclosure,
+                'enclosure'=>$bestEnclosure,
                 );
           }
           
@@ -74,3 +77,4 @@ class Analyse extends AbstractModel {
   }
 
 }
+

@@ -35,8 +35,8 @@ class Model_Supplier extends Model_Table {
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
 //ZZZZ      copy((string)$import->url,$file); // get url csv into local file
 
-print_r($this->add('Analyse')->file($file)->getConclusion());
-exit();
+
+//print_r($this->add('Analyse')->file($file)->getConclusion());
 
       // *** analyse first line to determine field names ***
 		  $fp=fopen($file,"r");
@@ -57,13 +57,15 @@ exit();
       $primary=array();
       $set=array();
       
-      foreach($import->fields->field as $fieldDef) {
-        if($field[(string)$fieldDef->name]) {
-          if((string)$fieldDef->type) $field[(string)$fieldDef->name]=(string)$fieldDef->type; // overrule field type
-          if((string)$fieldDef->key) $primary[]=(string)$fieldDef->name; // set primary field(s)
-          if((string)$fieldDef->var) {
-            $var[(string)$fieldDef->name]=(string)$fieldDef->var; // var for calculated fields with load data infile
-            $set[]=(string)$fieldDef->name.'='.(string)$fieldDef->set; // set calculated fields with load data infile
+      if($import->fields) {
+        foreach($import->fields->field as $fieldDef) {
+          if($field[(string)$fieldDef->name]) {
+            if((string)$fieldDef->type) $field[(string)$fieldDef->name]=(string)$fieldDef->type; // overrule field type
+            if((string)$fieldDef->key) $primary[]=(string)$fieldDef->name; // set primary field(s)
+            if((string)$fieldDef->var) {
+              $var[(string)$fieldDef->name]=(string)$fieldDef->var; // var for calculated fields with load data infile
+              $set[]=(string)$fieldDef->name.'='.(string)$fieldDef->set; // set calculated fields with load data infile
+            }
           }
         }
       }
@@ -99,8 +101,8 @@ exit();
       $db->query($load); // most quick (not always nice) solution
       
     
-//      $this->import_category();
-//      $this->import_product();
+      $this->import_category();
+      $this->import_product();
 //      $this->import_watch();
 
       $this->set('import_end',$this->dsql->expr('now()') )
@@ -150,6 +152,7 @@ exit();
     // import categories
   function import_category() {
     $node=$this->config()->category;
+    if(!($node)) return $this;
     $supfields=$this->import_supfields($node);
     $fields=$this->import_fields_select($node);
     $table='impeng_supplierdata.'.$this->get('name').'_'.$node->use->table;
@@ -171,6 +174,7 @@ exit();
   // import products
   function import_product() {
     $node=$this->config()->product;
+    if(!($node)) return $this;
     $supfields=$this->import_supfields($node);
     $supfields_productcode=$this->import_supfields($node,'fieldmap/productcode');
     $fields=$this->import_fields_select($node);
@@ -183,7 +187,7 @@ exit();
 
     $select='select '.implode(', ',($fields)).
         ' from '.$table.' t1 '.
-        ' left join '.$table.'_previous2 t2 '.
+        ' left join '.$table.'_previous t2 '.
         ' using  ('.implode(', ',($supfields_productcode)).') '.
         ' where t2.'.$supfields[0].' is null'.
         ' or ('.implode(', ',($supfields1)).') != ('.implode(', ',($supfields2)).')';
