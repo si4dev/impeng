@@ -24,9 +24,10 @@ class page_user extends Page {
       }
 	  
 	   if(isset($_GET['login_as'])){
-			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=>$_GET['login_as'])))->execute();
+			$user = $_GET['login_as'].':'.md5('secretpass');
+			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=> $user)))->execute();
+				 
 		}
-		
 	 }
     	
   }
