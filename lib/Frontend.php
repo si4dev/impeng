@@ -12,6 +12,7 @@ class Frontend extends ApiFrontend {
 					'php'=>array(
                         'mvc',
 						'misc/lib',
+						'filestore/lib',
 						)
 					))
 			->setParent($this->pathfinder->base_location);
@@ -24,8 +25,7 @@ class Frontend extends ApiFrontend {
     $this->dbConnect();
     // $this->add('Dbug');
 	
-	$this->js(true)->_selector("#Content")
-		->atk4_loader();
+	
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
@@ -52,6 +52,7 @@ class Frontend extends ApiFrontend {
     $m->addMenuItem('shopimport/filter','Filter');
     $m->addMenuItem('shopimport/import','Import');
 	$m->addMenuItem('shopimport/profile', 'profile');
+	$m->addMenuItem('fileadmin', 'Manage upload');
     $m->addMenuItem('logout','Logout');
  
     $si=$this->add('Controller_Shopimport');

@@ -12,7 +12,7 @@ class Admin extends ApiFrontend {
 						'lib',
                         'atk4-addons/mvc',
                         'atk4-addons/billing/lib',
-                        'atk4-addons/misc/lib',
+                        'atk4-addons/misc/lib'
                         )
                     ))
             ->setParent($this->pathfinder->base_location);
