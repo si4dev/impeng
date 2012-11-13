@@ -11,9 +11,30 @@ class Model_Prestashop_Category extends Model_Table2 {
     $this->hasMany('Prestashop_Category','id_parent');
     $this->addField('date_add');
     $this->addField('date_upd');
+    
+    if(!isset($this->version)) {
+      $table='ps_category_shop';
+      if($this->_dsql()->owner->getOne("show tables like '{$table}'")) {
+        $this->version='1.5';
+      } else {
+        $this->version='1.3';
+      }
+    }
+        
   }
   
   
+  // for prestashop 1.5 we need to join ps_category_shop
+  function joinCategoryShop() { 
+    if($this->version=='1.5') {
+      $catshop=$this->join('ps_category_shop.id_category','id_category');
+      $catshop->addField('id_shop');
+      $this->addCondition('id_shop',1);
+    }
+    return $this;
+  }
+  
+    
   function joinName() { // used by importCategory() to get also the name of the category
     $catlang=$this->join('ps_category_lang.id_category','id_category');
     $catlang->addField('name');

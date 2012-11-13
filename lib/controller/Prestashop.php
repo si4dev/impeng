@@ -66,6 +66,7 @@ class Controller_Prestashop extends AbstractController {
     }
 
     $shopcat=$this->add('Model_Prestashop_Category'); // the shop category model is the destination
+    $shopcat->joinCategoryShop();
     $shopcatname=clone $shopcat;
     $shopcatname
         ->joinName()

@@ -103,7 +103,7 @@ class Model_Supplier extends Model_Table {
     
       $this->import_category();
       $this->import_product();
-//      $this->import_watch();
+      $this->import_watch();
 
       $this->set('import_end',$this->dsql->expr('now()') )
           ->set('import_full',$this->get('import_start') ) // full start date when all articles are imported and 
@@ -231,6 +231,7 @@ class Model_Supplier extends Model_Table {
   // import watch price and stock  
   function import_watch() {
     $node=$this->config()->watch;
+    if(!($node)) return $this;
     $fields=$this->import_fields($node);
     $table='impeng_supplierdata.'.$this->get('name').'_'.$node->use->table;
     
@@ -239,8 +240,8 @@ class Model_Supplier extends Model_Table {
         'from '.$table.' t1 inner join product p on (p.productcode='.$fields['productcode'].' and p.supplier_id=:supplier) '.
         'where '.$fields['productcode']."!='' ".
         'on duplicate key update '.
-        ' modified=if(price!=values(price),now(),modified), price=values(price), stock=values(stock), last_checked=now()';
-        
+        ' modified=if(watch.price!=values(price),now(),modified), price=values(price), stock=values(stock), last_checked=now()';
+
     $this->api->db->query($query,array('supplier'=>$this->id,'pricebook'=>(int)$node->pricebook));
   }
 }

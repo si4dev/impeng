@@ -45,7 +45,7 @@ class Page_Shopimport_Filter extends Page {
 	 if($c->grid) {
       $g = $c->grid;
 	  $g->addColumn('expander','products');
-      $g->addPaginator(10);
+      $g->addPaginator(100);
       $g->addQuickSearch(array('category'));
 	  
 	  $non_active->js('change', array(

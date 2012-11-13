@@ -47,11 +47,9 @@ class page_pricelist extends Page {
         $this->add('P')->set('Take over categories from supplier '.$supplier);
         
         $filter=$s->prepareFilter()
-            ->addCondition('active', '>', '0');
-        $filter
-            ->getSupplier();
-        $filter
-            ->addCondition('Supplier',$supplier)
+            ->addCondition('active', '>', '0')
+            ->getSupplier()
+            ->addCondition('supplier',$supplier)
             ->addCondition('catshop',null);
             
         $s->importCategories( $filter );

@@ -209,7 +209,10 @@ class Model_Shop extends Model_Table {
       foreach($m as $active) {
         
         if($active['filter_id']) {
-          $filter->load($active['filter_id']);
+          
+echo ' ||'.          $active['filter_id'];
+          
+          $filter->debug()->load($active['filter_id']);
         } else {
           $filter->set('category_id',$active['category_id'])->set('margin_ratio',null)->set('margin_amount',null);
         }
