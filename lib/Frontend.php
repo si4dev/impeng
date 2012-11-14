@@ -52,7 +52,6 @@ class Frontend extends ApiFrontend {
     $m->addMenuItem('shopimport/filter','Filter');
     $m->addMenuItem('shopimport/import','Import');
 	$m->addMenuItem('shopimport/profile', 'profile');
-	$m->addMenuItem('uploadCSV', 'Overrite Supplier CSV pricelist');
 	$m->addMenuItem('fileadmin', 'Manage upload');
     $m->addMenuItem('logout','Logout');
  
