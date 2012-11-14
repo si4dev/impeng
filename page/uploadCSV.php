@@ -10,7 +10,8 @@ Class Page_UploadCSV extends Page {
 		$f = $this->add('Form');
 		
 		$f->addField('upload','myfile')
-			->setModel('filestore/File')
-		;
+			->setModel('uploadCSV')
+		;	
+		
 	}
 }

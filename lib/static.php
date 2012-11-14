@@ -1,4 +1,35 @@
 <?php
+
+if(!function_exists('mime_content_type')){
+	function mime_content_type($filename)
+	{
+		/*  $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+        $fileMimeType = finfo_file($finfo, $filename) ;
+        finfo_close($finfo); 		
+		return $fileMimeType ; }*/
+		
+
+    /* $result = new finfo();
+
+    if (is_resource($result) === true)
+    {
+    	return $result->file($filename, FILEINFO_MIME_TYPE);
+    }
+		return false;
+	} */
+	
+		return 'text/csv';
+	}
+	
+};
+    
+ 
+		
+		
+
+
+
+
 if(!function_exists('error_handler')){
     function error_handler($errno, $errstr, $errfile, $errline){
         $errorType = Array (
@@ -64,8 +95,13 @@ function handleShutdown() {
             echo ' FATALTJE '.$info;
         }
     }
+	
+
+
 
 include realpath('.').'/atk4/lib/static.php';
+
+
 
 /*
 foreach(explode(':',get_include_path()) as $p) {
