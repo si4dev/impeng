@@ -5,9 +5,11 @@ class Model_Prestashop_Category extends Model_Table2 {
   public $title_field='name';
   function init() {
     parent::init();
+    
     $this->addField('id_parent');
     $this->addField('active')->defaultValue(1);
     $this->hasMany('Prestashop_CategoryLang','id_category');
+    $this->hasMany('Prestashop_CategoryGroup','id_category');
     $this->hasMany('Prestashop_Category','id_parent');
     $this->addField('date_add');
     $this->addField('date_upd');
@@ -63,6 +65,11 @@ class Model_Prestashop_Category extends Model_Table2 {
       }
     }
     return $r;
+  }
+
+  function getTreeHome() {
+    if($this->version=='1.5') return 2;
+    return 1;
   }
 
   

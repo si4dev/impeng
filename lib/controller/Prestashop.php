@@ -52,8 +52,8 @@ class Controller_Prestashop extends AbstractController {
   // get shop categories is called in the Model_Shop and left over to the controller like here:
   function getShopCategories() {
     $defaultlangid=$this->add('Model_Prestashop_Lang')->loadBy('iso_code',$this->lang)->id;
-    
-    return $this->add('Model_Prestashop_Category')->lang($defaultlangid)->load(1)->tree();
+    $cat=$this->add('Model_Prestashop_Category')->lang($defaultlangid);
+    return $cat->load($cat->getTreeHome())->tree();
   }
 
     
@@ -65,6 +65,7 @@ class Controller_Prestashop extends AbstractController {
       $this->languages[$l['iso_code']]=$l['id_lang'];
     }
 
+    $shopgroup=$this->add('Model_Prestashop_Group');
     $shopcat=$this->add('Model_Prestashop_Category'); // the shop category model is the destination
     $shopcat->joinCategoryShop();
     $shopcatname=clone $shopcat;
@@ -77,6 +78,8 @@ class Controller_Prestashop extends AbstractController {
                
     $i=0;
     foreach( $filter as $f) {
+      
+      
       // get all source titles in XML <cat lang='nl'><node>..</node><node>..</node>..</cat> format
       $catxml=$cat->load($f['category_id'])->getTitleXml();
       // find the default source category to be used to match and for defaults      
@@ -89,7 +92,7 @@ class Controller_Prestashop extends AbstractController {
       }
       
       $level=1; // keep starting at ONE for category node xpath start at ONE (node[1])
-      $lastshopcatid = 1; // home category in prestashop
+      $lastshopcatid = $shopcatname->getTreeHome(); // home category in prestashop
       // loop through the levels of one category path (like breadcrumb)
       foreach( current($defaultcatxml)->node as $defaulttitle ) { // current($defaultcatxml) is for the default language
         if( !(string)$defaulttitle ) {
@@ -113,6 +116,11 @@ class Controller_Prestashop extends AbstractController {
               ->set('date_upd',$q->expr('now()'))
               ->save();
         }
+        //handle the category_group to link the category to all the customer groups
+        $shopcatgroup=$shopcat->ref('Prestashop_CategoryGroup');
+        foreach($shopgroup as $row) {
+          $shopcatgroup->tryLoadBy('id_group',$row['id_group'])->saveAndUnload();
+        }
         // handle the category translations in the shop
         $shopcatlang=$shopcat->ref('Prestashop_CategoryLang');
         foreach($this->languages as $langiso => $langid) {
@@ -134,7 +142,7 @@ class Controller_Prestashop extends AbstractController {
           ->set('margin_amount',0)
           ->saveAndUnload();
       $i++;
-      if($i>4) break;
+      //if($i>4) break;
     }
 
     $this->nb_categories=$i;

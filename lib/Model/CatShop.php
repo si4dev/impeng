@@ -9,5 +9,7 @@ class Model_CatShop extends Model_Table {
     //$this->addField('ref');
     $this->addField('title');
     $this->addField('status');
+    $this->addCondition('shop_id',$this->api->getShop()->id);
+    
   }  
 }

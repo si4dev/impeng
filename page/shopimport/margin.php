@@ -10,9 +10,7 @@ class Page_Shopimport_Margin extends Page {
     $this->add('P')->set('De uitkomst wordt daarna afgerond. Per prijs groep kan een andere afronding worden ingesteld. Er kan bijvoorbeeld op hele of halve euro\'s worden afgerond. Ook kan met een offset van bijvoorbeeld -0.05 gezorgd worden dat de prijs altijd eindigd op xxx.95 euro. De offset wordt na de afronding doorgevoerd. Een offset zal meestal negatief en klein zijn.');
     
     
-    $si=$this->add('Controller_Shopimport');
-    $s=$si->shop;
-    $u=$si->user;
+    $s=$this->api->getShop();
 
     $cols=$this->add('Columns');
     

@@ -10,8 +10,7 @@ class page_pricelist extends Page {
     if(isset($_GET['key']) and $_GET['key']===$this->api->getConfig('key',null)) {
       $s=$this->add('Model_Shop')->loadBy('name',$_GET['shop']);
     } else {
-      $si=$this->add('Controller_Shopimport');
-      $s=$si->shop;
+      $s=$this->api->getShop();
     }
 
 

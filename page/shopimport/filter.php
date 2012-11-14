@@ -3,8 +3,6 @@ class Page_Shopimport_Filter extends Page {
   function init() {
     parent::init();
 
-    $si=$this->add('Controller_Shopimport'); // get user and shop
-    $this->shop=$si->shop;
   }
   
   function initMainPage() {
@@ -29,7 +27,8 @@ class Page_Shopimport_Filter extends Page {
 	
 	$slist->setValueList($valuelist);
 	
-    $s=$this->shop;
+    $s=$this->api->getShop();
+
 
     // load the categories from the shop itself into table catshop
     $s->getShopCategories();
@@ -85,7 +84,8 @@ class Page_Shopimport_Filter extends Page {
 
   function page_products() {
     $this->api->stickyGET('id');
-    $m=$this->shop->ref('ProductForPricelist');
+    $s=$this->api->getShop();
+    $m=$s->ref('ProductForPricelist');
     // not working: $m->addCondition($m->getElement('filter_id'),$_GET['id'])->debug();
     $m->_dsql()->where('ff.id',$_GET['id']);
     $this->add('Grid')

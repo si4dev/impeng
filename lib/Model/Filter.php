@@ -9,7 +9,7 @@ class Model_Filter extends Model_Table {
     $this->addField('margin_ratio');// ->defaultValue(1);
     $this->addField('margin_amount'); //->defaultValue(0);
     $this->hasOne('CatShop');
-    $this->addField('catshop_id');  
+//    $this->addField('catshop_id');  
     $this->addField('import');
     $this->addField('active');
   }

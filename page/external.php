@@ -2,12 +2,12 @@
 class Page_External extends Page {
   function init() {
     parent::init();
-    
+
+    // TODO move this to frontend but then with ApiCLI (not sure how it works yet)
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       $s=$this->add('Model_Shop')->loadBy('name',$_GET['shop']);
     } else {
-      $si=$this->add('Controller_Shopimport');
-      $s=$si->shop;
+      $s=$this->api->getShop();
     }
     
     $product=$s->getShopPricelist()->addCondition('quantity','>','0');
