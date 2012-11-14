@@ -226,6 +226,17 @@ class Model_Supplier extends Model_Table {
         
     $this->api->db->query($query,array('supplier'=>$this->id,'pricebook'=>(int)$node->pricebook));
   }
+  
+  function getFiles(){
+		$file=array();
+		$config=$this->config();
+		
+		foreach($config->import as $import) {
+		  $file[]=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+		}
+		
+		return $file;	
+  }  
 }
 
 /*
