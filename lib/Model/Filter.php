@@ -23,6 +23,8 @@ class Model_Filter extends Model_Table {
     return $this;
   }
   
+
+  
   /* function getCatShop(){
 	return $this->addExpression('catshop')->set(
 	 function ($m, $q){

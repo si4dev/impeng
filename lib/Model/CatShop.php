@@ -12,4 +12,6 @@ class Model_CatShop extends Model_Table {
     $this->addCondition('shop_id',$this->api->getShop()->id);
     
   }  
+  
+  
 }
