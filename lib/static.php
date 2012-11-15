@@ -18,7 +18,7 @@ if(!function_exists('mime_content_type')){
 		return false;
 	} */
 	
-		return 'text/csv';
+		return 'image/png';
 	}
 	
 };
