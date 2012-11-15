@@ -9,7 +9,6 @@ class Model_Filter_Product extends Model_Filter {
     parent::init();
     
     // maybe to use this: ->expr(ÔÉÉÉ and cl.shop_id=[shop_id]Õ)->setCustom(Õshop_idÕ, $cat->getElement(Õshop_idÕ));
-    $this->debug();
 
 
 /* worked great, but not handy formatted: */

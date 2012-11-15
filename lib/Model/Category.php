@@ -2,11 +2,16 @@
 class Model_Category extends Model_Table {
   public $table='category';
   public $title_field='reference';
+  public $titleXml;
   function init() {
     parent::init();
     $this->hasOne('Supplier');
     $this->addField('title');
     $this->addField('reference');
+
+
+    $this->addHook('beforeLoad',function($o){ unset($o->titleXml); });
+
     
   }
 
@@ -25,6 +30,70 @@ class Model_Category extends Model_Table {
     $this->set('title',$dom->saveXml($n));
     return $this;
   }
+  
+  
+  
+  /*
+  
+     $this->title=new SimpleXMLElement('<title>'.
+     '<cat lang="nl">
+        <node>VOGELS2</node>
+        <node>Knaagdieren konijnen</node>
+      </cat>'.
+      '</title>');
+  */
+  public function getTitleXml() {
+    
+    if(!isset($this->titleXml)) {
+      $title=$this->get('title');
+      /* should not be needed anymore 
+      if( strpos($title,'<node') === false ) {
+        // in case the category is not yet in xml structure for old supplier import
+        $title=trim($title)?:'-';
+        $this->title=new SimpleXMLElement('<title></title>');
+        $cat=$this->title->addChild('cat');
+        $cat->addAttribute('lang','nl');
+        $cat->{"node"}[]=$title; // this way XML is properly escaped, http://www.php.net/manual/en/simplexmlelement.addchild.php
+      } else {
+      }
+      */
+      $this->titleXml=new SimpleXMLElement('<title>'.$title.'</title>');
+    }
+    return $this->titleXml;
+  }
+
+
+  // returns array of xml node 
+  function ZZZgetTitleXmlByLang() {
+    $t=array();
+    foreach( $this->getTitleXml()->cat as $cat ) {
+      $t[(string)$cat['lang']]=$cat;
+    }
+    return $t;
+  }
+
+
+
+  function ZZZgetTitleByLang($iso) {
+    foreach( $this->getTitleXml()->cat as $cat ) {
+      if( (string)$cat['lang'] == $iso ) {
+        return $cat;
+      }
+    }
+    return false;
+  }
+    
+
+  function ZZZtitle() {
+    if(!isset($this->title)) $this->titleXml();
+      foreach($this->title->cat as $cat) {
+        foreach($cat->node as $node) {
+        echo '[['.(string)$node.'==';
+        }
+      }
+    return 'tet';
+  }
+
 }
 
 /*

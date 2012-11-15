@@ -8,7 +8,7 @@ class page_supplierimport extends Page {
       $sup=$this->add('Model_Supplier')->load($supplier_id);
       $this->add('H1')->set('Supplier: '.$sup['friendly_name']);
       $this->add('h2')->set('Import');
-      $sup->import_files($_GET['full']==='true');
+      $sup->import($_GET['full']==='true');
     } // end if supplier
   }
 }

@@ -1,18 +1,22 @@
 <?php
 class Controller_Prestashop extends AbstractController {
+  protected $lang='nl';
   function init() {
     parent::init();
     
+    if(!isset($this->owner->platformCtrl)) {
+      $this->owner->platformCtrl=$this;
     
-    // use with setController on the Model_Shop
-    // then the $this->owner is the Model_Shop
-    
-    $this->owner->addMethod('ftproot',array($this,'ftproot'));
-    $this->owner->addMethod('connection',array($this,'connection'));
-    
-    unset($this->api->db2);
-    if($connection=$this->owner->connection()) {
-      $this->api->db2=$this->api->add('DB')->connect($connection);
+      // use with setController on the Model_Shop
+      // then the $this->owner is the Model_Shop
+      
+      $this->owner->addMethod('ftproot',array($this,'ftproot'));
+      $this->owner->addMethod('connection',array($this,'connection'));
+      
+      unset($this->api->db2);
+      if($connection=$this->owner->connection()) {
+        $this->api->db2=$this->api->add('DB')->connect($connection);
+      }
     }
   }
 
@@ -47,58 +51,107 @@ class Controller_Prestashop extends AbstractController {
   
   // get shop categories is called in the Model_Shop and left over to the controller like here:
   function getShopCategories() {
-    return $this->add('Model_Prestashop_Category')->load(1)->tree();
+    $defaultlangid=$this->add('Model_Prestashop_Lang')->loadBy('iso_code',$this->lang)->id;
+    $cat=$this->add('Model_Prestashop_Category')->lang($defaultlangid);
+    return $cat->load($cat->getTreeHome())->tree();
   }
+
     
-    
-  function import_categories($lang='nl') { 
-    echo '###CAT###';
-    // prepare model for shop category to add categories
-    $s=$this->owner; // the shop model 
-    $shopcat=$this->add('Model_Prestashop_Category');
-    // prepare model to loop through the available categories to be imported (where shopid=-1)
-    $cats=$this->add('Model_CatLink');
-    $cats->selectQuery(); // bug fix to get the model fields
-    $cats->addCondition('shop_id',$s->id)->addCondition('catshop_id',-1);
-    // loop through the categories to be imported to the shop (not all, only needed ones)
+  // function to return the shop pricelist for external purposes
+  function importCategories($filter) {
+    $s=$this->owner; // the shop model
+    // languages by this shop
+    foreach($this->add('Model_Prestashop_Lang') as $l) {
+      $this->languages[$l['iso_code']]=$l['id_lang'];
+    }
+
+    $shopgroup=$this->add('Model_Prestashop_Group');
+    $shopcat=$this->add('Model_Prestashop_Category'); // the shop category model is the destination
+    $shopcat->joinCategoryShop();
+    $shopcatname=clone $shopcat;
+    $shopcatname
+        ->joinName()
+        ->addCondition('id_lang',$this->languages[$this->lang]) // default language to lookup name
+        ;
+    $q=$shopcat->dsql(); // needed for some expressions
+    $cat=$this->add('Model_Category'); // this is only used to get title in proper language from the category model
+               
     $i=0;
-    foreach($cats as $cat) {
-      $defaultcat=$cats->categoryByLang($lang);
+    foreach( $filter as $f) {
       
-      $level = 1; // not used for this xcart shop 
-      $lastshopcatid = 0;
-      $shopcatpath='';
+      
+      // get all source titles in XML <cat lang='nl'><node>..</node><node>..</node>..</cat> format
+      $catxml=$cat->load($f['category_id'])->getTitleXml();
+      // find the default source category to be used to match and for defaults      
+      $defaultcatxml=$catxml->xpath('cat[@lang="'.$this->lang.'"]');
+      
+      if(!$defaultcatxml) {
+        throw $this->exception('Shopassist: category title not available')
+            ->addMoreInfo('Category ID',$f['category_id'])
+            ->addMoreInfo('lang',$this->lang);
+      }
+      
+      $level=1; // keep starting at ONE for category node xpath start at ONE (node[1])
+      $lastshopcatid = $shopcatname->getTreeHome(); // home category in prestashop
       // loop through the levels of one category path (like breadcrumb)
-      foreach( $defaultcat->node as $title ) {
-        if( !(string)$title ) {
-          throw $this->exception('Shopassist: supplier title node empty')->addMoreInfo('Category ID',$cats->id);
+      foreach( current($defaultcatxml)->node as $defaulttitle ) { // current($defaultcatxml) is for the default language
+        if( !(string)$defaulttitle ) {
+          throw $this->exception('Shopassist: supplier title node empty')->addMoreInfo('Category ID',$f['category_id']);
         }
 
-        $dsql=clone $shopcat->dsql;
-        // this will save or update or do nothing
-        // select `categoryid`,`category`,`parentid`,`lpos`,`rpos`,`order_by` from `xcart_categories` where `parentid` = 0 and `category` = "LED verlichting" limit 0, 1 [:a_2, :a]
-        // insert into `xcart_categories` (`category`,`parentid`) values ("LED verlichting",0) [:a_2, :a]
-        $shopcat->addCondition('id_parent',$lastshopcatid)
-          ->addCondition('name',(string)$title)
-          ->addCondition('id_lang',6) // TODO loop through languages
-          ->tryLoadAny()
-          ->save()
-          ;
-        $lastshopcatid = $shopcat->get('categoryid');
-        $shopcat->dsql=$dsql; // restore dsql as we added two conditions
+        // check if the default language category exists and get the id
+        $shopcatnamelookup=$shopcatname->dsql();
+        $shopcatid=$shopcatnamelookup
+            ->where('id_parent',$lastshopcatid)
+            ->where('name',(string)$defaulttitle)
+            ->limit(1) // to ensure it will fetch all as we will only fetch one (mysql issue to always fetch all).
+            ->getOne('category_id');
+
+        if($shopcatid) {
+          $shopcat->load($shopcatid); // only load in case of existing record
+        } else {
+          $shopcat->unload() // otherwise unload and save as new
+              ->set('id_parent',$lastshopcatid)
+              ->set('date_add',$q->expr('now()'))
+              ->set('date_upd',$q->expr('now()'))
+              ->save();
+        }
+        //handle the category_group to link the category to all the customer groups
+        $shopcatgroup=$shopcat->ref('Prestashop_CategoryGroup');
+        foreach($shopgroup as $row) {
+          $shopcatgroup->tryLoadBy('id_group',$row['id_group'])->saveAndUnload();
+        }
+        // handle the category translations in the shop
+        $shopcatlang=$shopcat->ref('Prestashop_CategoryLang');
+        foreach($this->languages as $langiso => $langid) {
+          $title=current($catxml->xpath('cat[@lang="'.$langiso.'"]/node['.$level.']'))?:$defaulttitle; // current is to get $title[0]
+          $shopcatlang->tryLoadBy('id_lang',$langid);
+          $shopcatlang->set('name',(string)$title); 
+          $shopcatlang->set('link_rewrite',strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', (string)$title ), '-'))); 
+          $shopcatlang->save();
+        }
+        
+        $lastshopcatid = $shopcat->get('id_category');
         $level++;
       }
       // due to bug we cannot save the join, ok the bug is solved by $this->data=$this->dsql->data in Model_Table,
       // however you cannot use ->save() as it will not be possible to load again with condition CategoryShopID=-1
-      $cats->set('CategoryShopID',$lastshopcatid)->saveAndUnload();
+      $filter
+          ->set('catshop_id',$lastshopcatid)
+          ->set('margin_ratio',1)
+          ->set('margin_amount',0)
+          ->saveAndUnload();
       $i++;
+      //if($i>4) break;
     }
 
     $this->nb_categories=$i;
     // rebuild category tree of the shop to nicely set the lpos and rpos again
     //    $shopcat->treeRebuild();
+    return $this;
   }
-
+    
+    
   // collect all taxes used in the shop
   protected function tax() {
     foreach($this->add('Model_Prestashop_Tax') as $t) {
@@ -200,7 +253,6 @@ class Controller_Prestashop extends AbstractController {
       $m->set('id_color_default',0); 
       $m->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
       $m->set('active',1);
-      $m->debug();
       $m->save();
     
       // handle title based on product id

@@ -3,8 +3,7 @@
 Class Page_shopimport_profile extends Page {
 	function init(){
 	  parent::init();
-		$si=$this->add('Controller_Shopimport');
-		$shop=$si->shop;
+    $shop=$this->api->getShop();
 		
 		$f=$this->add('Form');
 		$d=$f->addField('line', 'domain')->setCaption('Domain :');

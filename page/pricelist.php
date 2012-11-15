@@ -10,8 +10,7 @@ class page_pricelist extends Page {
     if(isset($_GET['key']) and $_GET['key']===$this->api->getConfig('key',null)) {
       $s=$this->add('Model_Shop')->loadBy('name',$_GET['shop']);
     } else {
-      $si=$this->add('Controller_Shopimport');
-      $s=$si->shop;
+      $s=$this->api->getShop();
     }
 
 
@@ -29,7 +28,7 @@ class page_pricelist extends Page {
     }
       
     $this->add('Text')->set('shop '.$s->id);
-      $s->pricelist();
+    //  $s->pricelist();
     try{
   //    $s->import();
     } catch  (Exception_FTP $e){
@@ -40,8 +39,22 @@ class page_pricelist extends Page {
       $this->add('View_Error')->set('Error '.$e->getMessage() . '['.implode(', ',$args).']' );
     }
       
-      // temp solution for old database structure
+      
+      $s->getShopCategories(); // fill table catshop
+      // get config for category import
       if($supplier=$s->category_import()) {
+        $this->add('P')->set('Take over categories from supplier '.$supplier);
+        
+        $filter=$s->prepareFilter()
+            ->addCondition('active', '>', '0')
+            ->getSupplier()
+            ->addCondition('supplier',$supplier)
+            ->addCondition('catshop',null);
+            
+        $s->importCategories( $filter );
+
+        $s->getShopCategories(); // fill table catshop again as it's not up to date due to new categories
+        
         /* hold for the moment as it's old structure
         $this->add('P')->set('look for supplier categories to import ['.$supplier.']');
         $sql="insert ignore into  tbltype_category (categoryshop,categorysupplierid,categoryshopid)

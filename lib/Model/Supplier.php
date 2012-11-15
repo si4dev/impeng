@@ -20,39 +20,52 @@ class Model_Supplier extends Model_Table {
      return new SimpleXMLElement('<config>'.$this->get('config').'</config>');
      
   }
-  
-  function import_files($full=false) {
-    
+
+      
+  function import($full=false) {
+   
+     
     $this->set('import_start',$this->dsql->expr('now()') )->save();
 
     $config=$this->config();
     foreach($config->import as $import) {
+   
+         
+      // create filename to save the csv import file to
       $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
-      copy((string)$import->url,$file);
+//ZZZZ      copy((string)$import->url,$file); // get url csv into local file
+
+
+//print_r($this->add('Analyse')->file($file)->getConclusion());
 
       // *** analyse first line to determine field names ***
 		  $fp=fopen($file,"r");
-      $header=fgetcsv( $fp, 10000, (string)$import->seperator, ((string)$import->enclosure?:'"') );
+      $header=fgetcsv( $fp, 10000, (string)$import->delimiter, ((string)$import->enclosure?:'"') );
       fclose($fp);
       
-      // trim each field value
+      
+      
+      
+      // trim each field value to make nice database field names
       foreach($header as $h) {
         $fieldName=strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $h), '_'));
         $field[$fieldName]='varchar(255)'; // default field type
         $var[$fieldName]=$fieldName; // default variable for mysql load data into
       }
       
-      // overrule default type and key when defined
+      // import all fields but allow to overrule default type and key when defined
       $primary=array();
       $set=array();
       
-      foreach($import->fields->field as $fieldDef) {
-        if($field[(string)$fieldDef->name]) {
-          if((string)$fieldDef->type) $field[(string)$fieldDef->name]=(string)$fieldDef->type; // overrule field type
-          if((string)$fieldDef->key) $primary[]=(string)$fieldDef->name; // set primary field(s)
-          if((string)$fieldDef->var) {
-            $var[(string)$fieldDef->name]=(string)$fieldDef->var; // var for calculated fields with load data infile
-            $set[]=(string)$fieldDef->name.'='.(string)$fieldDef->set; // set calculated fields with load data infile
+      if($import->fields) {
+        foreach($import->fields->field as $fieldDef) {
+          if($field[(string)$fieldDef->name]) {
+            if((string)$fieldDef->type) $field[(string)$fieldDef->name]=(string)$fieldDef->type; // overrule field type
+            if((string)$fieldDef->key) $primary[]=(string)$fieldDef->name; // set primary field(s)
+            if((string)$fieldDef->var) {
+              $var[(string)$fieldDef->name]=(string)$fieldDef->var; // var for calculated fields with load data infile
+              $set[]=(string)$fieldDef->name.'='.(string)$fieldDef->set; // set calculated fields with load data infile
+            }
           }
         }
       }
@@ -78,14 +91,16 @@ class Model_Supplier extends Model_Table {
       // now table is created and we can use fast load data infile
       $load="load data infile '".realpath($file)."' ".($import->duplicate?:'').' into table '.$table.
       ($import->characterset?" character set '".$import->characterset."'":'').
-      " fields terminated by '".($import->seperator?:',')."'". // the mysql default is '\t' now it is ','
+      " fields terminated by '".($import->delimiter?:',')."'". // the mysql default is '\t' now it is ','
       " enclosed by '".($import->enclosure?:'"')."'". // the mysql default is '', now it's '"'
       ($import->escape?" escaped by '".$import->escape."'":''). // the mysql default is '\\'
       ($import->terminate?" lines terminated by '".$import->terminate."'":''). // the mysql default is '\n'
       ' ignore 1 lines '.
       '('.implode(', ',$var).') '.
       ($set?'set ':'').implode(', ',$set);
-      $db->query($load);
+      $db->query($load); // most quick (not always nice) solution
+      
+    
       $this->import_category();
       $this->import_product();
       $this->import_watch();
@@ -137,6 +152,7 @@ class Model_Supplier extends Model_Table {
     // import categories
   function import_category() {
     $node=$this->config()->category;
+    if(!($node)) return $this;
     $supfields=$this->import_supfields($node);
     $fields=$this->import_fields_select($node);
     $table='impeng_supplierdata.'.$this->get('name').'_'.$node->use->table;
@@ -158,6 +174,7 @@ class Model_Supplier extends Model_Table {
   // import products
   function import_product() {
     $node=$this->config()->product;
+    if(!($node)) return $this;
     $supfields=$this->import_supfields($node);
     $supfields_productcode=$this->import_supfields($node,'fieldmap/productcode');
     $fields=$this->import_fields_select($node);
@@ -170,7 +187,7 @@ class Model_Supplier extends Model_Table {
 
     $select='select '.implode(', ',($fields)).
         ' from '.$table.' t1 '.
-        ' left join '.$table.'_previous2 t2 '.
+        ' left join '.$table.'_previous t2 '.
         ' using  ('.implode(', ',($supfields_productcode)).') '.
         ' where t2.'.$supfields[0].' is null'.
         ' or ('.implode(', ',($supfields1)).') != ('.implode(', ',($supfields2)).')';
@@ -214,6 +231,7 @@ class Model_Supplier extends Model_Table {
   // import watch price and stock  
   function import_watch() {
     $node=$this->config()->watch;
+    if(!($node)) return $this;
     $fields=$this->import_fields($node);
     $table='impeng_supplierdata.'.$this->get('name').'_'.$node->use->table;
     
@@ -222,8 +240,8 @@ class Model_Supplier extends Model_Table {
         'from '.$table.' t1 inner join product p on (p.productcode='.$fields['productcode'].' and p.supplier_id=:supplier) '.
         'where '.$fields['productcode']."!='' ".
         'on duplicate key update '.
-        ' modified=if(price!=values(price),now(),modified), price=values(price), stock=values(stock), last_checked=now()';
-        
+        ' modified=if(watch.price!=values(price),now(),modified), price=values(price), stock=values(stock), last_checked=now()';
+
     $this->api->db->query($query,array('supplier'=>$this->id,'pricebook'=>(int)$node->pricebook));
   }
   
@@ -245,7 +263,7 @@ class Model_Supplier extends Model_Table {
   <url>http://www.complies.nl/clientexport.aspx?name=complies01&amp;type=csv&amp;key=3692pcfast</url>
   <type>csv</type>
   <encoding>utf8</encoding>
-  <seperator xml:space="preserve">,</seperator>
+  <delimiter xml:space="preserve">,</delmiter>
   <enclosure>"</enclosure>
   <trim xml:space="preserve"> </trim>
   <escape></escape>

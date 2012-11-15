@@ -5,6 +5,8 @@ function exceptions_error_handler($severity, $message, $filename, $lineno, $vars
 }
 
 class Frontend extends ApiFrontend {
+  protected $user;
+  protected $shop;
   function md5($value) {return md5($value);}
 	function init(){
 		parent::init();
@@ -56,6 +58,7 @@ class Frontend extends ApiFrontend {
 	$m->addMenuItem('supplier', 'Supplier');
     $m->addMenuItem('logout','Logout');
  
+<<<<<<< HEAD
     $si=$this->add('Controller_Shopimport');
     $s=$si->shop;
     $u=$si->user;
@@ -70,6 +73,21 @@ class Frontend extends ApiFrontend {
 	}
 	$pp->add('HTML')->set('<br/>');
     $pp->add('Text')->set('shop: '.$s['name']);
+=======
+ 
+    $this->user=$this->api->auth->model;
+    if($shop_id=$this->api->recall('shop_id')) {
+      $this->shop=$this->user->ref('Shop')->load($shop_id);
+    } else {
+      $this->shop=$this->user->ref('Shop')->tryLoadAny();
+      $this->api->memorize('shop_id',$this->shop->id);
+    }
+
+    $pp=$this->api->add('P',null,'UserInfo');
+    $pp->add('Text')->set('user: '.$this->user['email']);
+    $pp->add('HTML')->set('<br/>');
+    $pp->add('Text')->set('shop: '.$this->shop['name']);
+>>>>>>> bb87f0e4afc191f101e57daa2420557415a43daa
     // button change shop when count($u->ref('Shop')) > 1
     
     /*
@@ -86,4 +104,13 @@ class Frontend extends ApiFrontend {
 
     //$this->add('performance/Controller_Profiler');
 	}
+  
+  function getUser() {
+    return $this->user;
+  }
+  
+  function getShop() {
+    return $this->shop;
+  }
+  
 }
