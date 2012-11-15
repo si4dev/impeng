@@ -5,18 +5,22 @@ class Admin extends ApiFrontend {
     parent::init();
     
     ini_set('display_errors',1);
-    
 
     $this->addLocation('..',array(
                     'php'=>array(
 						'lib',
                         'atk4-addons/mvc',
                         'atk4-addons/billing/lib',
-                        'atk4-addons/misc/lib',
+                        'atk4-addons/misc/lib',	
+						
                         )
+						,
+					'addons' => 'atk4-addons'
                     ))
             ->setParent($this->pathfinder->base_location);
 
+			
+			
     $this->add('jUI');
 
     $this->js()
@@ -34,7 +38,8 @@ class Admin extends ApiFrontend {
     $m = $this->add('Menu', null, 'Menu');
     $m->addMenuItem('user','Users');      
     $m->addMenuItem('shop','Shops');      
-    $m->addMenuItem('supplier','Suppliers');      
+    $m->addMenuItem('supplier','Suppliers');
+	$m->addMenuItem('fileadmin', 'Manage Uploads');
     $m->addMenuItem('logout','Log out');      
   }
   

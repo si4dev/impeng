@@ -99,7 +99,7 @@ function handleShutdown() {
 
 
 
-include realpath('.').'/atk4/lib/static.php';
+include realpath('.').'/../atk4/lib/static.php';
 
 
 
