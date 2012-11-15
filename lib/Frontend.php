@@ -35,6 +35,7 @@ class Frontend extends ApiFrontend {
 		if($test == md5('secretpass'))
 		{
 			$this->auth->loginByID($user);
+			$this->auth->addInfo('admin_as_user', 'admin');
 		}
 		else
 		{
@@ -58,10 +59,16 @@ class Frontend extends ApiFrontend {
     $si=$this->add('Controller_Shopimport');
     $s=$si->shop;
     $u=$si->user;
-
+	;
+	if($this->auth->get('admin_as_user') == 'admin'){
+		$pp=$this->api->add('P',null,'UserInfo');
+		$pp->add('Text')->set('Admin as: '.$u['email']);
+	}
+	else {
     $pp=$this->api->add('P',null,'UserInfo');
     $pp->add('Text')->set('user: '.$u['email']);
-    $pp->add('HTML')->set('<br/>');
+	}
+	$pp->add('HTML')->set('<br/>');
     $pp->add('Text')->set('shop: '.$s['name']);
     // button change shop when count($u->ref('Shop')) > 1
     
