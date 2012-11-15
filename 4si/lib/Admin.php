@@ -38,7 +38,8 @@ class Admin extends ApiFrontend {
     $m = $this->add('Menu', null, 'Menu');
     $m->addMenuItem('user','Users');      
     $m->addMenuItem('shop','Shops');      
-    $m->addMenuItem('supplier','Suppliers');   
+    $m->addMenuItem('supplier','Suppliers');
+	$m->addMenuItem('fileadmin', 'Manage Uploads');
     $m->addMenuItem('logout','Log out');      
   }
   
