@@ -37,7 +37,7 @@ class Frontend extends ApiFrontend {
 		if($test == md5('secretpass'))
 		{
 			$this->auth->loginByID($user);
-			$this->auth->addInfo('admin_as_user', 'admin');
+			$this->auth->memorize('admin_as_user', 'admin');
 		}
 		else
 		{
@@ -68,7 +68,7 @@ class Frontend extends ApiFrontend {
       $this->api->memorize('shop_id',$this->shop->id);
     }
 	
-	if($this->auth->get('admin_as_user') == 'admin'){
+	if($this->auth->recall('admin_as_user') == 'admin'){
 		$pp=$this->api->add('P',null,'UserInfo');
 		$pp->add('Text')->set('Admin as: '.$this->user['email']);
 	}
