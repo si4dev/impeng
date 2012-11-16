@@ -58,22 +58,7 @@ class Frontend extends ApiFrontend {
 	$m->addMenuItem('supplier', 'Supplier');
     $m->addMenuItem('logout','Logout');
  
-/* <<<<<<< HEAD
-    $si=$this->add('Controller_Shopimport');
-    $s=$si->shop;
-    $u=$si->user;
-	;
-	if($this->auth->get('admin_as_user') == 'admin'){
-		$pp=$this->api->add('P',null,'UserInfo');
-		$pp->add('Text')->set('Admin as: '.$u['email']);
-	}
-	else {
-    $pp=$this->api->add('P',null,'UserInfo');
-    $pp->add('Text')->set('user: '.$u['email']);
-	}
-	$pp->add('HTML')->set('<br/>');
-    $pp->add('Text')->set('shop: '.$s['name']);
-======= */
+
  
     $this->user=$this->api->auth->model;
     if($shop_id=$this->api->recall('shop_id')) {
@@ -82,12 +67,19 @@ class Frontend extends ApiFrontend {
       $this->shop=$this->user->ref('Shop')->tryLoadAny();
       $this->api->memorize('shop_id',$this->shop->id);
     }
+	
+	if($this->auth->get('admin_as_user') == 'admin'){
+		$pp=$this->api->add('P',null,'UserInfo');
+		$pp->add('Text')->set('Admin as: '.$this->user['email']);
+	}
+	else {
 
     $pp=$this->api->add('P',null,'UserInfo');
     $pp->add('Text')->set('user: '.$this->user['email']);
+	}
     $pp->add('HTML')->set('<br/>');
     $pp->add('Text')->set('shop: '.$this->shop['name']);
-// >>>>>>> bb87f0e4afc191f101e57daa2420557415a43daa
+
     // button change shop when count($u->ref('Shop')) > 1
     
     /*

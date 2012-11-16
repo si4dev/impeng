@@ -5,9 +5,9 @@ Class Page_Supplier extends Page {
 		parent::init();
 		
 		$link = $this->add('Model_SupplierLink');
-		$si = $this->add('Controller_Shopimport');
+		$shop_id = $this->api->recall('shop_id');
 	
-		$link_id = $link->dsql()->field('supplier_id')->where('shop_id', $si->shop->id);
+		$link_id = $link->dsql()->field('supplier_id')->where('shop_id', $shop_id);
 		
 		$m = $this->add('Model_Supplier');
 		$m->addCondition('id', $link_id);
