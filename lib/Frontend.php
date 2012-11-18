@@ -35,15 +35,14 @@ class Frontend extends ApiFrontend {
 	  if(isset($_GET['login_as'])){
 		if($this->auth->isLoggedIn()){
 			$this->auth->logout();
-			$this->stickyGET('login_as');
-			$this->api->redirect($this->api->url());
+			
+			$this->api->redirect($this->api->url(),array('login_as'=> $_GET['login_as'])) ;
 		}
 	
 		list($user, $token) = explode(':', $_GET['login_as']);
 		
 		if($token == md5('secretpass')){
 			$this->auth->loginByID($user);
-			$this->stickyForget('login_as');
 			$this->auth->memorize('admin_as_user', 'admin');
 		}
 		else{
