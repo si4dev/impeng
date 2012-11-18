@@ -13,7 +13,8 @@ class page_user extends Page {
       $crud->grid->getColumn('login')->makeSortable();
 	  $b = $crud->grid->addColumn('button', 'login_as' ,'login_as');
 	   
-          
+      $admin = $this->api->auth->model; //get the admin model
+	  
       if($_GET['set_password']){
           $u=$this->add('Model_User')
               ->load($_GET['set_password']);
@@ -25,8 +26,7 @@ class page_user extends Page {
 	  
 	   if(isset($_GET['login_as'])){
 			$user = $_GET['login_as'].':'.md5('secretpass');
-			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=> $user)))->execute();
-				 
+			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=> $user)))->execute();				 
 		}
 	 }
     	
