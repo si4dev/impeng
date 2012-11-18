@@ -1,19 +1,14 @@
 <?php 
 
 
-class Page_Supplier_Upload extends Page {
+class Page_supplier_upload extends Page {
 	function init(){
 		parent::init();
 		
 		if($_GET['supplier_id']){
+			$this->api->stickyGET('supplier_id');
 			$id = $_GET['supplier_id'];
-			$this->api->memorize('sup_id', $id);
 		}
-		else
-		{
-			$id = $this->api->recall('sup_id');
-		}
-		
 			
 		$s= $this->add('Model_Supplier');
 		$s->load($id);
