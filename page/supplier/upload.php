@@ -1,6 +1,5 @@
 <?php 
 
-
 class Page_Supplier_Upload extends Page {
 	function init(){
 		parent::init();
@@ -13,7 +12,6 @@ class Page_Supplier_Upload extends Page {
 		{
 			$id = $this->api->recall('sup_id');
 		}
-		
 			
 		$s= $this->add('Model_Supplier');
 		$s->load($id);
@@ -21,9 +19,9 @@ class Page_Supplier_Upload extends Page {
 		
 		foreach($paths as $path){
 			$f=$this->add('Form');
-			$f->add('p')->set($path);
+			$f->add('p')->set($path['file_name']);
 			$m = $this->add('Model_uploadPricelist');
-			$m->supplierpath = $path;		
+			$m->supplierpath = $path['path'];		
 			$f->addField('upload', 'supplier_file')->setModel($m);
 		}		
 	}

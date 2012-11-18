@@ -250,11 +250,14 @@ class Model_Supplier extends Model_Table {
 		$config=$this->config();
 		
 		foreach($config->import as $import) {
-		  $file[]=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+		  $filedatas['path']=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+		  $filedatas['file_name'] = $this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+		  $file[] = $filedatas;
+		  
 		}
 		
 		return $file;	
-  }  
+  }
 }
 
 /*

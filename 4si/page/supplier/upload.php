@@ -21,9 +21,9 @@ class Page_Supplier_Upload extends Page {
 		
 		foreach($paths as $path){
 			$f=$this->add('Form');
-			$f->add('p')->set($path);
+			$f->add('p')->set($path['file_name']);
 			$m = $this->add('Model_uploadPricelist');
-			$m->supplierpath = $path;		
+			$m->supplierpath = $path['path'];		
 			$f->addField('upload', 'supplier_file')->setModel($m);
 		}		
 	}
