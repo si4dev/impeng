@@ -44,7 +44,7 @@ class Frontend extends ApiFrontend {
 	  //now , login as the user
 		list($user, $token) = explode(':', $_GET['admin_as']);
 		
-		if($token == md5('secretpass')){
+		if($token == md5($this->api->getConfig('token').date('d:M:Y'))){
 			$this->auth->loginByID($user);
 			$this->auth->memorize('admin_as_user', 'admin');
 		}

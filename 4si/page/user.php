@@ -25,7 +25,8 @@ class page_user extends Page {
       }
 	  
 	   if(isset($_GET['login_as'])){
-			$user = $_GET['login_as'].':'.md5('secretpass');
+			$token = md5($this->api->getConfig('token').date('d:M:Y'));
+			$user = $_GET['login_as'].':'.$token;
 			$this->js(null, $this->js()->univ()->redirect('../', array('login_as'=> $user)))->execute();				 
 		}
 	 }
