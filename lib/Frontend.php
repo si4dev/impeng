@@ -33,17 +33,23 @@ class Frontend extends ApiFrontend {
     //$this->auth->usePasswordEncryption('md5')->check();
 	
 	  if(isset($_GET['login_as'])){
-		list($user, $test) = explode(':', $_GET['login_as']);
-		if($test == md5('secretpass'))
-		{
+		if($this->auth->isLoggedIn()){
+			$this->auth->logout();
+			$this->stickyGET('login_as');
+			$this->api->redirect($this->api->url());
+		}
+	
+		list($user, $token) = explode(':', $_GET['login_as']);
+		
+		if($token == md5('secretpass')){
 			$this->auth->loginByID($user);
+			$this->stickyForget('login_as');
 			$this->auth->memorize('admin_as_user', 'admin');
 		}
-		else
-		{
+		else{
 			throw new exception("Attempt to hack");
 		}
-		}
+	  }
 	
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
