@@ -3,8 +3,10 @@ class page_supplier extends Page {
   function init() {
     parent::init();
     
-    
-    $c=$this->add('CRUD');
+    $tt = $this->add('Tabs');
+	$ts = $tt->addTab('Supplier');
+	$tsl = $tt->addTab('Supplier Link');
+    $c=$ts->add('CRUD');
     $c->setModel('Supplier',array('name','friendly_name','branch','config'),array('name','friendly_name','branch','import_start','import_full','import_end'));
 	
     if($c->grid) {
@@ -29,6 +31,8 @@ class page_supplier extends Page {
       $cfg->set(str_replace(array('&'),array('&amp;'),$cfg->setAttr('rows',100)->get()));
       
     }
+	
+	$g = $tsl->add('CRUD')->setModel('Supplierlink');
 
     }
 }
