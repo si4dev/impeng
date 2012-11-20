@@ -34,11 +34,11 @@ class Model_Shop extends Model_Table {
     if($value===null) {    
       $m=$this->add('Model_margin');
       $shop=$this;
-      $m->addHook('afterDelete',function($o) use($shop) { $shop->shopconfig_r('margin',$o)->save(); });
-      $m->addHook('afterSave',function($o) use($shop) { $shop->shopconfig_r('margin',$o)->save(); });
-      return $m->setSource('Array',$this->shopconfig_r('margin'))->setOrder('from');
+      $m->addHook('afterDelete',function($o) use($shop) { $shop->config('shopconfig/margin',$o)->save(); });
+      $m->addHook('afterSave',function($o) use($shop) { $shop->config('shopconfig/margin',$o)->save(); });
+      return $m->setSource('Array',(array)$this->config('shopconfig/margin'))->setOrder('from');
     } else {
-      $this->shopconfig_r('margin',$value);
+      $this->config('shopconfig/margin',$value);
     }
     return $this;
   }
@@ -49,98 +49,93 @@ class Model_Shop extends Model_Table {
     if($value===null) {    
       $m=$this->add('Model_Rounding');
       $shop=$this;
-      $m->addHook('afterDelete',function($o) use($shop) { $shop->shopconfig_r('rounding',$o)->save(); });
-      $m->addHook('afterSave',function($o) use($shop) { $shop->shopconfig_r('rounding',$o)->save(); });
-      return $m->setSource('Array',$this->shopconfig_r('rounding'))->setOrder('from');
+      $m->addHook('afterDelete',function($o) use($shop) { $shop->config('shopconfig/rounding',$o)->save(); });
+      $m->addHook('afterSave',function($o) use($shop) { $shop->config('shopconfig/rounding',$o)->save(); });
+      return $m->setSource('Array',(array)$this->config('shopconfig/rounding'))->setOrder('from');
     } else {
-      $this->shopconfig_r('rounding',$value);
+      $this->config('shopconfig/rounding',$value);
     }
     return $this;
   }
 
 
-
-
-  function shopconfig_r($field,$value=null) {
-    $this->config();
-    if($value===null) {
-      $r=array();$i=1;
-      if(!isset($this->config->shopconfig->{$field})) return array();
-      foreach($this->config->shopconfig->{$field}->children() as $row) {
-        $r[$i++]=(array)$row;
-      }
-      return $r;
-    }
-    unset($this->config->shopconfig->{$field});
-    $i=0;
-    foreach($value as $row) {
-      foreach($row as $key=>$value) {
-        if($key!='id') $this->config->shopconfig->{$field}->row[$i]->{$key}=$value;
-      }
-      $i++;
-    }
-    return $this;
-  }
-
-
-  function shopconfig($field,$value=null) {
-    $this->config();
-    if($value===null) return (string)$this->config->shopconfig->{$field};
-    $this->config->shopconfig->{$field}->{0}=$value;
-    return $this;
-  }
-  function shopsystem($v=null) {
-    return $this->shopconfig('shopsystem',$v);
+ 
+  
+  function shopsystem($value=undefined) {
+    return $this->config('shopconfig/shopsystem',$value);
   }
   
-  function config($cfg=null) {
+  // this function will be able to read or store a string value or an array into an XML field
+  function config($fieldpath=null,$value=undefined) {
+    // first get the field into XML (only once)
     if(!isset($this->config)) {
       $this->config=new SimpleXMLElement('<config>'.$this->get('config').'</config>'); // add root node
     }
+    if($fieldpath===null) return $this->config;
     
     
-    return;
-    
-    // not ready:
-    
-    if($cfg) {
-      foreach($cfg as $key => $value) {
-        $n=$this->config;
-        $key='q1_q2_q3_q4_q5';
-        foreach(explode('_',$key) as $node) {
+    // set root node
+    $n=$this->config;
+    // test for read or store
+    if($value===undefined) {
+      
+      
+      // GET the config variable
+      foreach(explode('/',$fieldpath) as $node) $n=$n->{$node};
+      if(isset($n) and $n->row) { 
+        // if a row element is found then it's an array
+        $r=array();$i=1;
+        foreach($n->children() as $row) $r[$i++]=(array)$row;
+        return $r; 
+      } elseif( !(string)$n ) { 
+        return $n;
+      } else {
+        // else it's not an array but just a string value
+        return (string)$n;
+      }
+    } else {
+      
+      
+      // SET the config variable
+      foreach(explode('/',$fieldpath) as $node) {
+        if(!$n->{$node}) $n->addChild($node);
+        $n=$n->{$node};
+      }
+      
+      // $value can be array or model non-relational object
+      if(is_array($value) or is_object($value)) {
+        // set array
+        
+        // first remove previous XML array and repeat to find the node
+        unset($n->{0});   
+        $n=$this->config;     
+        foreach(explode('/',$fieldpath) as $node) {
           if(!$n->{$node}) $n->addChild($node);
           $n=$n->{$node};
+        } 
+        
+        // loop through the array with several rows of information and store it as XML
+        $i=0;
+        foreach($value as $row) {
+          foreach($row as $key=>$v) {
+            if($key!='id') $n->row[$i]->{$key}=$v;
+          }
+          $i++;
         }
+      } elseif(is_null($value)) {
+        // specific to unset the XML value
+        unset($n->{0});
+      } else {
+        // set the value as string
         $n->{0}=$value; // unbelievable but it works to set current value
       }
-      $x=$this->config->{'x1'}->{'x2'}->{'x3'}->{0};
-      $x->{0}='X4';
-      $this->config->testje='mooi<haha>ir</haha>lekker';
-      $r='';
-      foreach($this->config->children() as $n) $r.=(string)$n->asXml(); // output without root node
-      $this->set('config',$r);
     }
+    return $this; 
   }
-
-
-    
-
   
-
-  function imagepath() {
-    $this->config();
-    return (string)$this->config->shopconfig->imagepath;
-  }
-
-  function thumbspath() {
-    $this->config();
-    return (string)$this->config->shopconfig->thumbspath;
-  }
-
   // returns the supplier name in case automatically category creation is required
   function category_import() {
-    $this->config();
-    return (string)$this->config->category_import->supplier;
+    return (string)$this->config('category_import/supplier');
   }
 
 
@@ -155,32 +150,9 @@ class Model_Shop extends Model_Table {
         ->save();
         print($rounding);
     }
-     $r->set('from','1')
-        ->set('value','12')
-        ->set('offset','-0.05')
-        ->save();
-    
-    // foreach($r as $rr) print_r($rr);
     return $r;
   }
 
-// KAN WEG
-  function roundings() {
-    $this->config();
-    $r=$this->add('Model_Rounding');
-    $r->setSource('Array');
-    foreach($this->config->roundings as $rounding) {
-      $r->set('from',(string)$rounding->from)
-        ->set('value',(string)$rounding->value)
-        ->set('offset',(string)$rounding->offset)
-        ->save();
-    }
-    
-    
-    foreach($r as $rr) print_r($rr);
-    return $r;
-  }
-  
   // fill Fitler table for this shop with supplier categories when not already available
   function prepareFilter() {
  
