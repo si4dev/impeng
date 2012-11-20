@@ -31,7 +31,7 @@ class page_shopconfig extends Page {
       }
 
       $this->add('h2')->set('Suppliers');
-      $this->add('CRUD')->setModel($s->ref('SupplierLink'),array('supplier_id','prefix','pricebook_id'),array('supplier','prefix','pricebook'));
+      $this->add('CRUD')->setModel($s->ref('SupplierLink'),array('supplier_id','prefix','pricebook_id', 'is_owner'),array('supplier','prefix','pricebook'));
 
     } // end if shop
   }
