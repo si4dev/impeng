@@ -3,6 +3,7 @@ class Controller_Prestashop extends AbstractController {
   protected $lang='nl';
   function init() {
     parent::init();
+    $this->version='1.5';
     
     if(!isset($this->owner->platformCtrl)) {
       $this->owner->platformCtrl=$this;
@@ -12,6 +13,7 @@ class Controller_Prestashop extends AbstractController {
       
       $this->owner->addMethod('ftproot',array($this,'ftproot'));
       $this->owner->addMethod('connection',array($this,'connection'));
+      $this->owner->addMethod('imagepath',array($this,'imagepath'));
       
       unset($this->api->db2);
       if($connection=$this->owner->connection()) {
@@ -35,6 +37,7 @@ class Controller_Prestashop extends AbstractController {
   }
   function ftproot($m,$v=undefined) { return $m->config('shopconfig/ftproot',$v); }
   function connection($m,$v=undefined) { return $m->config('shopconfig/connection',$v); }
+  function imagepath($m,$v=undefined) { return $m->config('shopconfig/imagepath',$v); }
 
       
   // imports shop categories into local table --- We do not use anymore.. 
@@ -250,11 +253,23 @@ class Controller_Prestashop extends AbstractController {
       $m->set('date_add',$product['entry_date']); 
       $m->set('date_upd',$m->dsql()->expr('now()')); 
       $m->set('id_category_default',$product['catshop_id']); 
-      $m->set('id_color_default',0); 
+      //$m->set('id_color_default',0); 
       $m->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
       $m->set('active',1);
       $m->save();
-    
+
+      if( $this->version >= '1.5' ) {
+        $productshop=$m->ref('Prestashop_ProductShop')->tryLoadAny();
+        $productshop->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
+        $productshop->set('price',$product['price']);
+        $productshop->set('id_category_default',$product['catshop_id']); 
+        $productshop->set('date_add',$product['entry_date']); 
+        $productshop->set('date_upd',$m->dsql()->expr('now()')); 
+        $productshop->set('active',1);
+        $productshop->saveAndUnload();
+      }
+
+                
       // handle title based on product id
       $productlang=$m->ref('Prestashop_ProductLang');
       foreach($this->languages as $langiso => $langid) {

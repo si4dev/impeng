@@ -32,7 +32,7 @@ class Model_Supplier extends Model_Table {
    
          
       // create filename to save the csv import file to
-      $file=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+      $file=$this->api->getConfig('path_supplierdata').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
 //ZZZZ      copy((string)$import->url,$file); // get url csv into local file
 
 
@@ -220,7 +220,9 @@ class Model_Supplier extends Model_Table {
           $prod->addInfo($type,$row[$key],$lang);
         }
       }
-      $prod->setInfo()->saveAndUnload();
+      $prod->setInfo()->save();
+
+      $media=$prod->ref('Media')->found(explode('|',$row['images']));
     
       if($i++ > 200000) {
         break;
@@ -245,18 +247,28 @@ class Model_Supplier extends Model_Table {
     $this->api->db->query($query,array('supplier'=>$this->id,'pricebook'=>(int)$node->pricebook));
   }
   
+  
+  
+  
   function getFiles(){
 		$file=array();
 		$config=$this->config();
 		
 		foreach($config->import as $import) {
-		  $filedatas['path']=$this->api->getConfig('path_supplier_date').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
+		  $filedatas['path']=$this->api->getConfig('path_supplierdata').$this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
 		  $filedatas['file_name'] = $this->get('name').'_'.(string)$import->name.'.'.(string)$import->type;
 		  $file[] = $filedatas;
 		  
 		}
 		
 		return $file;	
+  }
+  
+  
+  // -----------------------------------------------------------------------------------------------
+  // download the media files for a specific supplier
+  function importMedia($max) {
+    return $this->setController('SupplierMedia')->importMedia($max);
   }
 }
 
