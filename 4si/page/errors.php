@@ -4,14 +4,27 @@ class page_errors extends Page{
 	function init(){
 		parent::init();
 
-		$on = $this->add('Button')->setLabel('DebugMode on');
-		$off = $this->add('Button')->setLabel('DebugMode off');
+		
 
 		$url = $this->api->getDestinationURL($this->api->url('/'));
 		$url->useAbsoluteURL();
 
-		$on->js('click')->univ()->redirect($url, array('debugmode' => 'on'));
-		$off->js('click')->univ()->redirect($url,  array('debugmode' => 'off'));
+		
+		
+
+		if($_GET['debugmode'] == 'on'){
+			$off = $this->add('Button')->setLabel('DebugMode off');
+			$off->js('click')->univ()->redirect($url,  array('debugmode' => 'off'));
+		}
+		else
+		{
+			$on = $this->add('Button')->setLabel('DebugMode on');
+			$on->js('click')->univ()->redirect($url, array('debugmode' => 'on'));
+		}
+
+		$this->add('hr');
+		
+		
 
 		$tt = $this->add('Tabs');
 		$log = $tt->addTab('Log');

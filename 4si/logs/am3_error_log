@@ -3705,3 +3705,1036 @@ Additional information:
 [25-Nov-2012 19:29:06 UTC] PHP   8. Model_Log->start() D:\wamp\www\impeng\lib\Dbug.php:66
 [25-Nov-2012 19:29:06 UTC] PHP   9. Model_Table->_dsql() D:\wamp\www\impeng\lib\Model\Log.php:34
 [25-Nov-2012 19:29:06 UTC] PHP  10. Model_Table->initQuery() D:\wamp\www\impeng\atk4\lib\Model\Table.php:113
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include supplier\nn.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:01:26
+Query String: page=supplier_nn&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "supplier\nn.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "supplier\nn.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_supplier_nn")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_supplier_nn")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/supplier\nn.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:05:07
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:06:40
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:06:59
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:07:01
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:07:09
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:07:21
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+[26-Nov-2012 12:07:46 UTC] PHP Parse error:  syntax error, unexpected ',', expecting '(' in D:\wamp\www\impeng\lib\Dbug.php on line 70
+[26-Nov-2012 12:07:46 UTC] PHP Stack trace:
+[26-Nov-2012 12:07:46 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:07:46 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:07:46 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:07:46 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:07:46 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:07:46 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:07:46 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:07:54
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:08:33
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:08:39
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:08:43
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+: ErrorException: Notice: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:77]Use of undefined constant caughtException - assumed 'caughtException'
+------------------------------------------------------------
+Date: 26-Nov-2012 12:09:23
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164 AbstractObject->add("Dbug")
+D:\wamp\www\impeng\4si\lib\Admin.php:34 ApiCLI->getLogger("Dbug")
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68 Admin->init()
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35 ApiCLI->__construct("4si")
+D:\wamp\www\impeng\4si\index.php:3 ApiWeb->__construct("4si")
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:09:37
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:09:45
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+[26-Nov-2012 12:09:56 UTC] PHP Parse error:  syntax error, unexpected ',' in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:09:56 UTC] PHP Stack trace:
+[26-Nov-2012 12:09:56 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:09:56 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:09:56 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:09:56 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:09:56 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:09:56 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:09:56 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 12:10:02 UTC] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:10:02 UTC] PHP Stack trace:
+[26-Nov-2012 12:10:02 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:10:02 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:10:02 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:10:02 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:10:02 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:10:02 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:10:02 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 12:10:10 UTC] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:10:10 UTC] PHP Stack trace:
+[26-Nov-2012 12:10:10 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:10:10 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:10:10 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:10:10 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:10:10 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:10:10 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:10:10 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 12:10:38 UTC] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:10:38 UTC] PHP Stack trace:
+[26-Nov-2012 12:10:38 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:10:38 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:10:38 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:10:38 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:10:38 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:10:38 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:10:38 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 12:11:06 UTC] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:11:06 UTC] PHP Stack trace:
+[26-Nov-2012 12:11:06 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:11:06 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:11:06 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:11:06 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:11:06 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:11:06 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:11:06 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 12:11:26 UTC] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:11:26 UTC] PHP Stack trace:
+[26-Nov-2012 12:11:26 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:11:26 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:11:26 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:11:26 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:11:26 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:11:26 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:11:26 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:11:43
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+[26-Nov-2012 12:13:08 UTC] PHP Fatal error:  Call to a member function addHook() on a non-object in D:\wamp\www\impeng\lib\Dbug.php on line 77
+[26-Nov-2012 12:13:08 UTC] PHP Stack trace:
+[26-Nov-2012 12:13:08 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:13:08 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:13:08 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:13:08 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:13:08 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:13:08 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:13:08 UTC] PHP   7. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:13:21
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:13:35
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:14:23
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:14:35
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:14:57
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+[26-Nov-2012 12:16:01 UTC] PHP Fatal error:  Maximum function nesting level of '100' reached, aborting! in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 548
+[26-Nov-2012 12:16:01 UTC] PHP Stack trace:
+[26-Nov-2012 12:16:01 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:16:01 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:16:01 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:16:01 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:16:01 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:16:01 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP   7. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP   8. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP   9. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  10. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  11. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  12. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  13. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  14. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  15. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  16. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  17. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  18. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  19. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  20. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  21. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  22. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  23. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  24. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  25. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  26. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  27. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  28. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  29. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  30. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  31. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  32. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  33. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  34. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  35. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  36. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  37. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  38. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  39. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  40. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  41. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  42. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  43. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  44. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  45. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  46. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  47. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  48. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  49. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  50. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  51. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  52. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  53. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  54. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  55. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  56. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  57. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  58. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  59. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  60. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  61. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  62. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  63. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  64. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  65. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  66. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  67. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  68. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  69. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  70. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  71. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  72. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  73. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  74. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  75. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  76. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  77. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  78. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  79. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  80. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:01 UTC] PHP  81. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:01 UTC] PHP  82. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:01 UTC] PHP  83. Model_Log->start() D:\wamp\www\impeng\lib\Dbug.php:66
+[26-Nov-2012 12:16:01 UTC] PHP  84. Model_Table->save() D:\wamp\www\impeng\lib\Model\Log.php:40
+[26-Nov-2012 12:16:01 UTC] PHP  85. Model_Table->insert() D:\wamp\www\impeng\atk4\lib\Model\Table.php:558
+[26-Nov-2012 12:16:01 UTC] PHP  86. Model_Table->tryLoad() D:\wamp\www\impeng\atk4\lib\Model\Table.php:596
+[26-Nov-2012 12:16:01 UTC] PHP  87. Model_Table->_load() D:\wamp\www\impeng\atk4\lib\Model\Table.php:423
+[26-Nov-2012 12:16:01 UTC] PHP  88. DB_dsql->getHash() D:\wamp\www\impeng\atk4\lib\Model\Table.php:484
+[26-Nov-2012 12:16:01 UTC] PHP  89. DB_dsql->fetch() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:889
+[26-Nov-2012 12:16:01 UTC] PHP  90. DB_dsql->execute() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:893
+[26-Nov-2012 12:16:01 UTC] PHP  91. DB_dsql->render() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:797
+[26-Nov-2012 12:16:01 UTC] PHP  92. DB_dsql->_render() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1006
+[26-Nov-2012 12:16:01 UTC] PHP  93. preg_replace_callback() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1022
+[26-Nov-2012 12:16:01 UTC] PHP  94. DB_dsql->{closure:D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1016-1022}() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1022
+[26-Nov-2012 12:16:01 UTC] PHP  95. DB_dsql->render_where() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1019
+[26-Nov-2012 12:16:01 UTC] PHP  96. DB_dsql->_render_where() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:448
+[26-Nov-2012 12:16:01 UTC] PHP  97. DB_dsql->escape() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:439
+[26-Nov-2012 12:16:01 UTC] PHP  98. DB_dsql->_unique() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:103
+[26-Nov-2012 12:16:01 UTC] PHP  99. AbstractObject->_unique() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:60
+[26-Nov-2012 12:16:12 UTC] PHP Fatal error:  Maximum function nesting level of '100' reached, aborting! in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 548
+[26-Nov-2012 12:16:12 UTC] PHP Stack trace:
+[26-Nov-2012 12:16:12 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:16:12 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:16:12 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:16:12 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:16:12 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:16:12 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP   7. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP   8. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP   9. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  10. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  11. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  12. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  13. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  14. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  15. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  16. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  17. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  18. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  19. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  20. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  21. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  22. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  23. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  24. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  25. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  26. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  27. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  28. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  29. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  30. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  31. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  32. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  33. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  34. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  35. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  36. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  37. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  38. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  39. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  40. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  41. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  42. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  43. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  44. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  45. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  46. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  47. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  48. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  49. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  50. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  51. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  52. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  53. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  54. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  55. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  56. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  57. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  58. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  59. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  60. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  61. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  62. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  63. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  64. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  65. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  66. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  67. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  68. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  69. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  70. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  71. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  72. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  73. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  74. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  75. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  76. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  77. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  78. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  79. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  80. ApiCLI->getLogger() D:\wamp\www\impeng\lib\Dbug.php:78
+[26-Nov-2012 12:16:12 UTC] PHP  81. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:16:12 UTC] PHP  82. Dbug->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+[26-Nov-2012 12:16:12 UTC] PHP  83. Model_Log->start() D:\wamp\www\impeng\lib\Dbug.php:66
+[26-Nov-2012 12:16:12 UTC] PHP  84. Model_Table->save() D:\wamp\www\impeng\lib\Model\Log.php:40
+[26-Nov-2012 12:16:12 UTC] PHP  85. Model_Table->insert() D:\wamp\www\impeng\atk4\lib\Model\Table.php:558
+[26-Nov-2012 12:16:12 UTC] PHP  86. Model_Table->tryLoad() D:\wamp\www\impeng\atk4\lib\Model\Table.php:596
+[26-Nov-2012 12:16:12 UTC] PHP  87. Model_Table->_load() D:\wamp\www\impeng\atk4\lib\Model\Table.php:423
+[26-Nov-2012 12:16:12 UTC] PHP  88. DB_dsql->getHash() D:\wamp\www\impeng\atk4\lib\Model\Table.php:484
+[26-Nov-2012 12:16:12 UTC] PHP  89. DB_dsql->fetch() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:889
+[26-Nov-2012 12:16:12 UTC] PHP  90. DB_dsql->execute() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:893
+[26-Nov-2012 12:16:12 UTC] PHP  91. DB_dsql->render() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:797
+[26-Nov-2012 12:16:12 UTC] PHP  92. DB_dsql->_render() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1006
+[26-Nov-2012 12:16:12 UTC] PHP  93. preg_replace_callback() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1022
+[26-Nov-2012 12:16:12 UTC] PHP  94. DB_dsql->{closure:D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1016-1022}() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1022
+[26-Nov-2012 12:16:12 UTC] PHP  95. DB_dsql->render_where() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:1019
+[26-Nov-2012 12:16:12 UTC] PHP  96. DB_dsql->_render_where() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:448
+[26-Nov-2012 12:16:12 UTC] PHP  97. DB_dsql->escape() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:439
+[26-Nov-2012 12:16:12 UTC] PHP  98. DB_dsql->_unique() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:103
+[26-Nov-2012 12:16:12 UTC] PHP  99. AbstractObject->_unique() D:\wamp\www\impeng\atk4\lib\DB\dsql.php:60
+
+
+============================================================
+BaseException.php on line 38, path: D:\wamp\www\impeng\atk4\lib
+
+PathFinder_Exception: Unable to include errors7.php
+
+------------------------------------------------------------
+Date: 26-Nov-2012 12:17:30
+Query String: page=errors7&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:131 PathFinder_Exception->__construct("page", "errors7.php", Array(1))
+D:\wamp\www\impeng\atk4\lib\PathFinder.php:198 PathFinder->locate("page", "errors7.php", "path")
+D:\wamp\www\impeng\atk4\lib\static.php:130 PathFinder->loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:77 loadClass("page_errors7")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * type: page
+ * attempted_locations:   * 0: D:/wamp/www/impeng/4si/page/errors7.php
+
+
+
+============================================================
+: ErrorException: Warning: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:78]register_shutdown_function(): Invalid shutdown callback '' passed
+------------------------------------------------------------
+Date: 26-Nov-2012 12:22:49
+Query String: page=user&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 Dbug->init()
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164 AbstractObject->add("Dbug")
+D:\wamp\www\impeng\4si\lib\Admin.php:34 ApiCLI->getLogger("Dbug")
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68 Admin->init()
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35 ApiCLI->__construct("4si")
+D:\wamp\www\impeng\4si\index.php:3 ApiWeb->__construct("4si")
+
+
+
+============================================================
+: ErrorException: Warning: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:78]register_shutdown_function(): Invalid shutdown callback 'test' passed
+------------------------------------------------------------
+Date: 26-Nov-2012 12:23:00
+Query String: page=user&debugmode=on
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 Dbug->init()
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164 AbstractObject->add("Dbug")
+D:\wamp\www\impeng\4si\lib\Admin.php:34 ApiCLI->getLogger("Dbug")
+D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68 Admin->init()
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35 ApiCLI->__construct("4si")
+D:\wamp\www\impeng\4si\index.php:3 ApiWeb->__construct("4si")
+
+[26-Nov-2012 12:27:37 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(100): Model_Log->logMsg(Object(PathFinder_Exception), 'exception')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274 in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:30:58 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(96): Model_Log->logMsg(Object(PathFinder_Exception), 'exception')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274) in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:32:13 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(94): Model_Log->logMsg(Object(PathFinder_Exception), 'fatal')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): Ap in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:34:52 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(94): Model_Log->logMsg(Object(PathFinder_Exception), 'fatal')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): Ap in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:35:50 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(94): Model_Log->logMsg(Object(PathFinder_Exception), 'fatal')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): Ap in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:37:36 UTC] PHP Fatal error:  Uncaught exception 'Exception_DB' with message 'Database Query Failed' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(804): AbstractObject->exception('Database Query ...')
+#1 D:\wamp\www\impeng\atk4\lib\DB\dsql.php(819): DB_dsql->execute()
+#2 D:\wamp\www\impeng\atk4\lib\Model\Table.php(580): DB_dsql->insert()
+#3 D:\wamp\www\impeng\atk4\lib\Model\Table.php(558): Model_Table->insert()
+#4 D:\wamp\www\impeng\atk4\lib\Model\Table.php(521): Model_Table->save()
+#5 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->saveAndUnload()
+#6 D:\wamp\www\impeng\lib\Dbug.php(94): Model_Log->logMsg(Object(PathFinder_Exception), 'fatal')
+#7 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#8 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#9 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#10 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): Ap in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:45:28 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Notice: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:95]Array to string conversion' in D:\wamp\www\impeng\lib/<b>Dbug.php</b>:95
+Stack trace:
+#0 D:\wamp\www\impeng\lib\Dbug.php(95): error_handler(8, 'Array to string...', 'D:\wamp\www\imp...', 95, Array)
+#1 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#2 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#3 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#4 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#5 D:\wamp\www\impeng\4si\index.php(4): ApiWeb->main()
+#6 {main}
+  thrown in D:\wamp\www\impeng\lib/<b>Dbug.php</b> on line 95
+[26-Nov-2012 12:45:41 UTC] PHP Fatal error:  Call to undefined method PathFinder_Exception::more_info() in D:\wamp\www\impeng\lib\Dbug.php on line 95
+[26-Nov-2012 12:45:41 UTC] PHP Stack trace:
+[26-Nov-2012 12:45:41 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:45:41 UTC] PHP   2. ApiWeb->main() D:\wamp\www\impeng\4si\index.php:4
+[26-Nov-2012 12:45:41 UTC] PHP   3. ApiWeb->caughtException() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:274
+[26-Nov-2012 12:45:41 UTC] PHP   4. AbstractObject->hook() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:189
+[26-Nov-2012 12:45:41 UTC] PHP   5. call_user_func_array() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435
+[26-Nov-2012 12:45:41 UTC] PHP   6. Dbug->caughtException() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435
+[26-Nov-2012 12:47:19 UTC] PHP Fatal error:  Uncaught exception 'Exception_Logic' with message 'Method is not defined for this object' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(468): AbstractObject->exception('Method is not d...', 'Logic')
+#1 D:\wamp\www\impeng\lib\Dbug.php(97): AbstractObject->__call('print_r', Array)
+#2 D:\wamp\www\impeng\lib\Dbug.php(97): Dbug->print_r(Array, '<ul>', '</ul>', '<li>', '</li>', ' ')
+#3 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#4 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#5 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#6 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#7 D:\wamp\www\impeng\4si\index.php(4): ApiWeb->main()
+#8 {main}
+  thrown in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+[26-Nov-2012 12:47:50 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Warning: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:97]print_r() expects at most 2 parameters, 6 given' in D:\wamp\www\impeng\lib/<b>Dbug.php</b>:97
+Stack trace:
+#0 [internal function]: error_handler(2, 'print_r() expec...', 'D:\wamp\www\imp...', 97, Array)
+#1 D:\wamp\www\impeng\lib\Dbug.php(97): print_r(Array, '<ul>', '</ul>', '<li>', '</li>', ' ')
+#2 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#3 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#4 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#5 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#6 D:\wamp\www\impeng\4si\index.php(4): ApiWeb->main()
+#7 {main}
+  thrown in D:\wamp\www\impeng\lib/<b>Dbug.php</b> on line 97
+[26-Nov-2012 12:48:11 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Warning: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:97]print_r() expects at most 2 parameters, 6 given' in D:\wamp\www\impeng\lib/<b>Dbug.php</b>:97
+Stack trace:
+#0 [internal function]: error_handler(2, 'print_r() expec...', 'D:\wamp\www\imp...', 97, Array)
+#1 D:\wamp\www\impeng\lib\Dbug.php(97): print_r(Array, '<ul>', '</ul>', '<li>', '</li>', ' ')
+#2 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#3 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#4 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#5 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#6 D:\wamp\www\impeng\4si\index.php(4): ApiWeb->main()
+#7 {main}
+  thrown in D:\wamp\www\impeng\lib/<b>Dbug.php</b> on line 97
+[26-Nov-2012 12:52:52 UTC] PHP Fatal error:  Uncaught exception 'ErrorException' with message 'Notice: [D:\wamp\www\impeng\lib/<b>Dbug.php</b>:94]Array to string conversion' in D:\wamp\www\impeng\lib/<b>Dbug.php</b>:94
+Stack trace:
+#0 D:\wamp\www\impeng\lib\Dbug.php(94): error_handler(8, 'Array to string...', 'D:\wamp\www\imp...', 94, Array)
+#1 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#2 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#3 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#4 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#5 D:\wamp\www\impeng\4si\index.php(4): ApiWeb->main()
+#6 {main}
+  thrown in D:\wamp\www\impeng\lib/<b>Dbug.php</b> on line 94
+[26-Nov-2012 12:53:08 UTC] PHP Fatal error:  Call to undefined function var_dupm() in D:\wamp\www\impeng\lib\Dbug.php on line 94
+[26-Nov-2012 12:53:08 UTC] PHP Stack trace:
+[26-Nov-2012 12:53:08 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:53:08 UTC] PHP   2. ApiWeb->main() D:\wamp\www\impeng\4si\index.php:4
+[26-Nov-2012 12:53:08 UTC] PHP   3. ApiWeb->caughtException() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:274
+[26-Nov-2012 12:53:08 UTC] PHP   4. AbstractObject->hook() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:189
+[26-Nov-2012 12:53:08 UTC] PHP   5. call_user_func_array() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435
+[26-Nov-2012 12:53:08 UTC] PHP   6. Dbug->caughtException() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435
+[26-Nov-2012 12:59:38 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in D:\wamp\www\impeng\lib\Dbug.php on line 162
+[26-Nov-2012 12:59:38 UTC] PHP Stack trace:
+[26-Nov-2012 12:59:39 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 12:59:39 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 12:59:39 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 12:59:39 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 12:59:39 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 12:59:39 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 12:59:39 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+[26-Nov-2012 13:00:10 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in D:\wamp\www\impeng\lib\Dbug.php on line 162
+[26-Nov-2012 13:00:10 UTC] PHP Stack trace:
+[26-Nov-2012 13:00:10 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[26-Nov-2012 13:00:10 UTC] PHP   2. ApiWeb->__construct() D:\wamp\www\impeng\4si\index.php:3
+[26-Nov-2012 13:00:10 UTC] PHP   3. ApiCLI->__construct() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:35
+[26-Nov-2012 13:00:10 UTC] PHP   4. Admin->init() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:68
+[26-Nov-2012 13:00:10 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
+[26-Nov-2012 13:00:10 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
+[26-Nov-2012 13:00:10 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167

@@ -103,6 +103,9 @@ class Frontend extends ApiFrontend {
     */
 
     //$this->add('performance/Controller_Profiler');
+
+    $this->logger = null;
+    $this->getLogger('Dbug');
 	}
   
   function getUser() {

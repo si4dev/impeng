@@ -66,19 +66,34 @@ class Dbug extends AbstractController {
     $this->model->start();
     //$this->model->end();
 
-		$this->api->addHook('caught-exception',array($this,'caughtException'));
+    //remove old hooks before add the new hooks
+    $this->api->removeHook('caught-exception');
+    $this->api->removeHook('output-fatal');
+    $this->api->removeHook('output-warning');
+    $this->api->removeHook('output-info');
+    $this->api->removeHook('output-debug');
+
+
+		
+    $this->api->addHook('caught-exception',array($this,'caughtException'), array(), 5);
 		$this->api->addHook('output-fatal',array($this,'outputFatal'));
 		$this->api->addHook('output-warning',array($this,'outputWarning'));
 		$this->api->addHook('output-info',array($this,'outputInfo'));
 		$this->api->addHook('output-debug',array($this,'outputDebug'));
 
+    $this->api->addHook('init', array($this, 'blaa'));
+    
+
    
   }
-  
 
-	function caughtException($caller,$msg,$shift=0){
-    $this->model->logMsg($msg,'exception');
-    exit;
+
+
+	function caughtException($caller,$e){
+      $msg = $e->getMessage();
+      $msg .= $this->backtrace($e->shift,$e->getTrace());
+
+      $this->model->logMsg($msg,'Exception');   
 	}  
 
 	function outputFatal($caller,$msg,$shift=0){
@@ -93,6 +108,65 @@ class Dbug extends AbstractController {
 	}  
 	function outputDebug($caller,$msg,$shift=0){
     $this->model->logMsg($msg,'debug');
-	} 
+	}
+
+
+
+  function backtrace($sh=null,$backtrace=null){
+    $output = "\n";
+    $output .= "Stack trace:\n";
+    if(!isset($backtrace)) $backtrace=debug_backtrace();
+
+    $n=0;
+    foreach($backtrace as $bt){
+      $n++;
+      $args = '';
+      if(!isset($bt['args']))continue;
+      foreach($bt['args'] as $a){
+        if(!empty($args)){
+          $args .= ', ';
+        }
+        switch (gettype($a)) {
+          case 'integer':
+          case 'double':
+            $args .= $a;
+            break;
+          case 'string':
+            $a = htmlspecialchars(substr($a, 0, 128)).((strlen($a) > 128) ? '...' : '');
+            $args .= "\"$a\"";
+            break;
+          case 'array':
+            $args .= "Array(".count($a).")";
+            break;
+          case 'object':
+            $args .= "Object(".get_class($a).")";
+            break;
+          case 'resource':
+            $args .= "Resource(".strstr($a, '#').")";
+            break;
+          case 'boolean':
+            $args .= $a ? 'True' : 'False';
+            break;
+          case 'NULL':
+            $args .= 'Null';
+            break;
+          default:
+            $args .= 'Unknown';
+        }
+      }
+
+      if(($sh==null && strpos($bt['file'],'/atk4/lib/')===false) || (!is_int($sh) && $bt['function']==$sh)){
+        $sh=$n;
+      }
+
+      $output .= dirname($bt['file'])."/".basename($bt['file'])."";
+      $output .= "{$bt['line']}";
+      $name=(!isset($bt['object']->name))?get_class($bt['object']):$bt['object']->name;
+      if($bt['object'])$output .= $name;else $output.="";
+      $output .= ">".get_class($bt['object'])."{$bt['type']}{$bt['function']}($args)\n";
+    }
+    $output .= "\n";
+    return $output;
+  }
    
 }
