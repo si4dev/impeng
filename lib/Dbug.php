@@ -68,20 +68,8 @@ class Dbug extends AbstractController {
 
     //remove old hooks before add the new hooks
     $this->api->removeHook('caught-exception');
-    $this->api->removeHook('output-fatal');
-    $this->api->removeHook('output-warning');
-    $this->api->removeHook('output-info');
-    $this->api->removeHook('output-debug');
 
-
-		
     $this->api->addHook('caught-exception',array($this,'caughtException'), array(), 5);
-		$this->api->addHook('output-fatal',array($this,'outputFatal'));
-		$this->api->addHook('output-warning',array($this,'outputWarning'));
-		$this->api->addHook('output-info',array($this,'outputInfo'));
-		$this->api->addHook('output-debug',array($this,'outputDebug'));
-
-    $this->api->addHook('init', array($this, 'blaa'));
     
 
    
@@ -95,23 +83,6 @@ class Dbug extends AbstractController {
 
       $this->model->logMsg($msg,'Exception');   
 	}  
-
-/* not needed
-	function outputFatal($caller,$msg,$shift=0){
-    $this->model->logMsg($msg,'fatal');
-	}  
-	function outputWarning($caller,$msg,$shift=0){
-
-    $this->model->logMsg($msg,'warning');
-	}  
-	function outputInfo($caller,$msg,$shift=0){
-    $this->model->logMsg($msg,'info');
-	}  
-	function outputDebug($caller,$msg,$shift=0){
-    $this->model->logMsg($msg,'debug');
-	}
-  */
-
 
 
   function backtrace($sh=null,$backtrace=null){
