@@ -96,6 +96,7 @@ class Dbug extends AbstractController {
       $this->model->logMsg($msg,'Exception');   
 	}  
 
+/* not needed
 	function outputFatal($caller,$msg,$shift=0){
     $this->model->logMsg($msg,'fatal');
 	}  
@@ -109,6 +110,7 @@ class Dbug extends AbstractController {
 	function outputDebug($caller,$msg,$shift=0){
     $this->model->logMsg($msg,'debug');
 	}
+  */
 
 
 

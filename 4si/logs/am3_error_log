@@ -4738,3 +4738,19 @@ Stack trace:
 [26-Nov-2012 13:00:10 UTC] PHP   5. ApiCLI->getLogger() D:\wamp\www\impeng\4si\lib\Admin.php:34
 [26-Nov-2012 13:00:10 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiCLI.php:164
 [26-Nov-2012 13:00:10 UTC] PHP   7. PathFinder->loadClass() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:167
+
+
+============================================================
+: Exception: blaaaaaaaaaaaa i'm a bad exception
+------------------------------------------------------------
+Date: 26-Nov-2012 13:31:49
+Query String: page=errors
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
