@@ -77,16 +77,15 @@ class Dbug extends AbstractController {
   
 
 	function caughtException($caller,$msg,$shift=0){
-    echo '&====&&&&&&&&&&&&&=';
     $this->model->logMsg($msg,'exception');
     exit;
 	}  
-  /*
+
 	function outputFatal($caller,$msg,$shift=0){
     $this->model->logMsg($msg,'fatal');
 	}  
 	function outputWarning($caller,$msg,$shift=0){
-echo '##########################';
+
     $this->model->logMsg($msg,'warning');
 	}  
 	function outputInfo($caller,$msg,$shift=0){
@@ -95,5 +94,5 @@ echo '##########################';
 	function outputDebug($caller,$msg,$shift=0){
     $this->model->logMsg($msg,'debug');
 	} 
-  */ 
+   
 }
