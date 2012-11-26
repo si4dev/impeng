@@ -71,15 +71,11 @@ class Dbug extends AbstractController {
 		$this->api->addHook('output-warning',array($this,'outputWarning'));
 		$this->api->addHook('output-info',array($this,'outputInfo'));
 		$this->api->addHook('output-debug',array($this,'outputDebug'));
+
+   
   }
   
-  	function logLine($msg,$shiftfunc=null,$severity='info',$trace=null){
-      // $this->log_output
-      
-      $this->model->logMsg($msg,$severity);
-	}
 
-  
 	function caughtException($caller,$msg,$shift=0){
     echo '&====&&&&&&&&&&&&&=';
     $this->model->logMsg($msg,'exception');

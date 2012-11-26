@@ -4,9 +4,9 @@ class Page_FileAdmin extends filestore\Page_FileAdmin {
 	function initMainPage(){
 		
 
-		/* Deactivated because not work with impeng
+		
 		$f=$this->add('Form');
-		$f->addField('upload','Upload_test','Upload Test')->setModel($this->model)->debug(); */
+		$f->addField('upload','Upload_test','Upload Test')->setModel($this->model)->debug();
 
 		$v=$this->add('View_Columns');
 		$g=$v->addColumn(6);

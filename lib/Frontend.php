@@ -25,7 +25,7 @@ class Frontend extends ApiFrontend {
 			;
 
     $this->dbConnect();
-    // $this->add('Dbug');
+   
 	
 	
 

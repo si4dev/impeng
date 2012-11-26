@@ -19,8 +19,8 @@ class Admin extends ApiFrontend {
                     ))
             ->setParent($this->pathfinder->base_location);
 
-			
-			
+
+	
     $this->add('jUI');
 
     $this->js()
@@ -28,7 +28,17 @@ class Admin extends ApiFrontend {
             ->_load('ui.atk4_notify');
 
     $this->dbConnect();
-    $this->add('Dbug');
+
+    if($_GET['debugmode'] == 'on'){
+        $this->logger = null;
+        $this->getLogger('Dbug');
+        $this->stickyGET('debugmode');
+    }
+
+    if($_GET['debugmode'] == 'off'){
+        $this->stickyForget('debugmode');
+    }
+   
 
     $this->add('Auth')->setModel('Admin'); // email and password are default to login
     $this->auth->usePasswordEncryption(function($v) { return md5($v); } );
@@ -40,7 +50,11 @@ class Admin extends ApiFrontend {
     $m->addMenuItem('shop','Shops');      
     $m->addMenuItem('supplier','Suppliers');
 	$m->addMenuItem('fileadmin', 'Manage Uploads');
-    $m->addMenuItem('logout','Log out');      
+    $m->addMenuItem('errors', 'Error logs');
+    $m->addMenuItem('logout','Log out'); 
+
+
+
   }
   
 }
