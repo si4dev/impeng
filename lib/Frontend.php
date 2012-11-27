@@ -53,12 +53,11 @@ class Frontend extends ApiFrontend {
 		}
 	 }
 	//debug logging
-
-  //check if it is not an AJax request
-    if(!isset($_GET['cut_page']) || $_GET['cut_page'] != 1){
-        $this->add('Dbug');
-    }
-    
+  
+  	$d =$this->add('Dbug');
+  	$d->set('test message');
+  	$d->addMoreInfo('1', 'foo');
+  				 					
    //debug mode for logMsg
     $url = $this->api->getDestinationURL($this->api->url('/'));
 	$url->useAbsoluteURL();

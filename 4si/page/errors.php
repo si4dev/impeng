@@ -42,13 +42,19 @@ class page_errors extends Page{
 		if($_GET['DeleteMessage']){
 			$m = $gm->getModel();
 			$m->delete($_GET['DeleteMessage']);
-			$this->js()->univ()->successMessage("Delete Successfull")->execute();
+			$this->js(null, array(
+				$this->js()->univ()->successMessage("Delete Successfull"),
+				$gm->js()->reload()
+				) )->execute();
 		}
 		
 		if($_GET['DeleteLog']){
 			$m = $gl->getModel();
 			$m->delete($_GET['DeleteLog']);
-			$this->js()->univ()->successMessage("Delete Successfull")->execute();
+			$this->js(null, array(
+				$this->js()->univ()->successMessage("Delete Successfull"),
+				$gl->js()->reload()
+				) )->execute();
 		}
 		
 	}

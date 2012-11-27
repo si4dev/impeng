@@ -57,6 +57,8 @@ function exceptions_error_handler($errno, $errstr, $errfile, $errline) {
 //throw new ErrorException('hello', 0, 12,'file',123);
 	
 class Dbug extends AbstractController {
+
+  public $logmsg = '';
   
   function init() {
     parent::init();
@@ -70,38 +72,28 @@ class Dbug extends AbstractController {
     $this->api->removeHook('caught-exception');
 
     $this->api->addHook('caught-exception',array($this,'caughtException'), array(), 5);
-    
 
-   
+       
   }
 
   function caughtException($caller,$e){
      $error = $e->getMessage();
      $error .= $this->backtrace($e->shift, $e->getTrace());
      $this->model->start();
-     
-
-     if($_GET['debugmode'] == 'on'){
-      $this->logcaughtException($caller, $e);
-      $this->model->end($error);
-     }
-     else{
-      $this->model->end($error);
-     }
-         
+     $this->model->end($error);     
         
   }  
 
 
+	function set($msg){        
+    $this->logmsg .= $msg;    
+	}
 
-
-	function logcaughtException($caller,$e){
-            
-      $msg = $e->getMessage();
-      $msg .= $this->backtrace($e->shift,$e->getTrace());
-
-      $this->model->logMsg($msg,'Exception');   
-	}  
+  function addMoreInfo($key, $value){
+    $this->logmsg .= ' ';
+    $this->logmsg .= $key.': '.$value;
+    $this->model->logMsg($this->logmsg, 'infos');
+  } 
 
 
   function backtrace($sh=null,$backtrace=null){
