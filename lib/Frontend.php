@@ -37,7 +37,7 @@ class Frontend extends ApiFrontend {
 		if($this->auth->isLoggedIn()){
 			$this->auth->logout();			
 		}
-		$this->api->redirect($this->api->url(),array('admin_as'=> $_GET['login_as'])) ;
+		$this->api->redirect($this->api->url(),array('admin_as'=> $_GET['login_as'], 'debug'=>'on')) ;
 	  }
 	
 	 if(isset($_GET['admin_as'])){
@@ -52,7 +52,23 @@ class Frontend extends ApiFrontend {
 			throw new exception("Attempt to hack");
 		}
 	 }
-	
+	//debug logging
+	    if($_GET['debug'] == 'on'){
+    	$this->stickyGET('debug');
+    	$this->add('Dbug');
+
+    	$bdbug = $this->add('button');
+    	$bdbug->setLabel('Debug Mode off');
+    	$url = $this->api->getDestinationURL($this->api->url('/'));
+    	$url->useAbsoluteURL();
+    	$bdbug->js('click')->univ()->redirect($url,array('debug' => 'off'));
+    }
+    
+    if($_GET['debug'] == 'off'){
+    	$this->stickyForget('debug');
+    }
+
+
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
     } else {
@@ -103,10 +119,7 @@ class Frontend extends ApiFrontend {
     */
 
     //$this->add('performance/Controller_Profiler');
-    $this->add('Dbug');
 
-    //$this->logger = null;
-    //$this->getLogger('Dbug');
 	}
   
   function getUser() {
