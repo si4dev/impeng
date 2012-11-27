@@ -52,11 +52,7 @@ class Frontend extends ApiFrontend {
 			throw new exception("Attempt to hack");
 		}
 	 }
-	//debug logging
-  
-  	$d =$this->add('Dbug');
-  	$d->set('test message');
-  	$d->addMoreInfo('1', 'foo');
+	
   				 					
    //debug mode for logMsg
     $url = $this->api->getDestinationURL($this->api->url('/'));
