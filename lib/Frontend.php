@@ -37,7 +37,7 @@ class Frontend extends ApiFrontend {
 		if($this->auth->isLoggedIn()){
 			$this->auth->logout();			
 		}
-		$this->api->redirect($this->api->url(),array('admin_as'=> $_GET['login_as'], 'debug'=>'on')) ;
+		$this->api->redirect($this->api->url(),array('admin_as'=> $_GET['login_as'])) ;
 	  }
 	
 	 if(isset($_GET['admin_as'])){
@@ -53,20 +53,29 @@ class Frontend extends ApiFrontend {
 		}
 	 }
 	//debug logging
-	    if($_GET['debug'] == 'on'){
-    	$this->stickyGET('debug');
-    	$this->add('Dbug');
 
-    	$bdbug = $this->add('button');
-    	$bdbug->setLabel('Debug Mode off');
-    	$url = $this->api->getDestinationURL($this->api->url('/'));
-    	$url->useAbsoluteURL();
-    	$bdbug->js('click')->univ()->redirect($url,array('debug' => 'off'));
+  //check if it is not an AJax request
+    if(!isset($_GET['cut_page']) || $_GET['cut_page'] != 1){
+        $this->add('Dbug');
     }
     
-    if($_GET['debug'] == 'off'){
-    	$this->stickyForget('debug');
+   //debug mode for logMsg
+    $url = $this->api->getDestinationURL($this->api->url('/'));
+	$url->useAbsoluteURL();
+
+    if($_GET['debugmode'] == 'on'){
+
+    	$this->stickyGET('debugmode');
+    	$off = $this->add('Button')->setLabel('DebugMode off');
+		$off->js('click')->univ()->redirect($url,  array('debugmode' => 'off'));
     }
+    else {
+
+    	$this->stickyForget('debugmode');
+    	$on = $this->add('Button')->setLabel('DebugMode on');
+		$on->js('click')->univ()->redirect($url, array('debugmode' => 'on'));
+    }
+
 
 
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {

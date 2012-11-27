@@ -25,8 +25,9 @@ class page_errors extends Page{
 
 
 		$tt = $this->add('Tabs');
-		$msg = $tt->addTab('Messages');
 		$log = $tt->addTab('Log');
+		$msg = $tt->addTab('Messages');
+		
 
 		$gl = $log->add('Grid');
 		$gl->setModel('Log');

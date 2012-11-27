@@ -28,17 +28,11 @@ class Admin extends ApiFrontend {
             ->_load('ui.atk4_notify');
 
     $this->dbConnect();
-
-    if($_GET['debugmode'] == 'on'){
-        $this->logger = null;
-        $this->getLogger('Dbug');
-        $this->stickyGET('debugmode');
+    //check if it's not an Ajax request
+    if(!isset($_GET['cut_page']) || $_GET['cut_page'] != 1){
+        $this->add('Dbug');
     }
-
-    if($_GET['debugmode'] == 'off'){
-        $this->stickyForget('debugmode');
-    }
-   
+    
 
     $this->add('Auth')->setModel('Admin'); // email and password are default to login
     $this->auth->usePasswordEncryption(function($v) { return md5($v); } );

@@ -75,9 +75,28 @@ class Dbug extends AbstractController {
    
   }
 
+  function caughtException($caller,$e){
+     $error = $e->getMessage();
+     $error .= $this->backtrace($e->shift, $e->getTrace());
+     $this->model->start();
+     
+
+     if($_GET['debugmode'] == 'on'){
+      $this->logcaughtException($caller, $e);
+      $this->model->end($error);
+     }
+     else{
+      $this->model->end($error);
+     }
+         
+        
+  }  
 
 
-	function caughtException($caller,$e){
+
+
+	function logcaughtException($caller,$e){
+            
       $msg = $e->getMessage();
       $msg .= $this->backtrace($e->shift,$e->getTrace());
 

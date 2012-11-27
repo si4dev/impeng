@@ -44,10 +44,10 @@ class Model_Log extends Model_Table {
     $this->ref('LogMsg')->set('message',$msg)->set('severity',$severity)->saveAndUnload();
   }
       
-  function end() {
+  function end($error = '') {
     $this->set('duration',round(microtime(true)-$this->starttime,3));
     $this->set('completed',1);
-    $this->set('error','');
+    $this->set('error',$error);
     $this->set('memory',$this->memory());
     $this->saveAndUnload();
   }
