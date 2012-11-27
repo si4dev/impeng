@@ -25,7 +25,7 @@ class Frontend extends ApiFrontend {
 			;
 
     $this->dbConnect();
-    // $this->add('Dbug');
+   
 	
 	
 
@@ -52,7 +52,31 @@ class Frontend extends ApiFrontend {
 			throw new exception("Attempt to hack");
 		}
 	 }
-	
+	//debug logging
+  
+  	$d =$this->add('Dbug');
+  	$d->set('test message');
+  	$d->addMoreInfo('1', 'foo');
+  				 					
+   //debug mode for logMsg
+    $url = $this->api->getDestinationURL($this->api->url('/'));
+	$url->useAbsoluteURL();
+
+    if($_GET['debugmode'] == 'on'){
+
+    	$this->stickyGET('debugmode');
+    	$off = $this->add('Button')->setLabel('DebugMode off');
+		$off->js('click')->univ()->redirect($url,  array('debugmode' => 'off'));
+    }
+    else {
+
+    	$this->stickyForget('debugmode');
+    	$on = $this->add('Button')->setLabel('DebugMode on');
+		$on->js('click')->univ()->redirect($url, array('debugmode' => 'on'));
+    }
+
+
+
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
       // admin or cron
     } else {
@@ -103,6 +127,7 @@ class Frontend extends ApiFrontend {
     */
 
     //$this->add('performance/Controller_Profiler');
+
 	}
   
   function getUser() {
