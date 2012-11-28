@@ -123,6 +123,9 @@ class Frontend extends ApiFrontend {
     */
 
     //$this->add('performance/Controller_Profiler');
+    
+    $this->logger->public_error_message = 'ahummm something wrong here.';
+
 
 	}
   

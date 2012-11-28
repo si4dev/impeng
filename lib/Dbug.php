@@ -59,6 +59,7 @@ function exceptions_error_handler($errno, $errstr, $errfile, $errline) {
 class Dbug extends AbstractController {
 
   public $logmsg = '';
+  public $moreinfo =array();
   
   function init() {
     parent::init();
@@ -86,13 +87,12 @@ class Dbug extends AbstractController {
 
 
 	function set($msg){        
-    $this->logmsg .= $msg;    
+    $this->logmsg .= $msg;
+    $this->model->logMsg($msg);   
 	}
 
   function addMoreInfo($key, $value){
-    $this->logmsg .= ' ';
-    $this->logmsg .= $key.': '.$value;
-    $this->model->logMsg($this->logmsg, 'infos');
+    $this->logmsg .= ' '.$key.': '.$value;
   } 
 
 

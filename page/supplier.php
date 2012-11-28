@@ -4,7 +4,10 @@ Class Page_supplier extends Page {
 	function init(){
 		parent::init();
 
-		$dbug = $this->add('Dbug');
+		//$dbug = $this->add('Dbug');
+
+
+		trigger_error('eeh', E_USER_NOTICE);
 
 		if($_GET['debugmode'] == 'on'){
 			$dbug->set('supplier page custom message');

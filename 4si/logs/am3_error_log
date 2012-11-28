@@ -4754,3 +4754,294 @@ D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
 D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
 D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
 
+
+
+============================================================
+: BaseException: Spot is not found in owner's template
+------------------------------------------------------------
+Date: 27-Nov-2012 08:50:05
+Query String: page=errors
+Referer: http://localhost/impeng/4si/
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\AbstractView.php:133 AbstractObject->exception("Spot is not found in owner's template")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:190 AbstractView->initializeTemplate(Null, Null)
+D:\wamp\www\impeng\4si\page\errors.php:34 AbstractObject->add("button", "Delete")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * spot: Content
+
+
+============================================================
+: BaseException: Spot is not found in owner's template
+------------------------------------------------------------
+Date: 27-Nov-2012 08:50:14
+Query String: page=errors
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+D:\wamp\www\impeng\atk4\lib\AbstractView.php:133 AbstractObject->exception("Spot is not found in owner's template")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:190 AbstractView->initializeTemplate(Null, Null)
+D:\wamp\www\impeng\4si\page\errors.php:34 AbstractObject->add("button", "Delete")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * spot: Content
+[27-Nov-2012 08:55:11 UTC] PHP Fatal error:  Function name must be a string in D:\wamp\www\impeng\4si\page\errors.php on line 41
+[27-Nov-2012 08:55:11 UTC] PHP Stack trace:
+[27-Nov-2012 08:55:11 UTC] PHP   1. {main}() D:\wamp\www\impeng\4si\index.php:0
+[27-Nov-2012 08:55:11 UTC] PHP   2. ApiWeb->main() D:\wamp\www\impeng\4si\index.php:4
+[27-Nov-2012 08:55:11 UTC] PHP   3. ApiFrontend->initLayout() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271
+[27-Nov-2012 08:55:11 UTC] PHP   4. ApiWeb->addLayout() D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37
+[27-Nov-2012 08:55:11 UTC] PHP   5. ApiFrontend->layout_Content() D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399
+[27-Nov-2012 08:55:11 UTC] PHP   6. AbstractObject->add() D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122
+[27-Nov-2012 08:55:11 UTC] PHP   7. page_errors->init() D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:04:32
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=258
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:46 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:04:51
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=259
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:46 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:04:57
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=259
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:46 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:05:01
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=261
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:46 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:05:29
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=300
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:46 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:06:13
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=300
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:47 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+
+
+============================================================
+: BaseException: Record could not be loaded
+------------------------------------------------------------
+Date: 27-Nov-2012 09:06:17
+Query String: page=errors&DeleteLog=258&4si_errors_tabs_view_htmlelement_2_grid_DeleteLog=350
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:494 Model_Table->exception("Record could not be loaded")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:428 Model_Table->_load("258")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:650 Model_Table->load("258")
+D:\wamp\www\impeng\4si\page\errors.php:47 Model_Table->delete("258")
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:197 page_errors->init()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:122 AbstractObject->add("page_errors", "errors", "Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:399 ApiFrontend->layout_Content()
+D:\wamp\www\impeng\atk4\lib\ApiFrontend.php:37 ApiWeb->addLayout("Content")
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:271 ApiFrontend->initLayout()
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * model: Object Model_Log(4si_errors_tabs_view_htmlelement_2_grid_model_log)
+ * id: 258
+[27-Nov-2012 12:00:12 UTC] PHP Fatal error:  Uncaught exception 'BaseException' with message 'Model must be loaded before traversing reference' in D:\wamp\www\impeng\atk4\lib\AbstractObject.php:300
+Stack trace:
+#0 D:\wamp\www\impeng\atk4\lib\SQL\Many.php(50): AbstractObject->exception('Model must be l...')
+#1 D:\wamp\www\impeng\atk4\lib\Model\Table.php(234): SQL_Many->ref(NULL)
+#2 D:\wamp\www\impeng\lib\Model\Log.php(44): Model_Table->ref('LogMsg')
+#3 D:\wamp\www\impeng\lib\Dbug.php(99): Model_Log->logMsg('Unable to inclu...', 'Exception')
+#4 D:\wamp\www\impeng\lib\Dbug.php(85): Dbug->logcaughtException(Object(Admin), Object(PathFinder_Exception))
+#5 [internal function]: Dbug->caughtException(Object(Admin), Object(PathFinder_Exception))
+#6 D:\wamp\www\impeng\atk4\lib\AbstractObject.php(435): call_user_func_array(Array, Array)
+#7 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(189): AbstractObject->hook('caught-exceptio...', Array)
+#8 D:\wamp\www\impeng\atk4\lib\ApiWeb.php(274): ApiWeb->caughtException(Object(PathFinder_Exception))
+#9 D:\wamp\www\impeng\4si\index in D:\wamp\www\impeng\atk4\lib\AbstractObject.php on line 300
+
+
+============================================================
+: BaseException: This file type is not allowed for upload
+------------------------------------------------------------
+Date: 27-Nov-2012 12:20:07
+Query String: page=fileadmin&submit=4si_fileadmin_form&4si_fileadmin_form_Upload_test_upload_action=4si_fileadmin_form_Upload_test
+Referer: http://localhost/impeng/4si/?page=fileadmin
+Version: Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0
+Port: 80
+------------------------------------------------------------
+ Stack trace
+: AbstractObject->exception("This file type is not allowed for upload")
+D:\wamp\www\impeng\atk4\lib\Model\Table.php:94 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4-addons\filestore\lib\Model\File.php:106 Model_Table->exception("This file type is not allowed for upload")
+D:\wamp\www\impeng\atk4\lib\Form\Field\upload.php:100 filestore\Model_File->getFiletypeID("application/msword")
+: Form_Field_Upload->loadPOST(Object(Form))
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\Form\Basic.php:321 AbstractObject->hook("loadPOST")
+: Form_Basic->submitted(Object(Admin))
+D:\wamp\www\impeng\atk4\lib\AbstractObject.php:435 call_user_func_array(Array(2), Array(1))
+D:\wamp\www\impeng\atk4\lib\ApiWeb.php:284 AbstractObject->hook("submitted")
+D:\wamp\www\impeng\4si\index.php:4 ApiWeb->main()
+
+Additional information:
+ * Raised by object: Object filestore\Model_File(4si_fileadmin_form_Upload_test_filestore_model_file)
+ * type: application/msword
