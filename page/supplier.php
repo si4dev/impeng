@@ -3,6 +3,13 @@ Class Page_supplier extends Page {
 
 	function init(){
 		parent::init();
+
+		$dbug = $this->add('Dbug');
+
+		if($_GET['debugmode'] == 'on'){
+			$dbug->set('supplier page custom message');
+			$dbug->addMoreInfo('foo', 'bar');
+		}
 		
 		$user = $this->api->auth->model;
 		$shop_id = $this->api->recall('shop_id');
