@@ -3,6 +3,7 @@ class Controller_Prestashop extends AbstractController {
   protected $lang='nl';
   function init() {
     parent::init();
+    $this->version='1.5';
     
     if(!isset($this->owner->platformCtrl)) {
       $this->owner->platformCtrl=$this;
@@ -190,17 +191,17 @@ class Controller_Prestashop extends AbstractController {
     $m=$this->add('Model_Prestashop_Product');
     // prepare FTP connection for images
     $ftp=$this->add('FTP');
-    $ftp->url($this->api->getConfig('ftproot',$s->ftproot()).'/')
+    
+    $ftp->url($s->ftproot())
         ->login();
-    $ftpimagespath=$ftp->path().$s->imagepath().'/'; // root path plus image relative path
+    $ftpimagespath=$ftp->path().'/img/p/'; // root path plus image relative path
+    
     $ftp->path($ftpimagespath)->cd();
     $ftplist=$ftp->lsDates();
 
     // prepare image actions to be ready to retreive image information
     $img=$this->add('Actions_Image');
     
-    // prepare media model
-    $media=$this->add('Model_MediaOld');
     // prepare image type model
     $imgtypes=$this->add('Model_Prestashop_ImageType')->addCondition('products',1)->getRows();
     $imgtypes[]=array('name'=>'','width'=>1024,'height'=>1024);
@@ -250,11 +251,23 @@ class Controller_Prestashop extends AbstractController {
       $m->set('date_add',$product['entry_date']); 
       $m->set('date_upd',$m->dsql()->expr('now()')); 
       $m->set('id_category_default',$product['catshop_id']); 
-      $m->set('id_color_default',0); 
+      //$m->set('id_color_default',0); 
       $m->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
       $m->set('active',1);
       $m->save();
-    
+
+      if( $this->version >= '1.5' ) {
+        $productshop=$m->ref('Prestashop_ProductShop')->tryLoadAny();
+        $productshop->set('id_tax_rules_group',$this->tax[floatval($product['tax'])]); 
+        $productshop->set('price',$product['price']);
+        $productshop->set('id_category_default',$product['catshop_id']); 
+        $productshop->set('date_add',$product['entry_date']); 
+        $productshop->set('date_upd',$m->dsql()->expr('now()')); 
+        $productshop->set('active',1);
+        $productshop->saveAndUnload();
+      }
+
+                
       // handle title based on product id
       $productlang=$m->ref('Prestashop_ProductLang');
       foreach($this->languages as $langiso => $langid) {
@@ -289,40 +302,56 @@ class Controller_Prestashop extends AbstractController {
         $category->set('id_category',$product['catshop_id'])->saveAndUnload();
       }
       // media file
-      $media_modified=$product['media'];
-      $image=$m->ref('Prestashop_Image');
-      $image->tryLoadBy('cover','1');
-      
-      if($image->id and !$media_modified) { // no source image anylonger so delete shop image
-        foreach($imgtypes as $imgtype) { // delete the differen image types
-          $shopfilename=$image['filebase'].($imgtype['name']?'-'.$imgtype['name']:'').'.jpg';
-          $ftp->setTarget($shopfilename)->delete();
-        }
-        $image->delete(); // delete entry from table
-      } 
-      
-      
-      if($media_modified) { // for sure a source image is available
-        if( !$image['filebase']) { // no image in shop then first generate database entry and use id for filename
-          $image->save();
-        }
-        if($media_modified > $ftplist[$image['filebase'].'.jpg']['date']) {
-          // now we have an entry in the image table so we can upload the image to ftp
-          foreach($imgtypes as $imgtype) {
-            $filename=$media['file'];
-            // overrule filename for development as we don't have the file library          
-            if( $this->api->getConfig('mode')=='dev') $filename='test.jpg';
+      if($media=$pricelist->ref('product_id')->ref('Media')->tryLoadAny()) {
+        
+        
+        $media_modified=$media->get('file_modified');
+        $image=$m->ref('Prestashop_Image');
+        $image->tryLoadBy('cover','1');
+        
+        if($image->id and !$media_modified) { // no source image anylonger so delete shop image
+          foreach($imgtypes as $imgtype) { // delete the differen image types
             $shopfilename=$image['filebase'].($imgtype['name']?'-'.$imgtype['name']:'').'.jpg';
-            
-            $img->resizeImage($filepath.$filename, $tmp.$shopfilename, $imgtype['width'], $imgtype['height'], 90, 'Thumb');
-            $ftp->setSource($tmp.$shopfilename)
-              ->setTarget($shopfilename)
-              ->save();
-            unlink($tmp.$shopfilename);
+            $ftp->setTarget($shopfilename)->delete();
+          }
+          $image->delete(); // delete entry from table
+        } 
+        
+        
+        if($media_modified) { // for sure a source image is available
+          if( !$image['filebase']) { // no image in shop then first generate database entry and use id for filename
+            $image->save();
+          }
+          if($media_modified > $ftplist[$image['filebase'].'.jpg']['date']) {
+            // now we have an entry in the image table so we can upload the image to ftp
+            foreach($imgtypes as $imgtype) {
+              $filename=$media->get('file');
+              // overrule filename for development as we don't have the file library          
+              if( $this->api->getConfig('mode')=='dev') $filename='test.jpg';
+              $shopfilename=$image['filebase'].($imgtype['name']?'-'.$imgtype['name']:'').'.jpg';
+              
+              $img->resizeImage($filepath.$filename, $tmp.$shopfilename, $imgtype['width'], $imgtype['height'], 90, 'Thumb');
+              $ftp->setSource($tmp.$shopfilename)
+                ->setTarget($shopfilename)
+                ->save();
+              unlink($tmp.$shopfilename);
+            }
           }
         }
-      }
-          
+        
+        // set languages for this image
+        $imagelang=$image->ref('Prestashop_ImageLang');
+        foreach($this->languages as $langiso => $langid) {
+          $imagelang->tryLoadBy('id_lang',$langid);
+          $imagelang->saveAndUnload();
+        }
+        // set shop for this image
+        $imageshop=$image->ref('Prestashop_ImageShop');
+        $imageshop->tryLoadBy('id_shop',1);
+        $imagelang->saveAndUnload();
+
+        
+      } // end if media
 
       $i++;
       if( $i >= 10 ) break;

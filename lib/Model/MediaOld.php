@@ -1,5 +1,5 @@
 <?php
-class Model_MediaOld extends Model_Table {
+class Model_Media Old extends Model_Table {
   public $table='tbldata_media';
   public $id_field='MediaID';
   

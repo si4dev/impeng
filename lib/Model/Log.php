@@ -11,7 +11,7 @@ class Model_Log extends Model_Table {
     $this->addField('command');
     $this->addField('completed');
     $this->addField('duration');
-    $this->addField('error');
+    $this->addField('error')->defaultValue('');
     $this->addField('memory');
     $this->addField('path');
     $this->addField('label');
@@ -44,18 +44,13 @@ class Model_Log extends Model_Table {
     $this->ref('LogMsg')->set('message',$msg)->set('severity',$severity)->saveAndUnload();
   }
       
-  function end($error = '') {
+  function end() {
     $this->set('duration',round(microtime(true)-$this->starttime,3));
-    $this->set('completed',1);
-    $this->set('error',$error);
     $this->set('memory',$this->memory());
+    $this->set('completed',1);
     $this->saveAndUnload();
   }
 
-  function __destruct(){
-    $this->end();
-    parent::__destruct();
-  }
 
 }
 

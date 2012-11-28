@@ -1,15 +1,16 @@
 <?php
-function exceptions_error_handler($severity, $message, $filename, $lineno, $vars) {
-	throw new ErrorException($message, 0, $severity, $filename, $lineno);
-	//print_r($vars);
-}
 
 class Frontend extends ApiFrontend {
   protected $user;
   protected $shop;
   function md5($value) {return md5($value);}
 	function init(){
+    
+    $this->dbConnect();
+    $this->add('Dbug');
+     
 		parent::init();
+	
 		$this->addLocation('atk4-addons',array(
 					'php'=>array(
                         'mvc',
@@ -23,11 +24,6 @@ class Frontend extends ApiFrontend {
 			->_load('atk4_univ')
 			// ->_load('ui.atk4_expander')
 			;
-
-    $this->dbConnect();
-   
-	
-	
 
     $this->add('Auth')->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
@@ -52,7 +48,8 @@ class Frontend extends ApiFrontend {
 			throw new exception("Attempt to hack");
 		}
 	 }
-	
+   
+  
   				 					
    //debug mode for logMsg
     $url = $this->api->getDestinationURL($this->api->url('/'));

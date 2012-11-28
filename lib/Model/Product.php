@@ -1,6 +1,7 @@
 <?php
 class Model_Product extends Model_Table {
   public $table='product';
+  public $title_field='productcode';
   function init() {
     parent::init();
     $this->hasOne('Supplier');
@@ -17,7 +18,8 @@ class Model_Product extends Model_Table {
 //    $this->hasMany('Media');
     $this->addField('entry_date');
     $this->addField('last_checked');
-    
+
+    $this->hasMany('Media');
 
     $this->addHook('beforeInsert',function($m,$dsql){
       $dsql->set('entry_date',$dsql->expr('now()'));
@@ -64,6 +66,10 @@ class Model_Product extends Model_Table {
     }
     return $this;
   }
+
+
+
+  
 }
 
 /*
