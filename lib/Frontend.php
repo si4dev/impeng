@@ -1,8 +1,4 @@
 <?php
-function exceptions_error_handler($severity, $message, $filename, $lineno, $vars) {
-	throw new ErrorException($message, 0, $severity, $filename, $lineno);
-	//print_r($vars);
-}
 
 class Frontend extends ApiFrontend {
   protected $user;
@@ -26,6 +22,8 @@ class Frontend extends ApiFrontend {
 
     $this->dbConnect();
    
+   
+   $this->add('Logger');
 	
 	
 

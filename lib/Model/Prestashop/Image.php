@@ -8,6 +8,9 @@ class Model_Prestashop_Image extends Model_Table2 {
     $this->addField('position');
     $this->addField('cover');
     $this->addExpression('filebase')->set("concat(id_product,'-',id_image)");
+    
+    $this->hasMany('Prestashop_ImageLang');
+    $this->hasMany('Prestashop_ImageShop');
   }
 }
     
