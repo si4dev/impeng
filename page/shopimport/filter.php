@@ -67,6 +67,13 @@ class Page_Shopimport_Filter extends Page {
 	  $s_name = $supplier->dsql()->field('name')->where('id', $s_id);
 	  $filter->addCondition('supplier', $s_name);
 	}
+	 $sl = $this->add('Model_Supplierlink'); // sl as supplierlink
+	 $sl->tryloadBy('shop_id', $s['id']);
+
+	 if($sl->loaded()){
+	  	$filter->addCondition('id' , $sl['supplier_id'] );
+	 }
+	  
 
 		
     $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active', ));

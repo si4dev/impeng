@@ -53,19 +53,13 @@ class Frontend extends ApiFrontend {
   				 					
    //debug mode for logMsg
     $url = $this->api->getDestinationURL($this->api->url('/'));
-	$url->useAbsoluteURL();
+	  $url->useAbsoluteURL();
 
     if($_GET['debugmode'] == 'on'){
-
     	$this->stickyGET('debugmode');
-    	$off = $this->add('Button')->setLabel('DebugMode off');
-		$off->js('click')->univ()->redirect($url,  array('debugmode' => 'off'));
     }
     else {
-
-    	$this->stickyForget('debugmode');
-    	$on = $this->add('Button')->setLabel('DebugMode on');
-		$on->js('click')->univ()->redirect($url, array('debugmode' => 'on'));
+    	$this->stickyForget('debugmode');    
     }
 
 
