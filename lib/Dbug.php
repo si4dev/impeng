@@ -41,11 +41,11 @@ class Dbug extends AbstractController {
     $this->logmsg .= $msg;
     $this->model->logMsg($msg);   
 	}
-
+/*
   function addMoreInfo($key, $value){
     $this->logmsg .= ' '.$key.': '.$value;
   } 
-
+*/
 
   function backtrace($sh=null,$backtrace=null){
     $output = "\n";
