@@ -7,7 +7,7 @@ class Frontend extends ApiFrontend {
 	function init(){
     
     $this->dbConnect();
-    $this->add('Dbug');
+    $this->dbug = $this->add('Dbug');
      
 		parent::init();
 	

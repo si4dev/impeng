@@ -5,8 +5,9 @@ Class Page_supplier extends Page {
 		parent::init();
 
 		if($_GET['debugmode'] == 'on'){
-			$dbug = $this->api->getLogger();
-			$dbug->set('supplier page custom message');
+			
+			$this->api->dbug->set('Custom message for debug');
+			$this->api->dbug->addMoreInfo('test', 'infos');
 		}
 		
 		$user = $this->api->auth->model;

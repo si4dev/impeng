@@ -31,21 +31,32 @@ class Dbug extends AbstractController {
   }  
 
   // -----------------------------------------------------------------------------------------------
-  // on descrturct log the duratoin and (max) memory used
+  // on desctruct log the duratoin and (max) memory used
   function __destruct(){
-    $this->model->end();
+    if($this->logmsg != ''){
+      //save logmsg
+      $this->regmoreinfo();
+      $this->model->logMsg($this->logmsg, 'info');
+    }
+    $this->model->end();    
+
     parent::__destruct();
   }
 
 	function set($msg){        
-    $this->logmsg .= $msg;
-    $this->model->logMsg($msg);   
+    $this->logmsg .= $msg; 
 	}
-/*
+
   function addMoreInfo($key, $value){
-    $this->logmsg .= ' '.$key.': '.$value;
+    $this->moreinfo[$key] = $value;
+  }
+
+  function regmoreinfo(){
+    foreach($this->moreinfo as $key => $value){
+        $this->logmsg .= ' '.$key.': '.$value;
+    }
   } 
-*/
+
 
   function backtrace($sh=null,$backtrace=null){
     $output = "\n";
