@@ -9,7 +9,6 @@ class Model_Filter extends Model_Table {
     $this->addField('margin_ratio');// ->defaultValue(1);
     $this->addField('margin_amount'); //->defaultValue(0);
     $this->hasOne('CatShop');
-//    $this->addField('catshop_id');  
     $this->addField('import');
     $this->addField('active');
   }
@@ -22,17 +21,5 @@ class Model_Filter extends Model_Table {
     });
     return $this;
   }
-  
-
-  
-  /* function getCatShop(){
-	return $this->addExpression('catshop')->set(
-	 function ($m, $q){
-		
-		 return $q->dsql()->table('catshop')->field('ref')->where('id', $m->getElement('catshop_id');
-			
-			; //result not unique without a key id or like.
-	 }
-	 );
-   }  */
+    
 }
