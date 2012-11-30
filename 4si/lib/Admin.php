@@ -29,7 +29,7 @@ class Admin extends ApiFrontend {
             ->_load('ui.atk4_notify');
 
     $this->dbConnect();
-    $this->add('Dbug');
+    //$this->add('Dbug');
 
     /*
     //check if it's not an Ajax request

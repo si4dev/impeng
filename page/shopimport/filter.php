@@ -75,7 +75,8 @@ class Page_Shopimport_Filter extends Page {
 	 }
 	  
 
-		
+	$filter->debug();
+	
     $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active', ));
     $c->dq->order('category_id');
 
