@@ -18,15 +18,25 @@ class Dbug extends AbstractController {
     $this->api->removeHook('caught-exception');
 
     $this->api->addHook('caught-exception',array($this,'caughtException'), array(), 5);
-
-       
   }
 
   function caughtException($caller,$e){
-     $error = $e->getMessage();
-     $error .= $this->backtrace($e->shift, $e->getTrace());
-     $this->model->set('error',$error);     
-        
+    $i=0;
+    $message='';
+    do {
+      $message .= "----------\r";
+      $message .= 'Error :'.$e->getMessage()."\r";
+      $message .= 'Code :'.$e->getCode()."\r";
+      $message .= 'File :'.$e->getFile()."\r";
+      $message .= 'Line :'.$e->getLine()."\r";
+      $message .= 'Trace :'.$e->getTraceAsString()."\r";
+      $message .= 'LIBXML :'.print_r(libxml_get_errors(), true)."\r";
+      $i++;
+    } while( $e = $e->getPrevious() );
+    
+    $message = $i." Exception(s)\r" . $message;
+
+    $this->model->set('error',$message);     
   }  
 
   // -----------------------------------------------------------------------------------------------
@@ -45,63 +55,5 @@ class Dbug extends AbstractController {
     $this->logmsg .= $key.': '.$value;
     $this->model->logMsg($this->logmsg, 'infos');
   } 
-
-
-  function backtrace($sh=null,$backtrace=null){
-    $output = "\n";
-    $output .= "Stack trace:\n";
-    if(!isset($backtrace)) $backtrace=debug_backtrace();
-
-    $n=0;
-    foreach($backtrace as $bt){
-      $n++;
-      $args = '';
-      if(!isset($bt['args']))continue;
-      foreach($bt['args'] as $a){
-        if(!empty($args)){
-          $args .= ', ';
-        }
-        switch (gettype($a)) {
-          case 'integer':
-          case 'double':
-            $args .= $a;
-            break;
-          case 'string':
-            $a = htmlspecialchars(substr($a, 0, 128)).((strlen($a) > 128) ? '...' : '');
-            $args .= "\"$a\"";
-            break;
-          case 'array':
-            $args .= "Array(".count($a).")";
-            break;
-          case 'object':
-            $args .= "Object(".get_class($a).")";
-            break;
-          case 'resource':
-            $args .= "Resource(".strstr($a, '#').")";
-            break;
-          case 'boolean':
-            $args .= $a ? 'True' : 'False';
-            break;
-          case 'NULL':
-            $args .= 'Null';
-            break;
-          default:
-            $args .= 'Unknown';
-        }
-      }
-
-      if(($sh==null && strpos($bt['file'],'/atk4/lib/')===false) || (!is_int($sh) && $bt['function']==$sh)){
-        $sh=$n;
-      }
-
-      $output .= dirname($bt['file'])."/".basename($bt['file'])."";
-      $output .= "{$bt['line']}";
-      $name=(!isset($bt['object']->name))?get_class($bt['object']):$bt['object']->name;
-      if($bt['object'])$output .= $name;else $output.="";
-      $output .= ">".get_class($bt['object'])."{$bt['type']}{$bt['function']}($args)\n";
-    }
-    $output .= "\n";
-    return $output;
-  }
    
 }

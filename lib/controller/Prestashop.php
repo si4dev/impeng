@@ -317,12 +317,12 @@ class Controller_Prestashop extends AbstractController {
           $image->delete(); // delete entry from table
         } 
         
-        
         if($media_modified) { // for sure a source image is available
           if( !$image['filebase']) { // no image in shop then first generate database entry and use id for filename
             $image->save();
           }
           if($media_modified > $ftplist[$image['filebase'].'.jpg']['date']) {
+            
             // now we have an entry in the image table so we can upload the image to ftp
             foreach($imgtypes as $imgtype) {
               $filename=$media->get('file');
@@ -338,23 +338,24 @@ class Controller_Prestashop extends AbstractController {
             }
           }
         }
-        
+        $s=microtime(true);
         // set languages for this image
-        $imagelang=$image->ref('Prestashop_ImageLang');
+        $imagelang=$image->ref('Prestashop_ImageLang')->debug();
         foreach($this->languages as $langiso => $langid) {
           $imagelang->tryLoadBy('id_lang',$langid);
           $imagelang->saveAndUnload();
         }
+        echo "T:".round(microtime(true)-$s,3)." ";
+        /*
         // set shop for this image
         $imageshop=$image->ref('Prestashop_ImageShop');
         $imageshop->tryLoadBy('id_shop',1);
-        $imagelang->saveAndUnload();
-
-        
+        $imageshop->saveAndUnload();
+        */
       } // end if media
 
       $i++;
-      if( $i >= 10 ) break;
+      if( $i >= 2 ) break;
     }
 
     $this->nb_products=$i;
