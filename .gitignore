@@ -1,3 +1,5 @@
 config.php
 .htaccess
 upload
+logs
+4si/logs
