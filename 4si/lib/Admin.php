@@ -29,14 +29,13 @@ class Admin extends ApiFrontend {
             ->_load('ui.atk4_notify');
 
     $this->dbConnect();
-    //$this->add('Dbug');
+   
 
-    /*
+    
     //check if it's not an Ajax request
     if(!isset($_GET['cut_page']) || $_GET['cut_page'] != 1){
         $this->add('Dbug');
     }
-    */
 
     $this->add('Auth')->setModel('Admin'); // email and password are default to login
     $this->auth->usePasswordEncryption(function($v) { return md5($v); } );
@@ -50,8 +49,6 @@ class Admin extends ApiFrontend {
 	$m->addMenuItem('fileadmin', 'Manage Uploads');
     $m->addMenuItem('errors', 'Error logs');
     $m->addMenuItem('logout','Log out'); 
-
-
 
   }
   
