@@ -12,6 +12,7 @@ class Model_Supplier extends Model_Table {
     $this->addField('schedule')->enum(array('disable','daily','manual','test'));
     $this->addField('config')->type('text');
     $this->hasMany('Category');
+    $this->hasMany('Attribute');
     $this->hasMany('Product');
   }
   
@@ -102,6 +103,7 @@ class Model_Supplier extends Model_Table {
       
     
       $this->import_category();
+      $this->import_attribute();
       $this->import_product();
       $this->import_watch();
 
@@ -164,9 +166,33 @@ class Model_Supplier extends Model_Table {
             
     $cat=$this->ref('Category');
     foreach($this->api->db->query($select) as $row) {
-      $cat->unload()
-          ->set('reference',$row['reference'])
+      $cat->tryLoadBy('reference',$row['reference'])
           ->category_title($row['title'])
+          ->save();
+    }
+  }
+
+
+    // import attributes
+  function import_attribute() {
+    
+    $node=$this->config()->attribute;
+    if(!($node)) return $this;
+    $supfields=$this->import_supfields($node); // array(1) { [0]=> string(13) "category_name" } 
+    $fields=$this->import_fields_select($node); // array(1) { [0]=> string(24) " t1.category_name value" } 
+    $table='impeng_supplierdata.'.$this->get('name').'_'.$node->use->table;
+    $select='select '.implode(', ',($fields)).' from ( select '.implode(', ',($supfields)).' from '.$table.' group by '.implode(', ',($supfields)).') t1'.
+        ' left join ( select '.implode(', ',($supfields)).' from '.$table.'_previous group by '.implode(', ',($supfields)).') t2'.
+        ' using  ('.implode(', ',($supfields)).') '.
+        ' where t2.'.$supfields[0].' is null';
+            
+            echo $select;
+    $attr=$this->ref('Attribute');
+    foreach($this->api->db->query($select) as $row) {
+      print_r($row);exit;
+      $attr->tryLoad()
+          ->set('value',$row['value'])
+          ->set('attributegroup_id',1)
           ->save();
     }
   }

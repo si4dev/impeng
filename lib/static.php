@@ -1,5 +1,8 @@
 <?php
 
+
+libxml_use_internal_errors ( true ); // Dbug will use this to show extra info for xml errors
+
 function exceptions_error_handler($severity, $message, $filename, $lineno, $vars) {
 	throw new ErrorException($message, 0, $severity, $filename, $lineno);
 }
@@ -59,6 +62,5 @@ function handleShutdown() {
   }
 }
 	
-
-include realpath('.').'/atk4/lib/static.php';
+include dirname(__FILE__).'/../atk4/lib/static.php';
 

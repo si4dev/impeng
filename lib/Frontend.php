@@ -10,7 +10,8 @@ class Frontend extends ApiFrontend {
     $this->dbug = $this->add('Dbug');
      
 		parent::init();
-	
+//	$this->add('performance/Controller_Profiler');
+  
 		$this->addLocation('atk4-addons',array(
 					'php'=>array(
                         'mvc',
