@@ -13,6 +13,7 @@ class Model_Supplier extends Model_Table {
     $this->addField('config')->type('text');
     $this->hasMany('Category');
     $this->hasMany('Attribute');
+    $this->hasMany('AttributeGroup');
     $this->hasMany('Product');
   }
   
@@ -103,7 +104,7 @@ class Model_Supplier extends Model_Table {
       
     
       $this->import_category();
-      $this->import_attribute();
+      $this->importAttribute();
       $this->import_product();
       $this->import_watch();
 
@@ -174,7 +175,7 @@ class Model_Supplier extends Model_Table {
 
 
     // import attributes
-  function import_attribute() {
+  function importAttribute() {
     
     $node=$this->config()->attribute;
     if(!($node)) return $this;
@@ -185,15 +186,28 @@ class Model_Supplier extends Model_Table {
         ' left join ( select '.implode(', ',($supfields)).' from '.$table.'_previous group by '.implode(', ',($supfields)).') t2'.
         ' using  ('.implode(', ',($supfields)).') '.
         ' where t2.'.$supfields[0].' is null';
-            
-            echo $select;
+      
+    // add all attribute groups for this supplier when not already existing
+    $attributegroup='test';
+    $attrgroup=$this->ref('AttributeGroup');
+    $attrgroup->tryLoadBy('name',$attributegroup)->save();
+    
+    $attrgroupAll=array();
+    foreach($attrgroup as $row) $attrgroupAll[$row['name']]=$attrgroup->id;
+ 
     $attr=$this->ref('Attribute');
+    $attrAll=array();
+    foreach($attr as $row) $attrAll[$row['attributegroup']][$row['value']]=$attr->id;
+
     foreach($this->api->db->query($select) as $row) {
-      print_r($row);exit;
-      $attr->tryLoad()
+      if(isset($attrAll[$attributegroup][$row['value']])) {
+        unset($attrAll[$attributegroup][$row['value']]);
+      } else {
+        $attr
           ->set('value',$row['value'])
-          ->set('attributegroup_id',1)
-          ->save();
+          ->set('attributegroup_id',$attrgroupAll[$attributegroup])
+          ->saveAndUnload();
+      }
     }
   }
 

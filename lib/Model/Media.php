@@ -31,7 +31,7 @@ class Model_Media extends Model_Table {
     if(is_array($url)) {
       foreach($url as $u) $this->found($u,$purpose);
     } elseif($url) {
-      $this->debug()->tryLoadBy('url',$url)
+      $this->tryLoadBy('url',$url)
           ->set('purpose',$purpose)
           ->saveAndUnload();
     }
