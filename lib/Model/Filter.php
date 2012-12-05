@@ -14,12 +14,19 @@ class Model_Filter extends Model_Table {
   }
   
   function getSupplier() {
+
     $this->addExpression('supplier')->set(
-    function($m, $q){		
+    function($m, $q){	
+       
       $supl_id = $m->refSQL('category_id')->dsql()->field('supplier_id');
       return $m->ref('category_id')->ref('supplier_id')->dsql()->field('name')->where('id', $supl_id);
     });
+   
     return $this;
   }
+
+
+    
+
     
 }

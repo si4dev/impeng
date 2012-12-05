@@ -13,10 +13,15 @@ class Page_Shopimport_Filter extends Page {
 	
 	$non_active = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
 	$slist= $form->addField('dropdown' , 'supplier'); //slist as supplier list
+
+	$s=$this->api->getShop();
 	
+	$sl = $this->add('Model_Supplierlink'); // sl as supplierlink
+    $sup = $sl->tryLoadBy('shop_id', $s['id']);
+
 	$supplier = $this->add('Model_Supplier');
 	//manualy add valuelist because setModel dont give 0 as default value.
-	$list = $supplier->dsql()->field('name')->get();
+	$list = $supplier->dsql()->field('name')->where('id', $sup['supplier_id'])->get();
 	$valuelist= array();
 	$valuelist[] = 'All'; //0 default value
 	foreach($list as $datas){
@@ -27,9 +32,6 @@ class Page_Shopimport_Filter extends Page {
 	
 	$slist->setValueList($valuelist);
 	
-    $s=$this->api->getShop();
-
-
     // load the categories from the shop itself into table catshop
     $s->getShopCategories();
 		
@@ -54,8 +56,10 @@ class Page_Shopimport_Filter extends Page {
 		) );
 	  $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
 	 }
+
 	//get Supplier name
-	$filter->getSupplier();
+	 $filter->getSupplier();
+	
 	
 	//check for active only (active > 1)
 	if(!isset($_GET['non-active']) || $_GET['non-active'] == 0){		
@@ -69,15 +73,8 @@ class Page_Shopimport_Filter extends Page {
 	  $s_name = $supplier->dsql()->field('name')->where('id', $s_id);
 	  $filter->addCondition('supplier', $s_name);
 	}
-	 $sl = $this->add('Model_Supplierlink'); // sl as supplierlink
-	 $sl->tryloadBy('shop_id', $s['id']);
-
-	 if($sl->loaded()){
-	  	$filter->addCondition('id' , $sl['supplier_id'] );
-	 }
-	  
 	
-    $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active', ));
+    $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active' ));
     $c->dq->order('category_id');
 
 
