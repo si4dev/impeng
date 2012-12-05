@@ -37,7 +37,7 @@ class Admin extends ApiFrontend {
     $m->addMenuItem('shop','Shops');      
     $m->addMenuItem('supplier','Suppliers');
   	$m->addMenuItem('fileadmin', 'Manage Uploads');
-    $m->addMenuItem('errors', 'Error logs');
+    $m->addMenuItem('dbug','Debug');
     $m->addMenuItem('logout','Log out'); 
 
   }

@@ -18,6 +18,7 @@ class Model_Log extends Model_Table {
     $this->addField('version');
     $this->addField('verbose_level');
     $this->hasMany('LogMsg');
+    $this->setOrder('id','desc');
   }
   
   private function memory() {

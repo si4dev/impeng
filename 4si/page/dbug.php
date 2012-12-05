@@ -1,6 +1,6 @@
 <?php
 
-class page_errors extends Page{
+class page_dbug extends Page{
 	function init(){
 		parent::init();
 
@@ -33,6 +33,8 @@ class page_errors extends Page{
 		$gl->setModel('Log');
 		$gl->addPaginator(50);
 		$gl->addColumn('Button', 'DeleteLog', 'Delete');
+		$gl->addFormatter('error','wrap');
+		$gl->addFormatter('command','wrap');
 
 		$gm = $msg->add('Grid');
 		$gm->setModel('logMsg');
