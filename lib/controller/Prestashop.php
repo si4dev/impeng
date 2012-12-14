@@ -57,6 +57,12 @@ class Controller_Prestashop extends AbstractController {
     return $cat->load($cat->getTreeHome())->tree();
   }
 
+  function getShopAttributes() {
+    $defaultlangid=$this->add('Model_Prestashop_Lang')->loadBy('iso_code',$this->lang)->id;
+    $attr=$this->add('Model_Prestashop_AttributeGroup')->lang($defaultlangid);
+    return $attr;
+  }
+
     
   // function to return the shop pricelist for external purposes
   function importCategories($filter) {

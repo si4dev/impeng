@@ -7,11 +7,13 @@ class Controller_Model_Order extends AbstractController {
   
     
   function setOrder($field) {
-    uasort($this->owner->table, 
-      function ($a, $b) use ($field) {
-          return strnatcmp($a[$field], $b[$field]);
-      }
-    );
+    if($this->owner->table) {
+      uasort($this->owner->table, 
+        function ($a, $b) use ($field) {
+            return strnatcmp($a[$field], $b[$field]);
+        }
+      );
+    }
     return $this->owner;
   }
 }

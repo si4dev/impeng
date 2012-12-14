@@ -63,19 +63,18 @@ class Frontend extends ApiFrontend {
     	$this->stickyForget('debugmode');    
     }
 
-
-
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
-      // admin or cron
+     // admin or cron
     } else {
       $this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
     }
     $m=$this->add('Menu',null,'Menu');
     $m->addMenuItem('shopimport/margin','Marge');
-    $m->addMenuItem('shopimport/filter','Filter');
+    $m->addMenuItem('shopimport/filter','Categorie');
+    $m->addMenuItem('shopimport/attribute','Attributen');
     $m->addMenuItem('shopimport/import','Import');
-	$m->addMenuItem('shopimport/profile', 'profile');
-	$m->addMenuItem('supplier', 'Supplier');
+	$m->addMenuItem('shopimport/profile', 'Profiel');
+	$m->addMenuItem('supplier', 'Leverancier');
     $m->addMenuItem('logout','Logout');
  
 

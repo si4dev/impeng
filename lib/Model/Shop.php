@@ -14,6 +14,7 @@ class Model_Shop extends Model_Table {
     $this->hasMany('Filter');
     $this->hasMany('CatShop');
     $this->hasMany('SupplierLink');
+    $this->hasMany('AttributeGroupLink');
     
     $this->addHook('beforeSave',function($m){
 
@@ -152,6 +153,32 @@ class Model_Shop extends Model_Table {
     }
     return $r;
   }
+  
+  
+  
+  function prepareAttributeGroupLink() {
+    
+    // model with attribute groups for this shop 
+    // TODO: now via supplier link, later via product for pricelist
+    $attrGroup=$this->add('Model_AttributeGroup');
+    $attrGroup->join('supplierlink.supplier_id','supplier_id')->addField('shop_id');
+    $attrGroup->addCondition('shop_id',$this->id);
+    
+    // model with attribute groups to be linked to the shop
+    $attrGroupLink=$this->ref('AttributeGroupLink');
+    $attrGroupLink->dsql()->set('used',0)->update(); // wonderfull to update all records at once!
+
+    foreach($attrGroup as $ag) {
+      $attrGroupLink->tryLoadBy('attributegroup_id',$attrGroup->id)
+          // TODO: when we use ProductForPricelist then we can also now used exactly in nr of products
+          ->set('used',1)
+          ->saveAndUnload();
+    }
+      
+    return $attrGroupLink;
+    
+  }
+  
 
   // fill Fitler table for this shop with supplier categories when not already available
   function prepareFilter() {
@@ -160,6 +187,7 @@ class Model_Shop extends Model_Table {
     
     if( !$this->api->isAjaxOutput() ) {
 
+      // TODO: rename active into used
       $filter->dsql()->set('active',0)->update(); // wonderfull to update all records at once!
     
 
@@ -198,8 +226,7 @@ class Model_Shop extends Model_Table {
   // get Shop categories, it's specific for the shop platform (prestashop etc) so leave to the controller
   function getShopCategories() {
     // get categories from shop
-    $shopsystem = ucwords($this->shopsystem());
-    $rows=$this->setController($shopsystem)->getShopCategories();
+    $rows=$this->controller()->getShopCategories();
     // and keep them in local catshop table
     $catshop=$this->ref('CatShop');
     $catshop->dsql()->set('status',1)->where('status',0)->update();
@@ -210,16 +237,25 @@ class Model_Shop extends Model_Table {
     return $this;
   }
   
-
+  function controller() {
+    if(!$this->controller) {
+      $shopsystem = ucwords($this->shopsystem());
+      $this->controller=$this->setController($shopsystem);
+    }
+    return $this->controller;
+  }
+    
 
   function getShopPricelist() {
-    $shopsystem = ucwords($this->shopsystem());
-    return $this->setController($shopsystem)->getShopPricelist();
+    return $this->controller()->getShopPricelist();
+  }
+
+  function getShopAttributes() {
+    return $this->controller()->getShopAttributes();
   }
 
   function importCategories($filter) {
-    $shopsystem = ucwords($this->shopsystem());
-    return $this->setController($shopsystem)->importCategories($filter);
+    return $this->controller()->importCategories($filter);
   }
     
       
@@ -333,8 +369,7 @@ class Model_Shop extends Model_Table {
   
   
   function import() {
-    $shopsystem = ucwords($this->shopsystem());
-    return $this->setController($shopsystem)->import();
+    return $this->controller()->import();
   }
     
 
