@@ -2,7 +2,6 @@
 class page_shop extends Page {
   function init() {
     parent::init();
-    
     $c=$this->add('CRUD');
     $c->setModel('Shop');
     if($c->grid) {

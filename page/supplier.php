@@ -4,32 +4,18 @@ Class Page_supplier extends Page {
 	function init(){
 		parent::init();
 
-		if($_GET['debugmode'] == 'on'){
-			
-			$this->api->dbug->set('Custom message for debug');
-			$this->api->dbug->addMoreInfo('test', 'infos');
-		}
-		
-		$user = $this->api->auth->model;
-		$shop_id = $this->api->recall('shop_id');
-		
-		$link = $this->add('Model_SupplierLink');
-		$slink = $link->tryLoadBy('shop_id', $shop_id); 
-		if($slink->Loaded()){
-	
-		// $link_id = $link->dsql()->field('supplier_id')->where('shop_id', $shop_id);
-		
-		$m = $this->add('Model_Supplier');
-		// $m->addCondition('id', $link_id);
-		$m->addCondition('id', $slink['supplier_id']);
-		
+    // TODO: upload  button depending on is_owner field. Probably it needs to extend grud specific to this
+    // TODO: very complicated, but need join on model in the future as now ugly join on table
+
+    $s=$this->api->getShop();
+    $m=$s->ref('AssortmentLink');
+    $supplier=$m->join('assortment','source_assortment_id');
+    $supplier->addField('name');
+    $supplier->addField('branch');
+    
 		$g = $this->add('Grid');
-		$g->setModel($m, array('name' ,'friendly_name','branch'));
-		if($slink['is_owner'] == true){
-			$g->addColumn('expander' ,'upload');	
-		}
-		
-		}
+		$g->setModel($m, array('name', 'branch'));
+    $g->addColumn('expander' ,'upload');	
 	}
 	
 

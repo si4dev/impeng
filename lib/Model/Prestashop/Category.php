@@ -60,16 +60,17 @@ class Model_Prestashop_Category extends Model_Table2 {
     
     foreach($childs as $child) {
       $r[$childs->id]=$prefix.$childs['name'];
-      foreach($childs->tree($prefix.'---') as $key=>$value) {
+      foreach($childs->tree($prefix.$childs['name'].'|') as $key=>$value) {
         $r[$key]=$value;
       }
     }
     return $r;
   }
 
-  function getTreeHome() {
-    if($this->version=='1.5') return 2;
-    return 1;
+  function loadHome() {
+    if($this->version=='1.5') $home=2;
+    $home=1;
+    return $this->load($home);
   }
 
   

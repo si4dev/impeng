@@ -17,7 +17,9 @@ class Page_Shopimport_Attribute extends Page {
     
     // need array in model but how? setValueList is same as listData
     $ag->getElement('shopattr_ref')->listData($list);
-    $this->add('CRUD')->setModel($ag);
+    $c=$this->add('CRUD');
+    $c->allow_add=false; // after crud definition but before setModel()
+    $c->setModel($ag);
     
      
     

@@ -1,32 +1,18 @@
 <?php
-class Model_Supplier extends Model_Table {
-  public $table='supplier';
+class Model_Supplier extends Model_Assortment {
   function init() {
     parent::init();
-    $this->addField('name');
-    $this->addField('friendly_name');
-    $this->addField('branch');
-    $this->addField('import_full');
-    $this->addField('import_start');
-    $this->addField('import_end');
-    $this->addField('schedule')->enum(array('disable','daily','manual','test'));
-    $this->addField('config')->type('text');
-    $this->hasMany('Category');
-    $this->hasMany('Attribute');
-    $this->hasMany('AttributeGroup');
-    $this->hasMany('Product');
+    // inherit from assortment
   }
   
  
+  //TODO:merge with config of Shop into base class Assortment
   private function config() {
      return new SimpleXMLElement('<config>'.$this->get('config').'</config>');
-     
   }
 
-      
-  function import($full=false) {
-   
      
+  function import($full=false) {
     $this->set('import_start',$this->dsql->expr('now()') )->save();
 
     $config=$this->config();
@@ -44,7 +30,6 @@ class Model_Supplier extends Model_Table {
 		  $fp=fopen($file,"r");
       $header=fgetcsv( $fp, 10000, (string)$import->delimiter, ((string)$import->enclosure?:'"') );
       fclose($fp);
-      
       
       
       
@@ -104,7 +89,7 @@ class Model_Supplier extends Model_Table {
       
     
       $this->import_category();
-      $this->importAttribute();
+//      $this->importAttribute();
       $this->import_product();
       $this->import_watch();
 
@@ -164,11 +149,12 @@ class Model_Supplier extends Model_Table {
         ' left join ( select '.implode(', ',($supfields)).' from '.$table.'_previous group by '.implode(', ',($supfields)).') t2'.
         ' using  ('.implode(', ',($supfields)).') '.
         ' where t2.'.$supfields[0].' is null';
-            
+        
     $cat=$this->ref('Category');
     foreach($this->api->db->query($select) as $row) {
-      $cat->tryLoadBy('reference',$row['reference'])
-          ->category_title($row['title'])
+      $cat->tryLoadBy('ref',$row['ref'])
+          ->set('name',$row['title'])
+          ->setTitle($row['title'])
           ->save();
     }
   }
@@ -240,7 +226,7 @@ class Model_Supplier extends Model_Table {
 //     echo '['.$row['productcode'].':::';
 //      echo ''.$row['info_long_nl'].']';
       // TODO we can keep $cat when category_ref is same for next product, maybe it saves time
-      $cat->loadBy('reference',$row['category_ref']);
+      $cat->loadBy('ref',$row['category_ref']);
       $prod->tryLoadBy('productcode',$row['productcode'])
           ->set('productcode',$row['productcode'])
           ->set('title',$row['title'])
@@ -279,7 +265,7 @@ class Model_Supplier extends Model_Table {
     
     $query='insert into watch (product_id, pricebook_id, stock, price, last_checked, modified) '.
         'select p.id, :pricebook, '.$fields['stock'].', '.$fields['price'].', now(), now() '.
-        'from '.$table.' t1 inner join product p on (p.productcode='.$fields['productcode'].' and p.supplier_id=:supplier) '.
+        'from '.$table.' t1 inner join product p on (p.productcode='.$fields['productcode'].' and p.assortment_id=:supplier) '.
         'where '.$fields['productcode']."!='' ".
         'on duplicate key update '.
         ' modified=if(watch.price!=values(price),now(),modified), price=values(price), stock=values(stock), last_checked=now()';

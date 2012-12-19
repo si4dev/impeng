@@ -1,20 +1,16 @@
 <?php
-class Model_Shop extends Model_Table {
-  public $table='shop';
+class Model_Shop extends Model_Assortment {
   function init() {
     parent::init();
 
     unset($this->config);
-    $this->addField('name');
-    $this->addField('schedule')->enum(array('disable','daily','manual','test'));
-    $this->addField('config')->visible(false)->editable(false);
-    $this->hasOne('User',null,'name'); 
+    $this->addCondition('is_shop',1);
     $this->hasMany('Pricelist');
-    $this->hasMany('ProductForPricelist');
+    $this->hasMany('ProductForPricelist','target_assortment_id');
+    $this->hasMany('Category');
     $this->hasMany('Filter');
-    $this->hasMany('CatShop');
-    $this->hasMany('SupplierLink');
     $this->hasMany('AttributeGroupLink');
+    $this->hasMany('AssortmentLink','target_assortment_id');
     
     $this->addHook('beforeSave',function($m){
 
@@ -181,59 +177,58 @@ class Model_Shop extends Model_Table {
   
 
   // fill Fitler table for this shop with supplier categories when not already available
-  function prepareFilter() {
+  function prepareFilter($filter) {
  
-    $filter=$this->ref('Filter');
-    
-    if( !$this->api->isAjaxOutput() ) {
-
-      // TODO: rename active into used
-      $filter->dsql()->set('active',0)->update(); // wonderfull to update all records at once!
-    
 
     
-      /*
-      // select `category`.`title`,`category`.`id`,`sl`.`shop_id`,`category`.`supplier_id` `sl` from `category` inner join `supplierlink` as `sl` on `sl`.`supplier_id` = `category`.`supplier_id` left join `catlink` as `cl` on cl.category_id=category.id and cl.shop_id=sl.shop_id where cl.id is null and `sl`.`shop_id` = 2
-      $cat=$this->add('Model_Category');
-      $cat->join('supplierlink.supplier_id','supplier_id',null,'sl')->addField('shop_id');
-      $cat->leftJoin('filter',$cat->dsql()->expr('f.category_id=category.id and f.shop_id=sl.shop_id'),null,'f');
-      $cat->addCondition($cat->dsql()->expr('f.id is null'));
-      $cat->addCondition('shop_id',$this->id);
-
-      foreach($cat as $category) {
-        $filter->tryLoadBy('category_id',$category['id'])->save()->set('margin_ratio',null)->set('margin_amount',null)->save();
-      }
-      */
-    
-      $m=$this->ref('ProductForPricelist')->group();
-      foreach($m as $active) {
-        
-        if($active['filter_id']) {
-          $filter->load($active['filter_id']);
-        } else {
-          $filter->set('category_id',$active['category_id'])->set('margin_ratio',null)->set('margin_amount',null);
-        }
-          
-        $filter->set('active',$active['cnt'])->saveAndUnload();
-        
-      }
-    }
+    // TODO: rename active into used
+    $filter->dsql()->set('active',0)->update(); // wonderfull to update all records at once!
   
+
     
-    return $filter;
+    /*
+    // select `category`.`title`,`category`.`id`,`sl`.`shop_id`,`category`.`supplier_id` `sl` from `category` inner join `supplierlink` as `sl` on `sl`.`supplier_id` = `category`.`supplier_id` left join `catlink` as `cl` on cl.category_id=category.id and cl.shop_id=sl.shop_id where cl.id is null and `sl`.`shop_id` = 2
+    $cat=$this->add('Model_Category');
+    $cat->join('supplierlink.supplier_id','supplier_id',null,'sl')->addField('shop_id');
+    $cat->leftJoin('filter',$cat->dsql()->expr('f.category_id=category.id and f.shop_id=sl.shop_id'),null,'f');
+    $cat->addCondition($cat->dsql()->expr('f.id is null'));
+    $cat->addCondition('shop_id',$this->id);
+
+    foreach($cat as $category) {
+      $filter->tryLoadBy('category_id',$category['id'])->save()->set('margin_ratio',null)->set('margin_amount',null)->save();
+    }
+    */
+  
+    $m=$this->ref('ProductForPricelist')->group();
+    foreach($m as $active) {
+      if($active['filter_id']) {
+        $filter->load($active['filter_id']);
+      } else {
+        $filter->set('category_id',$active['category_id'])->set('margin_ratio',null)->set('margin_amount',null);
+      }
+        
+      $filter->set('active',$active['cnt'])->saveAndUnload();
+      
+    }
+
+    
+    return $this;
   }
   
+  //------------------------------------------------------------------------------------------------
   // get Shop categories, it's specific for the shop platform (prestashop etc) so leave to the controller
   function getShopCategories() {
     // get categories from shop
     $rows=$this->controller()->getShopCategories();
     // and keep them in local catshop table
-    $catshop=$this->ref('CatShop');
-    $catshop->dsql()->set('status',1)->where('status',0)->update();
+    $cat=$this->ref('Category');
+    $cat->dsql()->set('status',0)->where('status',1)->update();
     foreach($rows as $key=>$value) {
-      $catshop->tryLoadBy('ref',$key)->set('title',$value)->set('status',0)->saveAndUnload();
+      $cat->tryLoadBy('ref',$key);
+      if($cat->get('name')!=$value) $cat->set('name',$value)->setTitle($value);
+      $cat->set('status',1)->saveAndUnload();
     }
-    $catshop->dsql()->where('status',1)->delete();
+    //    $catshop->dsql()->where('status',1)->delete(); // do not delete to keep link from filter table
     return $this;
   }
   

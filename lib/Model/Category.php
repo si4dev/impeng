@@ -1,23 +1,32 @@
 <?php
 class Model_Category extends Model_Table {
   public $table='category';
-  public $title_field='reference';
+  public $title_field='name';
   public $titleXml;
   function init() {
     parent::init();
-    $this->hasOne('Supplier');
+    $this->hasOne('Assortment');
+    $this->addField('ref');
     $this->addField('title');
-    $this->addField('reference');
+    $this->addField('name');
+    $this->addField('status');
 
 
     $this->addHook('beforeLoad',function($o){ unset($o->titleXml); });
 
     
+    $this->addHook('beforeSave',function($m){
+      if(!$m->get('ref')) {
+        throw $m->exception('Invalid ref')->addMoreinfo('title',$m->get('title'));
+      }
+    });
   }
+
+    
 
   // structure to create form Audio, Video, Image|Mounting solutions|Carts|Trolleys into  
   // <cat lang="nl"><node>Audio, Video, Image</node><node>Mounting solutions</node><node>Carts</node><node>Trolleys</node></cat>
-  function category_title($cat) {
+  function setTitle($cat) {
     $dom=new DOMDocument('1.0', 'UTF-8');
     $n=$dom->appendChild($dom->createElement('cat'));
     $n->setAttribute('lang','nl');

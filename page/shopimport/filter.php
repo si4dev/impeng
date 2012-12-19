@@ -2,62 +2,51 @@
 class Page_Shopimport_Filter extends Page {
   function init() {
     parent::init();
-
   }
   
   function initMainPage() {
+      
+    $this->add('hr');
+    $form= $this->add('form',null,null,array('form_horizontal'));
+    
+    $s=$this->api->getShop();
 
-	  
-	$this->add('hr');
-	$form= $this->add('form',null,null,array('form_horizontal'));
-	
-	$non_active = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
-	$slist= $form->addField('dropdown' , 'supplier'); //slist as supplier list
+    $non_active = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
 
-	$s=$this->api->getShop();
-	
-	$sl = $this->add('Model_Supplierlink'); // sl as supplierlink
-    $sup = $sl->tryLoadBy('shop_id', $s['id']);
+    $supplierModel=$s->ref('AssortmentLink');
+    $supplierModel->join('assortment','source_assortment_id')->addField('name');
+        
+    $slist=$form->addField('dropdown' , 'supplier'); //slist as supplier list
+    $slist->setModel($supplierModel);
+    $slist->setEmptyText('Alle leveranciers');   
 
-	$supplier = $this->add('Model_Supplier');
-	//manualy add valuelist because setModel dont give 0 as default value.
-	$list = $supplier->dsql()->field('name')->where('id', $sup['supplier_id'])->get();
-	$valuelist= array();
-	$valuelist[] = 'All'; //0 default value
-	foreach($list as $datas){
-		foreach($datas as $key => $value){
-		  $valuelist[]=$value;
-		}
-	}
-	
-	$slist->setValueList($valuelist);
-	
-    // load the categories from the shop itself into table catshop
-    $s->getShopCategories();
-		
-	$c=$this->add('CRUD');
-    // prepare filters with new categories from suppliers, it's done in the shop model
-    $filter=$s->prepareFilter();
-//      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
+    $c=$this->add('CRUD');
+    $filter=$s->ref('Filter');
+    if(!$this->api->isAjaxOutput()) { // used to check if we rebuild category table and get store categories
+      // load the categories from the shop itself into table catshop
+      $s->getShopCategories();
+      
+      // prepare filters with new categories from suppliers, it's done in the shop model
+      $s->prepareFilter($filter);
+    }
+  //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-	if($filter->loaded()){	
-		$filter->getElement('catshop_id')->model->addCondition('shop_id',$s->id); 
-	}
 	
 	// show filters
-	 if($c->grid) {
+    if($c->grid) {
       $g = $c->grid;
-	  $g->addColumn('expander','products');
+    $g->addColumn('expander','products');
       $g->addPaginator(100);
       $g->addQuickSearch(array('category'));
-	  
-	  $non_active->js('change', array(
-		$g->js()->reload(array('non-active' => $non_active->js()->val()))
-		) );
-	  $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
-	 }
 
-	//get Supplier name
+    $non_active->js('change', array(
+    $g->js()->reload(array('non-active' => $non_active->js()->val()))
+    ) );
+    $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
+    }
+    
+
+  //get Supplier name
 	 $filter->getSupplier();
 	
 	
@@ -73,9 +62,18 @@ class Page_Shopimport_Filter extends Page {
 	  $s_name = $supplier->dsql()->field('name')->where('id', $s_id);
 	  $filter->addCondition('supplier', $s_name);
 	}
-	
-    $c->setModel($filter,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active' ));
-    $c->dq->order('category_id');
+
+//TODO:check field names
+// array(13) { [0]=> string(2) "id" [1]=> string(14) "assortment_id" [2]=> string(11) "assortment" [3]=> string(18) "source_category_id" [4]=> string(15) "source_category" [5]=> string(7) "keyword" [6]=> string(12) "margin_ratio" [7]=> string(13) "margin_amount" [8]=> string(18) "target_category_id" [9]=> string(15) "target_category" [10]=> string(6) "import" [11]=> string(6) "active" [12]=> string(21) "source_assortment_id" }
+    $c->setModel($filter); //,array('keyw'));//,array('catshop_id','catshop','margin_ratio','margin_amount','keyword'),array('products', 'supplier','category','catshop','keyword','margin_ratio','margin_amount','active' ));
+//    $c->setModel($filter,array('target_category_id','target_category','margin_ratio','margin_amount','keyword'),array('products', 'source_assortment_id','source_category','target_category','keyword','margin_ratio','margin_amount','active' ));
+    $c->dq->order('target_category_id');
+
+//foreach($filter->elements as $key=>$value) var_dump($key);
+    if($c->form){	
+      $filter->getElement('target_category_id')->model->addCondition('assortment_id',$s->id); 
+    }
+
 
 
 	//$c->addFormatter('category','grid/inline'); //->editFields(array('catshop_id'));  

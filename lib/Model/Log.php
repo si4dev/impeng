@@ -19,6 +19,15 @@ class Model_Log extends Model_Table {
     $this->addField('verbose_level');
     $this->hasMany('LogMsg');
     $this->setOrder('id','desc');
+    
+    // do this to get the insertid without loading the whole record especially here with logging we need 
+    // to be carefull on performance 
+    // https://groups.google.com/forum/#!searchin/agile-toolkit-devel/afterInsert/agile-toolkit-devel/tdV1x8GTR8M/sWGe17CnwQUJ
+       $this->addHook('afterInsert',function($m,$id){
+            $m->id=$id;
+            $m->breakHook(false); // this to prevent unload or tryload
+        });
+    
   }
   
   private function memory() {
@@ -38,7 +47,7 @@ class Model_Log extends Model_Table {
     $this->set('path',$_SERVER["SCRIPT_FILENAME"]);
     $this->set('label',$label);
     $this->set('verbose_level',$this->verbose_level);
-    $this->save();
+    $this->saveAndUnload();
   }
  
   function logMsg($msg,$severity) {

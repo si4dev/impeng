@@ -51,7 +51,6 @@ if(!function_exists('error_handler')){
     set_error_handler("error_handler");
 };
 
-
 register_shutdown_function('handleShutdown');
 
 function handleShutdown() {

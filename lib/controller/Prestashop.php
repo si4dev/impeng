@@ -54,7 +54,7 @@ class Controller_Prestashop extends AbstractController {
   function getShopCategories() {
     $defaultlangid=$this->add('Model_Prestashop_Lang')->loadBy('iso_code',$this->lang)->id;
     $cat=$this->add('Model_Prestashop_Category')->lang($defaultlangid);
-    return $cat->load($cat->getTreeHome())->tree();
+    return $cat->loadHome()->tree();
   }
 
   function getShopAttributes() {
