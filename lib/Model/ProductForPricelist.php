@@ -67,7 +67,7 @@ class Model_ProductForPricelist extends Model_Product {
   // the base query model will show all products and with group() it will group by filter
   function group() {
     $this->addExpression('cnt',$this->dsql()->expr('count(1)'));
-    $this->_dsql()->group('source_category_id')->group('ff.id');
+    $this->_dsql()->group('category_id')->group('ff.id');
     return $this;
   }
     

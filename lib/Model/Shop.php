@@ -177,41 +177,22 @@ class Model_Shop extends Model_Assortment {
   
 
   // fill Fitler table for this shop with supplier categories when not already available
-  function prepareFilter($filter) {
- 
-
+  function prepareFilter() {
+    $filter=$this->ref('Filter');
     
     // TODO: rename active into used
     $filter->dsql()->set('active',0)->update(); // wonderfull to update all records at once!
   
-
-    
-    /*
-    // select `category`.`title`,`category`.`id`,`sl`.`shop_id`,`category`.`supplier_id` `sl` from `category` inner join `supplierlink` as `sl` on `sl`.`supplier_id` = `category`.`supplier_id` left join `catlink` as `cl` on cl.category_id=category.id and cl.shop_id=sl.shop_id where cl.id is null and `sl`.`shop_id` = 2
-    $cat=$this->add('Model_Category');
-    $cat->join('supplierlink.supplier_id','supplier_id',null,'sl')->addField('shop_id');
-    $cat->leftJoin('filter',$cat->dsql()->expr('f.category_id=category.id and f.shop_id=sl.shop_id'),null,'f');
-    $cat->addCondition($cat->dsql()->expr('f.id is null'));
-    $cat->addCondition('shop_id',$this->id);
-
-    foreach($cat as $category) {
-      $filter->tryLoadBy('category_id',$category['id'])->save()->set('margin_ratio',null)->set('margin_amount',null)->save();
-    }
-    */
-  
     $m=$this->ref('ProductForPricelist')->group();
     foreach($m as $active) {
-      if($active['filter_id']) {
+      if($active['filter_id']) { 
         $filter->load($active['filter_id']);
-      } else {
-        $filter->set('category_id',$active['category_id'])->set('margin_ratio',null)->set('margin_amount',null);
+      } else { 
+        $filter->set('source_category_id',$active['category_id'])->set('margin_ratio',null)->set('margin_amount',null);
       }
-        
       $filter->set('active',$active['cnt'])->saveAndUnload();
-      
     }
 
-    
     return $this;
   }
   
