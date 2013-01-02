@@ -1,4 +1,4 @@
-<?php 
+<?php
 Class Page_supplier extends Page {
 
 	function init(){
@@ -12,11 +12,11 @@ Class Page_supplier extends Page {
     $supplier=$m->join('assortment','source_assortment_id');
     $supplier->addField('name');
     $supplier->addField('branch');
-    
+
 		$g = $this->add('Grid');
 		$g->setModel($m, array('name', 'branch'));
-    $g->addColumn('expander' ,'upload');	
+    $g->addColumn('expander' ,'upload');
 	}
-	
+
 
 }

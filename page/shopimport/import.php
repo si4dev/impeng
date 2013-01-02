@@ -3,40 +3,21 @@ class Page_Shopimport_Import extends Page {
   function init() {
     parent::init();
 
+  $s=$this->api->getShop();
 
-    $s=$this->api->getShop();
-    $c=$this->add('Grid_AssortmentLink');
-    $c->setModel($s->ref('AssortmentLink'));
-
-$c->addColumn('import','import');
-
-    /*
-    if($slink->Loaded()){
-	//verify if user can import
-		if($slink['is_owner'] == true){
 			$b=$this->add('Button');
 			$b->setLabel('Pricelist');
 
-			$url = $this->api->getDestinationURL('job');
+			// TODO make a job queue so no large jobs can be done simultaniously and would kill the server resources
+      // $url = $this->api->getDestinationURL('job');
+			$url = $this->api->getDestinationURL('pricelist');
 
 			$b->js('click')->univ()->redirect($url);
-		}
-	}
-  */
-  }
-}
-
-class Grid_AssortmentLink extends Grid {
-
-  function init_import($field) {
-    parent::init_button($field);
-  }
-
-  function format_import($field){
-    if($this->current_row['is_owner']) {
-      parent::format_button($field);
-    } else {
-      $this->current_row_html[$field]='';
-    }
+			/* going directly to the page pricelist
+			if($b->isClicked()) {
+		 //     echo 'test';
+			  $this->js()->univ()->location($this->api->getDestinationURL(
+								'pricelist',array('token'=>false)))->execute();
+			}*/
   }
 }
