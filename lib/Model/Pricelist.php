@@ -3,12 +3,10 @@ class Model_Pricelist extends Model_Table {
   public $table='pricelist';
   public $title_field='title';
   public $lang;
-  public $nb_categories;
-  public $title; 
-  public $strict_fields=true;
+  public $title;
   function init() {
     parent::init();
-    
+
     $this->addField('productcode');
     $this->addField('shop_productcode');
     $this->addField('title');
@@ -36,31 +34,31 @@ class Model_Pricelist extends Model_Table {
     $this->hasOne('Shop');
     /*
       http://new2.agiletoolkit.org/doc/modeltable/reference
-      In the code above, model 'Author' will be examined for it's "table" property. 
-      That property is then used in the assumption about the referencing field. 
-      If Model_Author->table = 'author' then hasOne() function will use "author_id" field by default. 
+      In the code above, model 'Author' will be examined for it's "table" property.
+      That property is then used in the assumption about the referencing field.
+      If Model_Author->table = 'author' then hasOne() function will use "author_id" field by default.
       If a different field is used, you can specify it as a second argument to hasOne().
-      
-      By default one more field will be created. This field is called "dereferenced field" and it is 
-      defined as a sub-select expression selecting "name" field from related entity. 
-      If "name" field is not set in the related model, then the field will show "Record #n" instead. 
+
+      By default one more field will be created. This field is called "dereferenced field" and it is
+      defined as a sub-select expression selecting "name" field from related entity.
+      If "name" field is not set in the related model, then the field will show "Record #n" instead.
       You can specify a different field to expression by using 3th argument of hasOne();
     */
     $this->hasOne('Media',null,'file_modified');
-    
+
     $this->addHook('beforeLoad',function($o){ unset($o->title); });
 
   }
 
   function setInfo($info) {
-    
+
     $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$info.'</root>');
     $result='';
     foreach($xml->xpath("info[@type='title']/*") as $node) {
       $result.=(string)$node->asXML()."\r\n";
     }
     $this->set('product_title',$result);
-    
+
     $result='';
     foreach($xml->xpath("info[@type='short']/*") as $node) {
       $result.=(string)$node->asXML()."\r\n";
@@ -72,7 +70,7 @@ class Model_Pricelist extends Model_Table {
       $result.=(string)$node->asXML()."\r\n";
     }
     $this->set('info_long',$result);
-    
+
     return $this;
   }
 
@@ -82,56 +80,7 @@ class Model_Pricelist extends Model_Table {
   function image() {
     return str_replace('/','_',$this->get('shop_productcode')).'.jpg';
   }
-  
-  // returns one inner xml title for the specified language
-  function title() {
-    
-    if(!isset($this->title)) {
-      $this->title=$this->add('XML')->xmlToArray($this->get('product_title'),'info','lang');
-    }
-        
-    $result=$this->title[$this->lang];
-    if(!$result) $result = $this->title[null];
-    if(!$result) $result = $this->title['nl'];
-    if(!$result) $result = $this->get('title');
-    return $result;
-  }
-    
-  function info_short() {
-    //echo "<pre>[short-".$this->get('id')."[[" . htmlentities($this->get('short_description')). "]]] </pre><br/><br/>";
-    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('info_short').'</root>');
-    $result='';
-    foreach($xml->xpath("info[@type='short']/*") as $node) {
-      $result.=(string)$node->asXML();
-    }
-    return $result;
-  }
-  function info_long() {
-    //echo "<pre>[long-".$this->get('id')."[[" . htmlentities($this->get('specification')). "]]] </pre><br/><br/>";
-    $xml=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>'.$this->get('info_long').'</root>');
-    $result='';
-    foreach($xml->xpath("info/*") as $node) {
-      $result.=(string)$node->asXML();
-    }
-    return $result;
-  }
-  function meta_title() {
-    $content= $this->title().' '.$this->get('manufacturer').' '.$this->get('manufacturer_code');
-    return str_replace(array(';','=','#','{','}','<','>'),'-',$content);
-  }
-  function meta_description() {
-    $content= $this->title().' '.$this->get('manufacturer').' '.$this->get('manufacturer_code');
-    return str_replace(array(';','=','#','{','}','<','>'),'-',$content);
-  }
-  function meta_keywords() {
-    $content= $this->title().','.$this->get('manufacturer').','.$this->get('manufacturer_code');
-    $content=str_replace(array(';','=','#','{','}','<','>'),'-',$content);
-    $content=str_replace(' ',',',$content);
-    return $content;
-  }
-  function rewrite() {
-    return strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $this->title()), '-'));
-  }
+
 }
 
 /*

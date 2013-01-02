@@ -2,11 +2,15 @@
 class Page_Shopimport_Import extends Page {
   function init() {
     parent::init();
-	
-	$user = $this->api->auth->model;
-		
-	$link = $this->add('Model_SupplierLink');
-	$slink = $link->tryLoadBy('shop_id', $this->api->recall('shop_id')); 
+
+
+    $s=$this->api->getShop();
+    $c=$this->add('Grid_AssortmentLink');
+    $c->setModel($s->ref('AssortmentLink'));
+
+$c->addColumn('import','import');
+
+    /*
     if($slink->Loaded()){
 	//verify if user can import
 		if($slink['is_owner'] == true){
@@ -16,13 +20,19 @@ class Page_Shopimport_Import extends Page {
 			$url = $this->api->getDestinationURL('job');
 
 			$b->js('click')->univ()->redirect($url);
-			/* going directly to the page pricelist
-			if($b->isClicked()) {
-		 //     echo 'test';
-			  $this->js()->univ()->location($this->api->getDestinationURL(
-								'pricelist',array('token'=>false)))->execute();
-			}*/
 		}
 	}
+  */
+  }
+}
+
+class Grid_AssortmentLink extends Grid {
+
+  function init_import($field) {
+    parent::init_button($field);
+  }
+
+  function format_import($field){
+    if($this->current_row['is_owner']) parent::format_button($field);
   }
 }

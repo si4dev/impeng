@@ -11,5 +11,6 @@ class Model_Prestashop_Manufacturer extends Model_Table2 {
     $this->addField('active'); // set 1 always, not only by default as unset mfg should be set again.
     // $this->hasMany('Prestashop_ManufacturerLang'); // does work without
   }
+
+
 }
-    

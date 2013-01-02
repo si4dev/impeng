@@ -3,35 +3,35 @@ class Page_Shopimport_Filter extends Page {
   function init() {
     parent::init();
   }
-  
+
   function initMainPage() {
-      
+
     $this->add('hr');
     $form= $this->add('form',null,null,array('form_horizontal'));
-    
+
     $s=$this->api->getShop();
 
     $non_active = $form->addfield('dropdown', 'non-active')->setValueList(array('hide', 'show'));
 
     $supplierModel=$s->ref('AssortmentLink');
     $supplierModel->join('assortment','source_assortment_id')->addField('name');
-        
+
     $slist=$form->addField('dropdown' , 'supplier'); //slist as supplier list
     $slist->setModel($supplierModel);
-    $slist->setEmptyText('Alle leveranciers');   
+    $slist->setEmptyText('Alle leveranciers');
 
     $c=$this->add('CRUD');
     $filter=$s->ref('Filter');
     if(!$this->api->isAjaxOutput()) { // used to check if we rebuild category table and get store categories
       // load the categories from the shop itself into table catshop
       $s->getShopCategories();
-      
+
       // prepare filters with new categories from suppliers, it's done in the shop model
       $s->prepareFilter();
     }
   //      $filter->getField('catshop_id')->datatype('list')->setValueList($shopcats);  //datatype('list')->setValueList(array(1=>'een',2=>'twee')); //$shopcats);
 
-	
+
 	// show filters
     if($c->grid) {
       $g = $c->grid;
@@ -44,17 +44,17 @@ class Page_Shopimport_Filter extends Page {
     ) );
     $slist->js('change', $g->js()->reload(array('supplier' => $slist->js()->val())) );
     }
-    
+
 
   //get Supplier name
 	 $filter->getSupplier();
-	
-	
+
+
 	//check for active only (active > 1)
-	if(!isset($_GET['non-active']) || $_GET['non-active'] == 0){		
+	if(!isset($_GET['non-active']) || $_GET['non-active'] == 0){
 		 $filter->addCondition('active', '>', '0');
 	}
-	
+
 	//Supplier filter
 	if(isset($_GET['supplier']) && $_GET['supplier'] != 0){
 	  $s_id= $_GET['supplier'];
@@ -70,15 +70,15 @@ class Page_Shopimport_Filter extends Page {
     $c->dq->order('source_category_id');
 
 //foreach($filter->elements as $key=>$value) var_dump($key);
-    if($c->form){	
-      $filter->getElement('target_category_id')->model->addCondition('assortment_id',$s->id); 
-      
-      
+    if($c->form){
+      $filter->getElement('target_category_id')->model->addCondition('assortment_id',$s->id);
+
+
     }
 
 
 
-	//$c->addFormatter('category','grid/inline'); //->editFields(array('catshop_id'));  
+	//$c->addFormatter('category','grid/inline'); //->editFields(array('catshop_id'));
     if($c->form) {
       $f=$c->form->getElement('margin_ratio');
       if($f->get() == NULL) $f->set(1);
@@ -90,12 +90,12 @@ class Page_Shopimport_Filter extends Page {
   function page_products() {
     $this->api->stickyGET('id');
     $s=$this->api->getShop();
-    $m=$s->ref('ProductForPricelist');
+    $m=$s->ref('ProductForPricelist')->noInfo();
     // not working: $m->addCondition($m->getElement('filter_id'),$_GET['id'])->debug();
     $m->_dsql()->where('ff.id',$_GET['id']);
     $this->add('Grid')
         ->addPaginator(500)
-        ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));     
+        ->setModel($m,array('productcode','title','manufacturer','manufacturer_code','ean','price','stock'));
   }
 
 }

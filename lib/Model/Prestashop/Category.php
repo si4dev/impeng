@@ -67,10 +67,12 @@ class Model_Prestashop_Category extends Model_Table2 {
     return $r;
   }
 
-  function loadHome() {
+  
+
+  function getRoot() {
     if($this->version=='1.5') $home=2;
     $home=1;
-    return $this->load($home);
+    return $home;
   }
 
   

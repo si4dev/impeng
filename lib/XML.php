@@ -3,15 +3,16 @@
 class XML extends AbstractModel {
   function init() {
     parent::init();
-    
+
   }
-  
+
   function xmlToXml() {
-  
+
     }
-  
-  
-  
+
+
+  // -----------------------------------------------------------------------------------------------
+  // xml to array also supports XML as content. Cannot be done with simplexml as it needs saveXML()
   function xmlToArray($xml,$row,$key) {
     $result=array();
     if($xml) {
@@ -24,7 +25,7 @@ class XML extends AbstractModel {
     }
     return $result;
   }
-  
+
   function innerXml($node,$outputXml=false) {
     $innerXml='';
     foreach( $node->childNodes as $child ) {
@@ -40,15 +41,15 @@ class XML extends AbstractModel {
     }
     return $innerXml;
   }
-  
+
   function tryToXml($dom,$content) {
-    
+
     if(!$content) return false;
-    
+
     // xml well formed content can be loaded as xml node tree
     $fragment = $dom->createDocumentFragment();
     // wonderfull appendXML to add an XML string directly into the node tree!
-    
+
     // todo: maybe better to make a dom document and exclude the xml declaration for injecting
     // as appendxml will fail on a xml declaration.
     if( substr( $content,0, 5) == '<?xml' ) {
@@ -61,7 +62,7 @@ class XML extends AbstractModel {
 /* todo: nice with exception however then each php error should result in exception
     try {
       $fragment->appendXML( $content );
-      
+
     } catch(DOMException $e) {
       return htmlToXml;
     }
@@ -71,16 +72,16 @@ class XML extends AbstractModel {
       return $this->htmlToXml($dom,$content);
     }
 
-    return $fragment;    
+    return $fragment;
   }
-  
-  // convert content into xml 
-  // dom is only needed to prepare the xml which will be returned 
+
+  // convert content into xml
+  // dom is only needed to prepare the xml which will be returned
   function htmlToXml($dom, $content, $needEncoding=false, $bodyOnly=true) {
 
     // no xml when html is empty
     if(!$content) return false;
-    
+
     // real content and possibly it needs encoding
     if( $needEncoding ) {
       // no need to convert character encoding as loadHTML will respect the content-type (only)
@@ -108,7 +109,7 @@ class XML extends AbstractModel {
 
     if( $bodyOnly ) {
       $fragment = $dom->createDocumentFragment();
-      
+
       // retrieve nodes within /html/body
       foreach( $domInject->documentElement->childNodes as $elementLevel1 ) {
        if( $elementLevel1->nodeName == 'body' and $elementLevel1->nodeType == XML_ELEMENT_NODE ) {
@@ -120,12 +121,12 @@ class XML extends AbstractModel {
     } else {
       $fragment = $dom->importNode($domInject->documentElement, true);
     }
-        
+
 
     return $fragment;
   }
-    
-  
+
+
 
 	/*
 	 DOM Constants:
@@ -185,7 +186,7 @@ class XML extends AbstractModel {
 
 		// start with the first child node to iterate
 		$nodeChild = $node->firstChild;
-			
+
 		while ( $nodeChild )  {
 			$nodeNextChild = $nodeChild->nextSibling;
 

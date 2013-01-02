@@ -8,7 +8,7 @@ class Model_Assortment extends Model_Table {
     $this->addField('label');
     $this->addField('name');
     $this->addField('branch');
-    $this->hasOne('User',null,'name'); 
+    $this->hasOne('User',null,'name');
     $this->addField('is_supplier');
     $this->addField('is_shop');
     $this->addField('import_full');
@@ -21,8 +21,8 @@ class Model_Assortment extends Model_Table {
     $this->hasMany('AttributeGroup');
     $this->hasMany('Product');
   }
-  
-  
-  
-  
+
+
+
+
 }
