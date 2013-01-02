@@ -11,7 +11,7 @@ class page_shopconfig extends Page {
       $this->add('h2')->set('Config');
       if($shopsystem = ucwords($s->shopsystem())) {
         $sc=$s->setController($shopsystem);
-      } 
+      }
       $f=$this->add('Form');
       $platforms=array('prestashop','opencart','xcart','magento','oscommerce');
       $f->addField('dropdown','shopsystem')->setValueList(array_combine($platforms,$platforms));
@@ -23,7 +23,7 @@ class page_shopconfig extends Page {
         $s->shopsystem($f->get('shopsystem')); // store shopsystem
         $s->save();
         $action1=$f->js()->univ()->successMessage('Opgeslagen');
-        $action2=$f->js()->reload(); 
+        $action2=$f->js()->reload();
         $f->js(null,array($action1,$action2))->execute();
         $this->api->redirect($p); // in case of no js
 
@@ -31,7 +31,8 @@ class page_shopconfig extends Page {
       }
 
       $this->add('h2')->set('Suppliers');
-      $this->add('CRUD')->setModel($s->ref('SupplierLink'),array('supplier_id','prefix','pricebook_id', 'is_owner'),array('supplier','prefix','pricebook', 'is_owner'));
+      //OLD $this->add('CRUD')->setModel($s->ref('SupplierLink'),array('supplier_id','prefix','pricebook_id', 'is_owner'),array('supplier','prefix','pricebook', 'is_owner'));
+      $this->add('CRUD')->setModel($s->ref('AssortmentLink'));
 
     } // end if shop
   }

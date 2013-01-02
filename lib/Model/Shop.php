@@ -7,7 +7,6 @@ class Model_Shop extends Model_Assortment {
     $this->addCondition('is_shop',1);
     $this->hasMany('Pricelist');
     $this->hasMany('ProductForPricelist','target_assortment_id');
-    $this->hasMany('ProductList');
     $this->hasMany('Category');
     $this->hasMany('Filter');
     $this->hasMany('AttributeGroupLink');
