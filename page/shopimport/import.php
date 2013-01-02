@@ -33,6 +33,10 @@ class Grid_AssortmentLink extends Grid {
   }
 
   function format_import($field){
-    if($this->current_row['is_owner']) parent::format_button($field);
+    if($this->current_row['is_owner']) {
+      parent::format_button($field);
+    } else {
+      $this->current_row_html[$field]='';
+    }
   }
 }
