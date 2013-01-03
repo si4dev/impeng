@@ -1,5 +1,5 @@
 <?php 
-class Page_supplier_upload extends Page {
+class Page_shopimport_supplier_upload extends Page {
 	function init(){
 		parent::init();
     
