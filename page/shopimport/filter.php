@@ -6,8 +6,8 @@ class Page_Shopimport_Filter extends Page {
 
   function initMainPage() {
 
-    $this->add('hr');
-    $form= $this->add('form',null,null,array('form_horizontal'));
+    $this->add('HR');
+    $form= $this->add('Form',null,null,array('form_horizontal'));
 
     $s=$this->api->getShop();
 

@@ -28,7 +28,7 @@ class Model_Shop extends Model_Assortment {
   function margin($value=null) {
 
     if($value===null) {
-      $m=$this->add('Model_margin');
+      $m=$this->add('Model_Margin');
       $shop=$this;
       $m->addHook('afterDelete',function($o) use($shop) { $shop->config('shopconfig/margin',$o)->save(); });
       $m->addHook('afterSave',function($o) use($shop) { $shop->config('shopconfig/margin',$o)->save(); });

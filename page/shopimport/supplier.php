@@ -15,7 +15,9 @@ Class Page_shopimport_supplier extends Page {
 
 		$g = $this->add('Grid');
 		$g->setModel($m, array('name', 'branch'));
-    $g->addColumn('expander' ,'upload');
+        
+            $g->addColumn('expander' ,'upload');
+       
 	}
 
 

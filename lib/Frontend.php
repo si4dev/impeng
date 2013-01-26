@@ -96,7 +96,7 @@ class Frontend extends ApiFrontend {
     $pp=$this->api->add('P',null,'UserInfo');
     $pp->add('Text')->set('user: '.$this->user['email']);
 	}
-    $pp->add('HTML')->set('<br/>');
+    $pp->add('Html')->set('<br/>');
     $pp->add('Text')->set('shop: '.$this->shop['name']);
 
     // button change shop when count($u->ref('Shop')) > 1
