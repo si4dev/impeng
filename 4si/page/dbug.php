@@ -21,7 +21,7 @@ class page_dbug extends Page{
 		}
 
 
-		$this->add('hr');
+		$this->add('HR');
 
 
 		$tt = $this->add('Tabs');

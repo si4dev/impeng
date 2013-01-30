@@ -16,6 +16,7 @@ class Page_Shopimport_Margin extends Page {
     
     $p=$cols->addColumn(6);
     $p->add('H2')->set('Globale marge instellingen');
+
     $p->add('CRUD')->setModel($s->margin());
 
     $p=$cols->addColumn(6);

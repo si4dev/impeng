@@ -7,6 +7,7 @@ class page_user extends Page {
 	$tabs=$this->add('Tabs');
     $crud=$tabs->addTab('Users')->add('CRUD');
 	$m = $this->add('Model_User');
+  
     $crud->setModel($m);
     if($crud->grid){
       $crud->grid->addColumn('prompt','set_password');
