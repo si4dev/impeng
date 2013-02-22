@@ -26,8 +26,10 @@ class Frontend extends ApiFrontend {
 			// ->_load('ui.atk4_expander')
 			;
 
-    $this->add('Auth')->setModel('User'); // email and password are default to login
+    $auth = $this->add('Auth');
+    $auth->setModel('User'); // email and password are default to login
     //$this->auth->usePasswordEncryption('md5')->check();
+    //$auth->debug();
 	
 	  if(isset($_GET['login_as'])){
 	  //first, logout the current user
@@ -66,19 +68,18 @@ class Frontend extends ApiFrontend {
     if($key=$this->api->getConfig('key',null) and $_GET['key']===$key) {
      // admin or cron
     } else {
-      $this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
+      //$this->auth->usePasswordEncryption(function($v) { return md5($v); } )->check();
+      $this->auth->usePasswordEncryption()->check();
     }
     $m=$this->add('Menu',null,'Menu');
     $m->addMenuItem('shopimport/margin','Marge');
     $m->addMenuItem('shopimport/filter','Categorie');
     $m->addMenuItem('shopimport/attribute','Attributen');
     $m->addMenuItem('shopimport/import','Import');
-	$m->addMenuItem('shopimport/profile', 'Profiel');
-	$m->addMenuItem('shopimport/supplier', 'Leverancier');
+	  $m->addMenuItem('shopimport/profile', 'Profiel');
+	  $m->addMenuItem('shopimport/supplier', 'Leverancier');
     $m->addMenuItem('logout','Logout');
- 
-
- 
+  
     $this->user=$this->api->auth->model;
     if($shop_id=$this->api->recall('shop_id')) {
       $this->shop=$this->user->ref('Shop')->load($shop_id);

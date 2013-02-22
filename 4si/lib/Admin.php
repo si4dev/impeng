@@ -28,7 +28,8 @@ class Admin extends ApiFrontend {
             ->_load('ui.atk4_notify');
 
     $this->add('Auth')->setModel('Admin'); // email and password are default to login
-    $this->auth->usePasswordEncryption(function($v) { return md5($v); } );
+    //$this->auth->usePasswordEncryption(function($v) { return md5($v); } );
+    $this->auth->usePasswordEncryption();
     $this->auth->check();
 
     
